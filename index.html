@@ -1,0 +1,156 @@
+<header class="notion-header">
+  <div class="cover-banner">
+    <div class="header-container">
+      <div class="profile-avatar">
+        <img src="https://via.placeholder.com/150" alt="stef. profile"> 
+        </div>
+      
+      <div class="header-titles">
+        <h1 class="main-title">stef.</h1>
+        <p class="sub-title">my personal portfolio</p>
+      </div>
+    </div>
+  </div>
+
+  <nav class="pill-nav">
+    <div class="nav-container">
+      <a href="#work" class="pill-btn pill-work">Work</a>
+      <a href="#projects" class="pill-btn pill-projects">Projects</a>
+      <a href="#travel" class="pill-btn pill-travel">Travel</a>
+      <a href="#passions" class="pill-btn pill-passions">Passions</a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* Variabili di Colore basate sul tuo Screenshot */
+  :root {
+    --font-notion: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --text-color: #000000;
+    
+    /* Gradienti e colori delle pillole presi dall'immagine */
+    --gradient-banner: linear-gradient(90deg, #8cb5ff 0%, #bca5ff 50%, #f196ff 100%);
+    --color-pill-work: #a0c4ff;
+    --color-pill-projects: #b8b2ff;
+    --color-pill-travel: #d6a6ff;
+    --color-pill-passions: #f39eff;
+  }
+
+  body {
+    font-family: var(--font-notion);
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+  }
+
+  /* Layout del Banner */
+  .cover-banner {
+    background: var(--gradient-banner);
+    padding: 40px 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-container {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  /* Foto Profilo con Bordo Bianco Spesso */
+  .profile-avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 4px solid #ffffff;
+    overflow: hidden;
+    background-color: #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+  }
+
+  .profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Testi a destra della foto */
+  .header-titles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .main-title {
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin: 0;
+    color: var(--text-color);
+    letter-spacing: -2px;
+  }
+
+  .sub-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 10px 0 0 0;
+    color: var(--text-color);
+    letter-spacing: -0.5px;
+  }
+
+  /* Navigazione a Pillole */
+  .pill-nav {
+    background-color: #ffffff;
+    padding: 20px 20px;
+  }
+
+  .nav-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  /* Stile di base delle singole Pillole */
+  .pill-btn {
+    display: inline-block;
+    padding: 14px 32px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #000000;
+    border-radius: 30px; /* Curve perfette stile pillola */
+    transition: transform 0.2s ease, filter 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+
+  .pill-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.95);
+  }
+
+  /* Assegnazione dei colori specifici alle singole pillole */
+  .pill-work { background-color: var(--color-pill-work); }
+  .pill-projects { background-color: var(--color-pill-projects); }
+  .pill-travel { background-color: var(--color-pill-travel); }
+  .pill-passions { background-color: var(--color-pill-passions); }
+
+  /* Ottimizzazione per Mobile */
+  @media (max-width: 600px) {
+    .header-container {
+      flex-direction: column;
+      text-align: center;
+      gap: 20px;
+    }
+    .main-title { font-size: 3.5rem; }
+    .sub-title { font-size: 1.4rem; }
+    .nav-container { justify-content: center; }
+    .pill-btn { padding: 10px 22px; font-size: 1rem; }
+  }
+</style>
