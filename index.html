@@ -146,6 +146,12 @@
             letter-spacing: -0.5px;
         }
 
+        .notion-intro-text {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
         /* Toggle Card */
         .notion-toggle-card {
             background: #ffffff;
@@ -240,12 +246,120 @@
         .prod-tagline { font-size: 0.85rem; color: #d97706; font-weight: 600; margin-bottom: 12px; }
         .prod-content p { font-size: 0.95rem; color: #334155; margin-bottom: 16px; flex-grow: 1; }
 
-        @media (max-width: 600px) {
+        /* ================= CSS TRAVELS & PASSIONS ================= */
+        .scratch-map-container {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .map-placeholder {
+            height: 400px;
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+        }
+
+        .map-icon { font-size: 3rem; margin-bottom: 10px; }
+
+        .passion-block {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+
+        .passion-sub-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .passion-text {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .media-gallery {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .triple-gallery { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+        .double-gallery { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+
+        .media-box {
+            height: 180px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.2s ease;
+        }
+        
+        .media-box:hover { background: #f1f5f9; }
+
+        .art-group h4, .audio-tracks-container h4 {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .audio-tracks-container {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .notion-audio-player {
+            background: #f1f5f9;
+            border-radius: 6px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .notion-audio-player:hover { background: #e2e8f0; }
+        .audio-icon { font-size: 1.2rem; color: var(--text-dark); }
+        
+        .audio-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .track-duration { color: var(--text-muted); font-size: 0.85rem; }
+
+        @media (max-width: 640px) {
             .header-container { flex-direction: column; text-align: center; gap: 20px; }
             .main-title { font-size: 3.5rem; }
             .sub-title { font-size: 1.4rem; }
             .nav-container { justify-content: center; flex-wrap: wrap; }
             .pill-btn { padding: 8px 18px; font-size: 0.95rem; }
+            .double-gallery { grid-template-columns: 1fr; }
+            .map-placeholder { height: 250px; }
         }
     </style>
 </head>
@@ -336,7 +450,7 @@
                 <div class="toggle-content">
                     <div class="project-media">
                         <img src="https://via.placeholder.com/800x450" alt="Getir Operations">
-                        <span class="media-caption">Pianificazione e ottimizzazione dei flussi di delivery urbani.</span>
+                        <span class="media-caption">Pianificazione e ottimizzazione dei flussi di delivery urbani e scheduling del personale degli store.</span>
                     </div>
 
                     <p class="project-brief">
@@ -441,7 +555,89 @@
             </div>
         </section>
 
-        </main>
+
+        <section id="travel" class="notion-section">
+            <h2 class="section-title">🗺️ Travels</h2>
+            <p class="notion-intro-text">La mia mappa dei luoghi esplorati nel mondo. Una scratch map interattiva per tenere traccia dei viaggi e delle prossime mete.</p>
+            
+            <div class="scratch-map-container">
+                <div class="map-placeholder">
+                    <span class="map-icon">🌍</span>
+                    <p><strong>[ Scratch Map Live Window ]</strong></p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Caricamento della mappa dei luoghi visitati...</p>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="passions" class="notion-section">
+            <h2 class="section-title">⚡ Passions</h2>
+            <p class="notion-intro-text">Adrenalina, arti visive e sound design. Tutto ciò che mi mette in movimento fuori dal codice e dalla supply chain.</p>
+
+            <div class="passion-block">
+                <h3 class="passion-sub-title">🏁 Velocità</h3>
+                <p class="passion-text">Kart e moto. La ricerca del limite, la traiettoria perfetta e l'adrenalina pura della pista.</p>
+                
+                <div class="media-gallery triple-gallery">
+                    <div class="media-box">[ Foto Moto ]</div>
+                    <div class="media-box">[ Foto Kart ]</div>
+                    <div class="media-box">[ Video Breve Pista 🎥 ]</div>
+                </div>
+            </div>
+
+            <div class="passion-block">
+                <h3 class="passion-sub-title">🎨 Arte: Magic Canvas & Mirrors</h3>
+                <p class="passion-text">Esplorazioni visive e installazioni. Progetti che uniscono percezione, riflessi e interazione nello spazio.</p>
+                
+                <div class="art-group">
+                    <h4>Magic Canvas</h4>
+                    <div class="media-gallery double-gallery">
+                        <div class="media-box">[ Video Magic Canvas 1 🎥 ]</div>
+                        <div class="media-box">[ Video Magic Canvas 2 🎥 ]</div>
+                    </div>
+                </div>
+                <div class="art-group" style="margin-top: 20px;">
+                    <h4>Mirrors</h4>
+                    <div class="media-gallery double-gallery">
+                        <div class="media-box">[ Foto Mirrors 1 ]</div>
+                        <div class="media-box">[ Foto Mirrors 2 ]</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="passion-block">
+                <h3 class="passion-sub-title">🎵 Music & Sound Design</h3>
+                <p class="passion-text">Produzione musicale e creazione di panorami sonori. Ritmo e frequenze per dare forma alle idee.</p>
+                
+                <div class="media-gallery double-gallery">
+                    <div class="media-box">[ Video Studio Session 🎥 ]</div>
+                    <div class="media-box">[ Foto Setup / Live ]</div>
+                </div>
+                
+                <div class="audio-tracks-container">
+                    <h4>Sintonizzati sulle tracce:</h4>
+                    
+                    <div class="notion-audio-player">
+                        <span class="audio-icon">▶️</span>
+                        <div class="audio-info">
+                            <span class="track-name">Traccia Audio 01 - Progetto Originale</span>
+                            <span class="track-duration">0:00 / 3:15</span>
+                        </div>
+                    </div>
+
+                    <div class="notion-audio-player">
+                        <span class="audio-icon">▶️</span>
+                        <div class="audio-info">
+                            <span class="track-name">Traccia Audio 02 - Sound Design Experiment</span>
+                            <span class="track-duration">0:00 / 2:40</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
 
 </body>
 </html>
