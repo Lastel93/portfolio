@@ -116,7 +116,199 @@
     gap: 15px;
     flex-wrap: wrap;
   }
+<main class="notion-body">
+  <div class="main-container">
+    
+    <section id="work" class="notion-section">
+      <h2 class="notion-section-title">💼 Work Experience</h2>
+      <p class="notion-intro-text">Un archivio dettagliato delle mie esperienze professionali. Clicca sui singoli blocchi per espandere i dettagli dei progetti e vedere le foto correlate.</p>
 
+      <details class="notion-toggle-card" open>
+        <summary class="toggle-header">
+          <span class="arrow">▶</span>
+          <div class="company-logo">
+            <img src="https://via.placeholder.com/40" alt="Logo Azienda">
+          </div>
+          <div class="company-meta">
+            <h3 class="role-title">Senior Full Stack Developer</h3>
+            <p class="company-name">Nome Azienda Tech <span class="date-badge">2024 - Presente</span></p>
+          </div>
+        </summary>
+
+        <div class="toggle-content">
+          <p class="project-brief">Guida del team di sviluppo per la progettazione dell'infrastruttura cloud e l'ottimizzazione delle performance core del sistema.</p>
+          
+          <div class="project-media">
+            <img src="https://via.placeholder.com/800x400" alt="Foto Ufficio o Team" class="company-photo">
+            <span class="media-caption">Sede centrale e il team di sviluppo durante il rilascio dell'architettura.</span>
+          </div>
+
+          <div class="notion-callout-box">
+            <span class="callout-icon">🚀</span>
+            <div class="callout-text">
+              <h4>Case Study: Ottimizzazione Flussi Dati Real-time</h4>
+              <p><strong>Il Problema:</strong> I tempi di risposta del server superavano i 2 secondi sotto carico critico, impattando l'esperienza utente.</p>
+              <p><strong>La Soluzione:</strong> Riprogettazione dell'architettura in microservizi con caching distribuito e database PostgreSQL su Supabase.</p>
+              <p><strong>I Risultati:</strong> Performance velocizzate del 65% e latenza ridotta al minimo.</p>
+            </div>
+          </div>
+
+          <div class="work-tags">
+            <span class="w-tag">PostgreSQL</span>
+            <span class="w-tag">Supabase</span>
+            <span class="w-tag">Next.js</span>
+            <span class="w-tag">Cloud Architecture</span>
+          </div>
+        </div>
+      </details>
+
+    </section>
+    
+  </div>
+</main>
+
+<style>
+  /* Integrazione Stile Notion per il Corpo del Sito */
+  .main-container {
+    max-width: 800px; /* Più stretto dell'header, tipico layout di Notion per la lettura */
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .notion-section {
+    margin-bottom: 40px;
+  }
+
+  .notion-section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #37352f;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .notion-intro-text {
+    color: #787774;
+    font-size: 1.05rem;
+    margin-bottom: 25px;
+  }
+
+  /* Stile del Blocco Card / Toggle di Notion */
+  .notion-toggle-card {
+    background: #fbfbfa;
+    border: 1px solid #ededeb;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    padding: 16px;
+    transition: background 0.2s ease;
+  }
+
+  .notion-toggle-card[open] {
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Rimuove la freccia standard del browser nei details */
+  .toggle-header {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    cursor: pointer;
+    gap: 12px;
+  }
+  .toggle-header::-webkit-details-marker { display: none; }
+
+  /* Nostra freccia personalizzata stile Notion */
+  .notion-toggle-card .arrow {
+    font-size: 0.8rem;
+    color: #c4c4c2;
+    transition: transform 0.2s ease;
+    user-select: none;
+  }
+  .notion-toggle-card[open] .arrow {
+    transform: rotate(90deg); /* Ruota la freccia in basso quando è aperto */
+  }
+
+  /* Elementi dell'Azienda nell'Header */
+  .company-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f1f1ef;
+    flex-shrink: 0;
+  }
+  .company-logo img { width: 100%; height: 100%; object-fit: cover; }
+
+  .company-meta { display: flex; flex-direction: column; }
+  .role-title { font-size: 1.15rem; font-weight: 600; margin: 0; color: #37352f; }
+  .company-name { font-size: 0.95rem; margin: 2px 0 0 0; color: #787774; }
+  
+  .date-badge {
+    font-size: 0.8rem;
+    background: #f1f1ef;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 6px;
+    color: #37352f;
+  }
+
+  /* Contenuto interno del Toggle */
+  .toggle-content {
+    padding-left: 28px; /* Allineato perfettamente sotto il testo, saltando la freccia */
+    margin-top: 16px;
+  }
+
+  .project-brief { color: #37352f; font-size: 1rem; margin-bottom: 16px; }
+
+  /* Gestione delle foto aziendali strutturate */
+  .project-media {
+    margin: 20px 0;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f1f1ef;
+  }
+  .company-photo {
+    width: 100%;
+    max-height: 380px;
+    object-fit: cover;
+    display: block;
+  }
+  .media-caption {
+    display: block;
+    font-size: 0.85rem;
+    color: #787774;
+    padding: 10px 12px;
+    background: #f7f7f5;
+    border-top: 1px solid #ededeb;
+  }
+
+  /* Il classico blocco Callout Giallo di Notion */
+  .notion-callout-box {
+    background: #fbf3db; /* Giallo tenue Notion */
+    border-radius: 4px;
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .callout-icon { font-size: 1.3rem; line-height: 1; }
+  .callout-text h4 { margin: 0 0 6px 0; color: #37352f; font-size: 1rem; }
+  .callout-text p { margin: 4px 0; font-size: 0.95rem; color: #37352f; }
+
+  /* Tag */
+  .work-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+  .w-tag {
+    background: #eaecef;
+    color: #4b5563;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+</style>
+
+  
   /* Stile di base delle singole Pillole */
   .pill-btn {
     display: inline-block;
