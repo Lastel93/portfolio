@@ -3,20 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>stef. | personal portfolio</title>
+    <title>stef. | portfolio</title>
     <style>
         :root {
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --bg-page: #f8fafc;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            
-            /* Gradienti e colori presi direttamente dal tuo screenshot */
+            --bg-page: #0b0f19; /* Sfondo scuro profondo per far risaltare foto e gradienti */
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --gradient-insta: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             --gradient-banner: linear-gradient(90deg, #8cb5ff 0%, #bca5ff 50%, #f196ff 100%);
-            --color-pill-work: #a0c4ff;
-            --color-pill-projects: #b8b2ff;
-            --color-pill-travel: #d6a6ff;
-            --color-pill-passions: #f39eff;
         }
 
         * {
@@ -29,36 +24,39 @@
         body {
             font-family: var(--font-main);
             background-color: var(--bg-page);
-            color: var(--text-dark);
-            line-height: 1.6;
+            color: var(--text-light);
+            overflow-x: hidden;
         }
 
-        /* ================= INTESTAZIONE (HEADER) ================= */
-        .cover-banner {
+        /* ================= HEADER STYLE SOCIAL ================= */
+        .profile-header {
             background: var(--gradient-banner);
-            padding: 60px 20px;
-            display: flex;
-            align-items: center;
+            padding: 80px 20px;
+            position: relative;
         }
 
-        .header-container {
-            max-width: 1000px;
-            width: 100%;
+        .profile-container {
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 50px;
+        }
+
+        .profile-avatar-wrapper {
+            position: relative;
+            padding: 5px;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
         }
 
         .profile-avatar {
-            width: 160px;
-            height: 160px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
-            border: 4px solid #ffffff;
             overflow: hidden;
-            background-color: #e2e8f0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            flex-shrink: 0;
+            background: #1e293b;
         }
 
         .profile-avatar img {
@@ -67,577 +65,385 @@
             object-fit: cover;
         }
 
-        .header-titles {
+        .profile-info h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #0b0f19;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .profile-info p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0b0f19;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* ================= STORIES (HIGHLIGHTS) ================= */
+        .highlights-section {
+            background: #111827;
+            padding: 30px 20px;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        .highlights-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 35px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .highlights-container::-webkit-scrollbar { display: none; }
+
+        .story-circle-wrapper {
+            text-decoration: none;
+            color: var(--text-light);
             display: flex;
             flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
         }
 
-        .main-title {
-            font-size: 5rem;
-            font-weight: 800;
-            line-height: 1;
-            margin: 0;
-            letter-spacing: -2px;
+        .story-circle-wrapper:hover {
+            transform: scale(1.05);
         }
 
-        .sub-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 10px 0 0 0;
-            letter-spacing: -0.5px;
-        }
-
-        /* ================= STRISCIA NAVBAR STICKY ================= */
-        .pill-nav {
-            background-color: rgba(248, 250, 252, 0.8);
-            backdrop-filter: blur(8px);
-            padding: 15px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .nav-container {
-            max-width: 1000px;
-            margin: 0 auto;
+        .story-ring {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background: var(--gradient-banner);
+            padding: 3px;
             display: flex;
-            gap: 15px;
+            align-items: center;
+            justify-content: center;
         }
 
-        .pill-btn {
-            display: inline-block;
-            padding: 12px 28px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-decoration: none;
-            color: #000000;
-            border-radius: 30px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .pill-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .pill-work { background-color: var(--color-pill-work); }
-        .pill-projects { background-color: var(--color-pill-projects); }
-        .pill-travel { background-color: var(--color-pill-travel); }
-        .pill-passions { background-color: var(--color-pill-passions); }
-
-
-        /* ================= CORPO PAGINA (NOTION STYLE) ================= */
-        .main-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px 100px 20px;
-        }
-
-        .notion-section {
-            padding-top: 40px;
-            margin-bottom: 60px;
-        }
-
-        .section-title {
+        .story-content {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #111827;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.8rem;
-            font-weight: 700;
+        }
+
+        .story-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* ================= FULL-WIDTH ALTERNATE FEED ================= */
+        .feed-container {
+            width: 100%;
+        }
+
+        .feed-section-title {
+            max-width: 1400px;
+            margin: 60px auto 20px auto;
+            padding: 0 40px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            border-left: 5px solid #bca5ff;
+        }
+
+        .social-post {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            min-height: 80vh;
+            position: relative;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        /* Inversione automatica destra/sinistra delle righe */
+        .social-post:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .post-media-side {
+            width: 50%;
+            height: 80vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Effetto Parallasse Leggero sull'immagine */
+        .post-media-side img, .post-media-side video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease-out;
+        }
+
+        .social-post:hover .post-media-side img {
+            transform: scale(1.03);
+        }
+
+        .post-text-side {
+            width: 50%;
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .post-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient-banner);
+            padding: 2px;
+        }
+        .post-avatar-inner {
+            width: 100%; height: 100%; background: #000; border-radius: 50%;
+        }
+
+        .post-author { font-weight: 700; font-size: 1.1rem; }
+        .post-date { color: var(--text-muted); font-size: 0.9rem; }
+
+        .post-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
             margin-bottom: 20px;
             letter-spacing: -0.5px;
         }
 
-        .notion-intro-text {
-            color: var(--text-muted);
-            font-size: 1rem;
+        .post-caption {
+            font-size: 1.15rem;
+            color: #cbd5e1;
+            line-height: 1.7;
             margin-bottom: 25px;
         }
 
-        /* Toggle Card */
-        .notion-toggle-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            padding: 24px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-        }
-
-        .toggle-header {
+        .post-tags {
             display: flex;
-            align-items: center;
-            cursor: pointer;
-            gap: 14px;
-            list-style: none;
-        }
-        .toggle-header::-webkit-details-marker { display: none; }
-        
-        .arrow { font-size: 0.8rem; color: #94a3b8; transition: transform 0.2s ease; }
-        .notion-toggle-card[open] .arrow { transform: rotate(90deg); }
-
-        .company-logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 8px;
-            overflow: hidden;
-            flex-shrink: 0;
-            border: 1px solid #e2e8f0;
-        }
-        .company-logo img { width: 100%; height: 100%; object-fit: cover; }
-
-        .company-meta { display: flex; flex-direction: column; }
-        .role-title { font-size: 1.2rem; font-weight: 700; margin: 0; }
-        .company-name { font-size: 0.95rem; color: var(--text-muted); margin-top: 2px; }
-        .date-badge { font-size: 0.8rem; background: #f1f5f9; padding: 2px 8px; border-radius: 4px; margin-left: 8px; color: var(--text-dark); }
-
-        .toggle-content {
-            padding-left: 28px;
-            margin-top: 20px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
-        /* Foto Asset */
-        .project-media {
-            margin: 20px 0;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #e2e8f0;
-        }
-        .project-media img { width: 100%; display: block; height: auto; }
-        .media-caption { display: block; font-size: 0.85rem; color: var(--text-muted); padding: 10px 14px; background: #f8fafc; border-top: 1px solid #e2e8f0; }
-
-        /* Blocchi di Evidenziazione (Callout) */
-        .notion-callout {
-            border-radius: 8px;
-            padding: 18px;
-            display: flex;
-            gap: 14px;
-            margin: 18px 0;
-        }
-        .callout-icon { font-size: 1.4rem; line-height: 1; }
-        .callout-text h4 { margin: 0 0 6px 0; font-size: 1.05rem; }
-        .callout-text p { margin: 4px 0; font-size: 0.98rem; color: #334155; }
-        .callout-text ul { margin: 8px 0 0 20px; padding: 0; font-size: 0.98rem; color: #334155; }
-        .callout-text li { margin-bottom: 4px; }
-
-        .bg-blue { background: #eff6ff; border: 1px solid #bfdbfe; }
-        .bg-purple { background: #faf5ff; border: 1px solid #e9d5ff; }
-        .bg-yellow { background: #fefce8; border: 1px solid #fef08a; }
-        .bg-gray { background: #f8fafc; border: 1px solid #e2e8f0; }
-
-        .w-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
-        .tag { background: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 500; }
-
-        /* Griglia Prodotti Digitali */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 20px;
-        }
-        .product-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .prod-media { height: 160px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.9rem; border-bottom: 1px solid #e2e8f0; }
-        .prod-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        .prod-content h3 { font-size: 1.3rem; margin-bottom: 2px; }
-        .prod-tagline { font-size: 0.85rem; color: #d97706; font-weight: 600; margin-bottom: 12px; }
-        .prod-content p { font-size: 0.95rem; color: #334155; margin-bottom: 16px; flex-grow: 1; }
-
-        /* ================= CSS TRAVELS & PASSIONS ================= */
-        .scratch-map-container {
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .map-placeholder {
-            height: 400px;
-            background: #f1f5f9;
-            border: 2px dashed #cbd5e1;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #64748b;
-        }
-
-        .map-icon { font-size: 3rem; margin-bottom: 10px; }
-
-        .passion-block {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 30px;
-        }
-
-        .passion-sub-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: var(--text-dark);
-        }
-
-        .passion-text {
+        .hashtag {
+            color: #8cb5ff;
+            font-weight: 600;
+            text-decoration: none;
             font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
         }
 
-        .media-gallery {
-            display: grid;
-            gap: 12px;
-            margin-bottom: 15px;
+        /* Animazioni di Fade-In allo Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
 
-        .triple-gallery { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-        .double-gallery { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-
-        .media-box {
-            height: 180px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #94a3b8;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: background 0.2s ease;
-        }
-        
-        .media-box:hover { background: #f1f5f9; }
-
-        .art-group h4, .audio-tracks-container h4 {
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-            font-weight: 700;
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .audio-tracks-container {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .notion-audio-player {
-            background: #f1f5f9;
-            border-radius: 6px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .notion-audio-player:hover { background: #e2e8f0; }
-        .audio-icon { font-size: 1.2rem; color: var(--text-dark); }
-        
-        .audio-info {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        .track-duration { color: var(--text-muted); font-size: 0.85rem; }
-
-        @media (max-width: 640px) {
-            .header-container { flex-direction: column; text-align: center; gap: 20px; }
-            .main-title { font-size: 3.5rem; }
-            .sub-title { font-size: 1.4rem; }
-            .nav-container { justify-content: center; flex-wrap: wrap; }
-            .pill-btn { padding: 8px 18px; font-size: 0.95rem; }
-            .double-gallery { grid-template-columns: 1fr; }
-            .map-placeholder { height: 250px; }
+        /* Responsive Layout */
+        @media (max-width: 968px) {
+            .profile-container { flex-direction: column; text-align: center; gap: 20px; }
+            .social-post, .social-post:nth-child(even) { flex-direction: column; min-height: auto; }
+            .post-media-side { width: 100%; height: 50vh; }
+            .post-text-side { width: 100%; padding: 40px 20px; }
+            .post-title { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <header class="cover-banner">
-        <div class="header-container">
-            <div class="profile-avatar">
-                <img src="https://via.placeholder.com/160" alt="stef. profile">
+    <header class="profile-header">
+        <div class="profile-container">
+            <div class="profile-avatar-wrapper">
+                <div class="profile-avatar">
+                    <img src="METTI_URL_TUA_FOTO_PROFILO_SE_VUOI" alt="stef.">
+                </div>
             </div>
-            <div class="header-titles">
-                <h1 class="main-title">stef.</h1>
-                <p class="sub-title">my personal portfolio</p>
+            <div class="profile-info">
+                <h1>stef.</h1>
+                <p>Operations, Automation & Digital Products</p>
             </div>
         </div>
     </header>
 
-    <nav class="pill-nav">
-        <div class="nav-container">
-            <a href="#work" class="pill-btn pill-work">Work</a>
-            <a href="#projects" class="pill-btn pill-projects">Projects</a>
-            <a href="#travel" class="pill-btn pill-travel">Travel</a>
-            <a href="#passions" class="pill-btn pill-passions">Passions</a>
+    <nav class="highlights-section">
+        <div class="highlights-container">
+            <a href="#work-feed" class="story-circle-wrapper">
+                <div class="story-ring"><div class="story-content">💼</div></div>
+                <span class="story-label">Work</span>
+            </a>
+            <a href="#projects-feed" class="story-circle-wrapper">
+                <div class="story-ring"><div class="story-content">🚀</div></div>
+                <span class="story-label">Projects</span>
+            </a>
+            <a href="#travel-feed" class="story-circle-wrapper">
+                <div class="story-ring"><div class="story-content">🗺️</div></div>
+                <span class="story-label">Travel</span>
+            </a>
+            <a href="#passions-feed" class="story-circle-wrapper">
+                <div class="story-ring"><div class="story-content">⚡</div></div>
+                <span class="story-label">Passions</span>
+            </a>
         </div>
     </nav>
 
-    <main class="main-content">
+    <main class="feed-container">
+        
+        <div id="work-feed">
+            <h2 class="feed-section-title">Work Experience</h2>
 
-        <section id="work" class="notion-section">
-            <h2 class="section-title">Work Experience</h2>
-
-            <details class="notion-toggle-card" open>
-                <summary class="toggle-header">
-                    <span class="arrow">▶</span>
-                    <div class="company-logo" style="background: #002f6c;"></div>
-                    <div class="company-meta">
-                        <h3 class="role-title">Central Distribution Planner & Strategic Planner</h3>
-                        <p class="company-name">Barilla Group <span class="date-badge">Nazionale / Internazionale</span></p>
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barilla-neve.JPG" alt="Barilla Innevata">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">Barilla Group</p>
+                            <p class="post-date">Central & Strategic Planner</p>
+                        </div>
                     </div>
-                </summary>
-                <div class="toggle-content">
-                    <div class="project-media">
-                        <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barilla-neve.JPG" alt="Barilla Innevata">
-                        <span class="media-caption">Nel ruolo di Central Distribution Planner gestivo tutte le spedizioni in outbound dal magazzino centrale (100+ FTL/day), facendo da pivot tra produzione, logistica e vendite.</span>
-                    </div>
-
-                    <p class="project-brief">
-                        Il mio compito era coordinare la produzione per evitare shortage, organizzare il lavoro in magazzino, assicurare la disponibilità dei mezzi e gestire le criticità direttamente con i team di sales e customer. Durante la pandemia gli shortage sono stati fortissimi e il carico di lavoro era diventato folle (minimo 15 ore al giorno). Ho capito che il processo doveva fare un salto in avanti.
+                    <h3 class="post-title">Ottimizzazione Flussi Outbound & Automazione dei Processi</h3>
+                    <p class="post-caption">
+                        Gestivo tutte le spedizioni in outbound dal magazzino centrale con oltre 100 camion al giorno, facendo da pivot tra produzione, logistica e vendite. Durante la pandemia, con shortage fortissimi e ritmi da 15 ore al giorno, ho azzerato le inefficienze sviluppando un sistema automatizzato integrato con SAP. Incrociando ordini e produzione in tempo reale, ho ridotto l'effort operativo a sole 4 ore al giorno, ottenendo la promozione al team strategico di Network Design per investimenti internazionali.
                     </p>
-
-                    <div class="notion-callout bg-blue">
-                        <span class="callout-icon">💡</span>
-                        <div class="callout-text">
-                            <h4>L'automazione del processo di prenotazione</h4>
-                            <p>Ho costruito un foglio di calcolo che scaricava tutti i dati necessari direttamente da SAP, integrando produzione, disponibilità e ordini. Puscando queste informazioni al mattino a tutte le funzioni, ognuno sapeva in anticipo i rischi di rottura stock (produzione), le previsioni sulla disponibilità merci (sales) e i volumi dei pallet richiesti (logistica). <strong>In questo modo ho ridotto l'effort del mio ruolo da 10-15 ore al giorno a circa 4-5.</strong></p>
-                        </div>
-                    </div>
-
-                    <div class="notion-callout bg-purple">
-                        <span class="callout-icon">📈</span>
-                        <div class="callout-text">
-                            <h4>La promozione allo Strategic Planning & Network Design</h4>
-                            <p>Grazie a questo risultato sono stato inserito nel team strategico, lavorando su progetti ad alto livello come:</p>
-                            <ul>
-                                <li>Pianificazione degli investimenti per nuovi asset (es. dove costruire il nuovo mulino per l'Est Europa).</li>
-                                <li>Ottimizzazione del last mile delivery per i prodotti fresh in Francia.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="w-tags">
-                        <span class="tag">SAP</span>
-                        <span class="tag">Process Automation</span>
-                        <span class="tag">Strategic Planning</span>
-                        <span class="tag">Network Design</span>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#SAPAutomation</a>
+                        <a href="#" class="hashtag">#SupplyChain</a>
+                        <a href="#" class="hashtag">#StrategicPlanning</a>
                     </div>
                 </div>
-            </details>
+            </article>
 
-            <details class="notion-toggle-card">
-                <summary class="toggle-header">
-                    <span class="arrow">▶</span>
-                    <div class="company-logo" style="background: #5d3ebd;"></div>
-                    <div class="company-meta">
-                        <h3 class="role-title">Operations & Supply Chain Specialist</h3>
-                        <p class="company-name">Getir</p>
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Getir.jpg" alt="Getir Operations">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">Getir</p>
+                            <p class="post-date">Operations & Supply Chain</p>
+                        </div>
                     </div>
-                </summary>
-                <div class="toggle-content">
-                    <div class="project-media">
-                        <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Getir.jpg" alt="Getir Operations">
-                        <span class="media-caption">Pianificazione e ottimizzazione dei flussi di delivery urbani e scheduling del personale degli store.</span>
-                    </div>
-
-                    <p class="project-brief">
-                        Il problema principale qui era l'impatto sul costo del personale: lo scheduling dei turni veniva fatto manualmente da ogni singolo store manager. Per azzerare questo workload e avere una pianificazione efficace ma non centralizzata in modo rigido, ho preso in mano la situazione.
+                    <h3 class="post-title">Taglio del 50% dei Costi Last Mile con la Predizione Algoritmica</h3>
+                    <p class="post-caption">
+                        Per risolvere il problema dell'alto costo del personale dovuto allo scheduling manuale dei singoli store manager, ho sviluppato interamente su Google Scripts una web app predittiva. Elaborando lo storico ordini, la stagionalità e le promozioni attive, l'app generava i turni perfetti ottimizzando rider e picker sul territorio nazionale. Abbiamo guidato il cambio di processo con formazione dedicata, abbattendo i costi di consegna del 50%.
                     </p>
-
-                    <div class="notion-callout bg-yellow">
-                        <span class="callout-icon">🤖</span>
-                        <div class="callout-text">
-                            <h4>Previsione della domanda su Google Scripts</h4>
-                            <p>Ho sviluppato interamente su Google Scripts una web app di planning che prevedeva la domanda della settimana successiva (incrociando storico, stagionalità e promozioni attive). Il software creava uno schedule preciso per ogni store basandosi su organico e contratti, ottimizzando la utilization di rider e picker senza intaccare il livello di servizio. Ho gestito l'intero cambio di processo in Italia con webinar, formazione e assistenza diretta. <strong>Risultato: costo del Last Mile Delivery ridotto del 50%.</strong></p>
-                        </div>
-                    </div>
-                    <div class="w-tags">
-                        <span class="tag">Google Apps Script</span>
-                        <span class="tag">Predictive Planning</span>
-                        <span class="tag">Last Mile Optimization</span>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#GoogleAppsScript</a>
+                        <a href="#" class="hashtag">#PredictivePlanning</a>
+                        <a href="#" class="hashtag">#LastMile</a>
                     </div>
                 </div>
-            </details>
+            </article>
 
-            <details class="notion-toggle-card">
-                <summary class="toggle-header">
-                    <span class="arrow">▶</span>
-                    <div class="company-logo" style="background: #ffe600;"></div>
-                    <div class="company-meta">
-                        <h3 class="role-title">Project Manager - Supply Chain</h3>
-                        <p class="company-name">EY (Ernst & Young)</p>
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" alt="EY Project Management">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">EY (Ernst & Young)</p>
+                            <p class="post-date">Project Manager</p>
+                        </div>
                     </div>
-                </summary>
-                <div class="toggle-content">
-                    <p class="project-brief">
-                        Per una multinazionale da 1.5B€ di fatturato, ho gestito come PM l'intera transizione tecnologica dei vecchi sistemi WMS e TMS basati su AS400 verso le nuove piattaforme di gestione. Ho coordinato operativamente il fornitore della tecnologia, i dipartimenti di eccellenza del cliente e le funzioni locali dislocate in 7 diverse nazioni.
+                    <h3 class="post-title">Migrazione Sistemi Cloud WMS/TMS in 7 Nazioni</h3>
+                    <p class="post-caption">
+                        Nel ruolo di Project Manager per una multinazionale da 1.5 miliardi di euro di fatturato, ho guidato la transizione tecnologica dei vecchi sistemi legacy AS400 verso nuove e moderne piattaforme WMS e TMS. Ho orchestrato i flussi di lavoro gestendo i rapporti tra il fornitore tecnologico, i team di eccellenza del cliente e i dipartimenti logistici distribuiti in 7 nazioni.
                     </p>
-                    <div class="w-tags">
-                        <span class="tag">Project Management</span>
-                        <span class="tag">Systems Migration</span>
-                        <span class="tag">WMS & TMS</span>
-                        <span class="tag">AS400</span>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#ProjectManagement</a>
+                        <a href="#" class="hashtag">#SystemMigration</a>
+                        <a href="#" class="hashtag">#WMS</a>
+                        <a href="#" class="hashtag">#TMS</a>
                     </div>
                 </div>
-            </details>
-        </section>
+            </article>
+        </div>
 
+        <div id="projects-feed">
+            <h2 class="feed-section-title">Digital Products</h2>
 
-        <section id="projects" class="notion-section">
-            <h2 class="section-title">🚀 Digital Products & Projects</h2>
-            <div class="products-grid">
-
-                <div class="product-card">
-                    <div class="prod-media">[ Immagine E-commerce / Prodotti ]</div>
-                    <div class="prod-content">
-                        <h3>Persebes</h3>
-                        <p class="prod-tagline">Brand di Design & Go-To-Market</p>
-                        <p>Costruzione da zero di un brand di design partendo dalle opere di un'artista contemporanea. Mi sono occupato di tutto il ciclo dalla A alla Z: ingegnerizzazione dei prodotti, predisposizione della catena produttiva e distributiva, marketing strategy, aspetti legali e website. In soli 6 mesi siamo passati da un foglio bianco a un e-commerce perfettamente funzionante.</p>
-                        <div class="w-tags">
-                            <span class="tag">E-commerce</span>
-                            <span class="tag">Product Engineering</span>
-                        </div>
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1200" alt="Persebes Design">
+                </div>
+                <div class="post-text-side reveal">
+                    <h3 class="post-title">Persebes: Da un Foglio Bianco a un E-commerce di Design in 6 Mesi</h3>
+                    <p class="post-caption">
+                        Incaricato da un'artista contemporanea, ho costruito interamente da zero un brand di design e gestito tutto il lancio sul mercato. Mi sono occupato di ogni singolo pilastro aziendale: ingegnerizzazione dei prodotti fisici, supply chain produttiva, logistica di distribuzione, marketing strategy, impianto legale e sviluppo completo del sito e-commerce funzionante.
+                    </p>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#BrandBuilding</a>
+                        <a href="#" class="hashtag">#Ecommerce</a>
+                        <a href="#" class="hashtag">#Operations</a>
                     </div>
                 </div>
+            </article>
 
-                <div class="product-card">
-                    <div class="prod-media">[ Screenshot Form / Menu QR ]</div>
-                    <div class="prod-content">
-                        <h3>SmartMenu</h3>
-                        <p class="prod-tagline">SaaS per la Ristorazione Locale</p>
-                        <p>Nato per mettermi alla prova su un prodotto digitale mio, risolve un problema stupidamente comune: le pizzerie in Italia spesso non hanno un sito o un menu online. Ho sviluppato un sistema che, al costo di pochissimi centesimi, mette online il menu di un locale. Basta compilare un form con 4 campi e fare una foto al menu cartaceo per generare un sito web pubblico.</p>
-                        <div class="w-tags">
-                            <span class="tag">SaaS</span>
-                            <span class="tag">Product Design</span>
-                        </div>
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200" alt="SmartMenu Local SaaS">
+                </div>
+                <div class="post-text-side reveal">
+                    <h3 class="post-title">SmartMenu: Il SaaS Agile da Pochi Centesimi per la Ristorazione</h3>
+                    <p class="post-caption">
+                        Sviluppato per perfezionare le mie competenze di gestione del prodotto digitale, risolve la totale assenza web delle piccole pizzerie italiane. Ho ingegnerizzato un'applicazione in grado di generare un sito web pubblico e indicizzato semplicemente scattando una foto al menu cartaceo del locale e compilando un modulo veloce a 4 campi, riducendo i costi di infrastruttura al minimo.
+                    </p>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#SaaS</a>
+                        <a href="#" class="hashtag">#ProductDesign</a>
+                        <a href="#" class="hashtag">#MVP</a>
                     </div>
                 </div>
+            </article>
+        </div>
 
-                <div class="product-card">
-                    <div class="prod-media">[ Mockup Piattaforma Gamificata ]</div>
-                    <div class="prod-content">
-                        <h3>Universe of Humanity</h3>
-                        <p class="prod-tagline">Gamification & Cooperazione Umana</p>
-                        <p>La sfida parte da una riflessione: qual è il modo per far andare d'accordo tutti gli esseri umani? Un'invasione aliena. Ma perché non provarci anche senza alieni? Ho creato un MVP pilota: una piattaforma web dove la comprensione degli altri è gamificata. Gli utenti si connettono e affrontano mini-giochi psicologici e test celebri della sociologia per mappare la propria personalità e scoprire come integrarsi costruttivamente con quella degli altri.</p>
-                        <div class="w-tags">
-                            <span class="tag">MVP</span>
-                            <span class="tag">Gamification</span>
-                        </div>
-                    </div>
-                </div>
+        </main>
 
-                <div class="product-card">
-                    <div class="prod-media">[ Render 3D Digital Twin ]</div>
-                    <div class="prod-content">
-                        <h3>3D Models</h3>
-                        <p class="prod-tagline">Gaussian Splatting & Image Processing</p>
-                        <p>Un'esplorazione nel potenziale sottosfruttato dei digital twin in 3D. Utilizzando tecnologie di Gaussian Splatting e modelli di comprensione delle immagini, ho noleggiato macchine virtuali in cloud per superare i limiti hardware fisici e ho strutturato una pipeline di elaborazione video complessa, riuscendo a trasformare un semplice video della mia cucina in una sua fedele riproduzione 3D.</p>
-                        <div class="w-tags">
-                            <span class="tag">Gaussian Splatting</span>
-                            <span class="tag">Cloud Compute</span>
-                        </div>
-                    </div>
-                </div>
+    <script>
+        window.addEventListener('scroll', reveal);
 
-            </div>
-        </section>
-
-
-        <section id="travel" class="notion-section">
-            <h2 class="section-title">🗺️ Travels</h2>
-            <p class="notion-intro-text">La mia mappa dei luoghi esplorati nel mondo. Una scratch map interattiva per tenere traccia dei viaggi e delle prossime mete.</p>
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
             
-            <div class="scratch-map-container">
-                <div class="map-placeholder">
-                    <span class="map-icon">🌍</span>
-                    <p><strong>[ Scratch Map Live Window ]</strong></p>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Caricamento della mappa dei luoghi visitati...</p>
-                </div>
-            </div>
-        </section>
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var revealTop = reveals[i].getBoundingClientRect().top;
+                var revealPoint = 150; // Pixel prima che l'animazione si attivi
 
-
-        <section id="passions" class="notion-section">
-            <h2 class="section-title">⚡ Passions</h2>
-            <p class="notion-intro-text">Adrenalina, arti visive e sound design. Tutto ciò che mi mette in movimento fuori dal codice e dalla supply chain.</p>
-
-            <div class="passion-block">
-                <h3 class="passion-sub-title">🏁 Velocità</h3>
-                <p class="passion-text">Kart e moto. La ricerca del limite, la traiettoria perfetta e l'adrenalina pura della pista.</p>
-                
-                <div class="media-gallery triple-gallery">
-                    <div class="media-box">[ Foto Moto ]</div>
-                    <div class="media-box">[ Foto Kart ]</div>
-                    <div class="media-box">[ Video Breve Pista 🎥 ]</div>
-                </div>
-            </div>
-
-            <div class="passion-block">
-                <h3 class="passion-sub-title">🎨 Arte: Magic Canvas & Mirrors</h3>
-                <p class="passion-text">Esplorazioni visive e installazioni. Progetti che uniscono percezione, riflessi e interazione nello spazio.</p>
-                
-                <div class="art-group">
-                    <h4>Magic Canvas</h4>
-                    <div class="media-gallery double-gallery">
-                        <div class="media-box">[ Video Magic Canvas 1 🎥 ]</div>
-                        <div class="media-box">[ Video Magic Canvas 2 🎥 ]</div>
-                    </div>
-                </div>
-                <div class="art-group" style="margin-top: 20px;">
-                    <h4>Mirrors</h4>
-                    <div class="media-gallery double-gallery">
-                        <div class="media-box">[ Foto Mirrors 1 ]</div>
-                        <div class="media-box">[ Foto Mirrors 2 ]</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="passion-block">
-                <h3 class="passion-sub-title">🎵 Music & Sound Design</h3>
-                <p class="passion-text">Produzione musicale e creazione di panorami sonori. Ritmo e frequenze per dare forma alle idee.</p>
-                
-                <div class="media-gallery double-gallery">
-                    <div class="media-box">[ Video Studio Session 🎥 ]</div>
-                    <div class="media-box">[ Foto Setup / Live ]</div>
-                </div>
-                
-                <div class="audio-tracks-container">
-                    <h4>Sintonizzati sulle tracce:</h4>
-                    
-                    <div class="notion-audio-player">
-                        <span class="audio-icon">▶️</span>
-                        <div class="audio-info">
-                            <span class="track-name">Traccia Audio 01 - Progetto Originale</span>
-                            <span class="track-duration">0:00 / 3:15</span>
-                        </div>
-                    </div>
-
-                    <div class="notion-audio-player">
-                        <span class="audio-icon">▶️</span>
-                        <div class="audio-info">
-                            <span class="track-name">Traccia Audio 02 - Sound Design Experiment</span>
-                            <span class="track-duration">0:00 / 2:40</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-    </main>
-
+                if (revealTop < windowHeight - revealPoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        
+        // Esegui una volta all'avvio per attivare i blocchi già visibili
+        document.addEventListener("DOMContentLoaded", reveal);
+    </script>
 </body>
 </html>
