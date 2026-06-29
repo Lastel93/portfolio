@@ -775,11 +775,11 @@
          - caption      text    -> breve ricordo/descrizione
          - photo_url    text    -> URL pubblico da Supabase Storage
 
-         GLI ITINERARI (linee tratteggiate ad arco) sono gestiti separatamente
+         GLI ITINERARI (linee tratteggiate) sono gestiti separatamente
          nell'array "travelRoutes" più sotto — non c'entrano con i pin.
-         Ogni rotta è { name, stops: [[lat,lng], [lat,lng], ...] }.
-         Con 2 stops fai un collegamento diretto A→B, con 3+ stops un
-         road trip multi-tappa (un arco per ogni segmento consecutivo).
+         Ogni rotta è una lista di "segments": tratti "coastal" (seguono
+         la costa con waypoint densi) e tratti "inland" (via terra, arco
+         leggero tra due punti).
     ===================================================== -->
     <script>
 
@@ -841,60 +841,109 @@
             }
         ];
 
-        /* ---- 2.1bis ITINERARI (rotte tratteggiate ad arco tra le tappe) ----
-           Struttura: ogni rotta è un oggetto con un array "stops" di [lat, lng]
-           in ordine di percorso. Funziona sia per A→B (2 stops) sia per
-           road trip multi-tappa (3+ stops, disegna un arco per ogni segmento).
+        /* ---- 2.1bis ITINERARI (linee tratteggiate che seguono la costa) ----
 
-           Per aggiungere un itinerario: copia un oggetto, cambia "name" e
-           l'elenco di "stops" (in ordine di percorso). Ogni coppia di stops
-           consecutivi diventa un arco separato.
+           NUOVA STRUTTURA: ogni rotta è una lista di SEGMENTI.
+           Ogni segmento ha:
+             - type: "coastal"  -> lista densa di [lat,lng] che seguono il
+                                    profilo della costa reale (niente curve,
+                                    sono punto-punto dritti ma tanti, quindi
+                                    il risultato segue fedelmente la riva)
+             - type: "inland"   -> collegamento via terra tra due punti,
+                                    disegnato con un leggero arco (usato per
+                                    es. trasferimenti che non seguono il mare)
+
+           Per aggiungere/modificare: ogni "coastal" è solo un elenco di
+           coordinate in ordine geografico lungo la costa — più punti metti,
+           più la linea segue fedelmente le insenature reali.
         */
         const travelRoutes = [
             {
                 name: "West Coast USA — Esplorazione Parchi Nazionali",
-                stops: [
-                    [47.6062, -122.3321],   // Seattle
-                    [46.8523, -121.7603],   // Mount Rainier NP
-                    [44.4280, -110.5885],   // Yellowstone NP (deviazione est)
-                    [37.8651, -119.5383],   // Yosemite NP
-                    [37.7749, -122.4194],   // San Francisco
-                    [36.1069, -112.1129],   // Grand Canyon NP
-                    [36.1699, -115.1398]    // Las Vegas
+                segments: [
+                    { type: "coastal", points: [
+                        [47.6062, -122.3321],   // Seattle
+                        [47.0379, -123.0810],   // Olympic Peninsula
+                        [46.9787, -124.1090],   // Westport WA
+                        [46.2113, -123.8200],   // foce Columbia River
+                        [46.1879, -123.9357],   // Astoria OR
+                        [45.5152, -123.9650],   // Tillamook OR
+                        [44.6365, -124.0535],   // Newport OR
+                        [43.3665, -124.2179],   // Coos Bay OR
+                        [42.4180, -124.4262],   // Brookings OR
+                        [41.7558, -124.2026],   // Crescent City CA
+                        [40.8021, -124.1637],   // Eureka CA
+                        [39.3074, -123.7997],   // Fort Bragg CA
+                        [38.3585, -123.0734],   // Bodega Bay CA
+                        [37.7749, -122.4194]    // San Francisco
+                    ]},
+                    { type: "inland", from: [37.7749, -122.4194], to: [37.8651, -119.5383] },  // SF -> Yosemite
+                    { type: "inland", from: [37.8651, -119.5383], to: [36.1069, -112.1129] },  // Yosemite -> Grand Canyon
+                    { type: "inland", from: [36.1069, -112.1129], to: [36.1699, -115.1398] }   // Grand Canyon -> Las Vegas
                 ]
             },
             {
                 name: "Mediterraneo — Milano-Tarifa",
-                stops: [
-                    [45.4642, 9.1900],      // Milano
-                    [43.7102, 7.2620],      // Nizza / Costa Azzurra
-                    [41.3851, 2.1734],      // Barcellona
-                    [38.5024, 0.1225],      // Alicante / Costa Blanca
-                    [36.7213, -4.4214],     // Malaga / Costa del Sol
-                    [36.0128, -5.6072]      // Tarifa
+                segments: [
+                    { type: "inland", from: [45.4642, 9.1900], to: [43.7102, 7.2620] },  // Milano -> Nizza
+                    { type: "coastal", points: [
+                        [43.7102, 7.2620],      // Nizza
+                        [43.5528, 7.0174],      // Cannes
+                        [43.2347, 6.6407],      // Saint-Tropez
+                        [43.2965, 5.3698],      // Marsiglia
+                        [42.6953, 2.8950],      // Perpignan
+                        [42.1414, 3.1051],      // Costa Brava
+                        [41.5912, 2.4502],      // Barcellona nord
+                        [41.3851, 2.1734],      // Barcellona
+                        [40.4168, 0.2230],      // Costa Daurada
+                        [39.4699, -0.3763],     // Valencia
+                        [38.5024, 0.1225],      // Alicante
+                        [37.7758, -0.7866],     // Cartagena
+                        [36.8381, -2.4597],     // Almeria
+                        [36.7213, -4.4214],     // Malaga
+                        [36.1408, -5.3536],     // Gibilterra
+                        [36.0128, -5.6072]      // Tarifa
+                    ]}
                 ]
             },
             {
                 name: "Road Trip Italia — Costa Est e Ovest",
-                stops: [
-                    [45.4642, 9.1900],      // Milano (partenza)
-                    [43.6158, 13.5189],     // Ancona / costa adriatica
-                    [41.8821, 16.1729],     // Vieste
-                    [42.4534, 14.2150],     // Gran Sasso
-                    [40.8518, 14.2681],     // Napoli / Campania
-                    [41.9028, 12.4964],     // Roma / Lazio
-                    [43.7696, 11.2558],     // Firenze / Toscana
-                    [45.4642, 9.1900]       // Milano (ritorno)
+                segments: [
+                    { type: "inland", from: [45.4642, 9.1900], to: [44.4949, 11.3426] },  // Milano -> verso Adriatico
+                    { type: "coastal", points: [
+                        [44.4949, 11.3426],     // Bologna entroterra->costa
+                        [44.0678, 12.5695],     // Rimini
+                        [43.6158, 13.5189],     // Ancona
+                        [42.9028, 13.9008],     // San Benedetto del Tronto
+                        [42.4602, 14.2056],     // Pescara
+                        [41.9982, 15.1995],     // Termoli
+                        [41.8821, 16.1729]      // Vieste
+                    ]},
+                    { type: "inland", from: [41.8821, 16.1729], to: [40.8518, 14.2681] },  // Vieste -> Napoli (trasferimento via terra)
+                    { type: "coastal", points: [
+                        [40.8518, 14.2681],     // Napoli
+                        [41.2392, 13.4339],     // Gaeta
+                        [41.4456, 12.9081],     // Anzio
+                        [41.7314, 12.2486],     // Civitavecchia
+                        [42.4853, 11.1100],     // Costa Argentario
+                        [43.0072, 10.6917],     // Follonica
+                        [43.5485, 10.3106],     // Livorno
+                        [43.7696, 11.2558]      // Firenze / Toscana
+                    ]},
+                    { type: "inland", from: [43.7696, 11.2558], to: [45.4642, 9.1900] }    // Toscana -> Milano
                 ]
             },
             {
                 name: "Thailandia — Nord e Isole",
-                stops: [
-                    [13.7563, 100.5018],    // Bangkok
-                    [18.7883, 98.9853],     // Chiang Mai
-                    [19.9105, 99.8406],     // Chiang Rai
-                    [9.5018, 100.0133],     // Koh Samui
-                    [9.7320, 100.0136]      // Koh Phangan
+                segments: [
+                    { type: "inland", from: [13.7563, 100.5018], to: [18.7883, 98.9853] },  // Bangkok -> Chiang Mai
+                    { type: "inland", from: [18.7883, 98.9853], to: [19.9105, 99.8406] },    // Chiang Mai -> Chiang Rai
+                    { type: "inland", from: [19.9105, 99.8406], to: [9.5018, 100.0133] },    // Chiang Rai -> Koh Samui (lungo trasferimento sud)
+                    { type: "coastal", points: [
+                        [9.5018, 100.0133],     // Koh Samui
+                        [9.6100, 99.9700],      // passaggio stretto tra le isole
+                        [9.7320, 100.0136]      // Koh Phangan
+                    ]}
                 ]
             }
         ];
@@ -922,13 +971,17 @@
                 maxZoom: 19,
             }).addTo(map);
 
-            // ---- Itinerari: arco curvo tratteggiato tra le tappe ----
+            // ---- Itinerari: segmenti costieri (seguono la riva) + tratti interni (arco leggero) ----
             // Disegnato PRIMA dei pin così le linee restano "sotto" visivamente
             if (routes && routes.length) {
                 routes.forEach(function (route) {
-                    for (var i = 0; i < route.stops.length - 1; i++) {
-                        drawCurvedRoute(map, route.stops[i], route.stops[i + 1], i);
-                    }
+                    route.segments.forEach(function (seg, segIndex) {
+                        if (seg.type === "coastal") {
+                            drawCoastalRoute(map, seg.points);
+                        } else if (seg.type === "inland") {
+                            drawInlandRoute(map, seg.from, seg.to, segIndex);
+                        }
+                    });
                 });
             }
 
@@ -964,24 +1017,36 @@
             if (placesEl) placesEl.textContent = places.length;
         }
 
-        /* ---- 2.2bis DISEGNO ARCO CURVO TRA DUE PUNTI ----
-           Leaflet non ha archi nativi: calcoliamo dei punti intermedi
-           lungo una curva quadratica (il punto di controllo è spostato
-           perpendicolarmente a metà strada) e li uniamo con una Polyline.
-
-           Stile "mappa del tesoro": curvatura più pronunciata e leggermente
-           irregolare (alterna lato e intensità in modo deterministico in
-           base alle coordinate, così resta identica a ogni reload ma non
-           è un arco sempre uguale e simmetrico per tutti i segmenti).
+        /* ---- 2.2bis DISEGNO SEGMENTI COSTIERI ----
+           Nessuna curva inventata: i punti sono già stati scelti a mano
+           seguendo il profilo della costa, quindi basta collegarli con una
+           polyline dritta punto-punto. Più punti ci sono, più la linea
+           sembra "abbracciare" la riva.
         */
-        function drawCurvedRoute(map, from, to, segmentIndex) {
-            const latlngs = getArcPoints(from, to, segmentIndex);
-
-            L.polyline(latlngs, {
-                color: '#bca5ff',      // viola del gradiente banner, distinto dal rosa dei pin
+        function drawCoastalRoute(map, points) {
+            L.polyline(points, {
+                color: '#bca5ff',
                 weight: 2.5,
                 opacity: 0.8,
                 dashArray: '5, 9',     // tratteggio (in pixel schermo: più zoom = più trattini visibili)
+                lineCap: 'round',
+                smoothFactor: 1,
+            }).addTo(map);
+        }
+
+        /* ---- 2.2ter DISEGNO TRATTI INTERNI (via terra, non costieri) ----
+           Qui invece va bene un leggero arco — non c'è il vincolo del mare,
+           quindi una curva dolce comunica meglio "spostamento" rispetto a
+           una linea dritta geometrica.
+        */
+        function drawInlandRoute(map, from, to, segmentIndex) {
+            const latlngs = getArcPoints(from, to, segmentIndex);
+
+            L.polyline(latlngs, {
+                color: '#bca5ff',
+                weight: 2.5,
+                opacity: 0.8,
+                dashArray: '5, 9',
                 lineCap: 'round',
                 smoothFactor: 1,
             }).addTo(map);
@@ -994,7 +1059,7 @@
         }
 
         function getArcPoints(from, to, segmentIndex) {
-            const numPoints = 80;
+            const numPoints = 50;
             const lat1 = from[0], lng1 = from[1];
             const lat2 = to[0], lng2 = to[1];
 
@@ -1005,11 +1070,9 @@
             const dy = lat2 - lat1;
             const dist = Math.sqrt(dx * dx + dy * dy);
 
-            // Curvatura base più pronunciata (era 0.3, ora tra 0.35 e 0.55)
-            // e lato dell'arco alternato in modo deterministico per segmento,
-            // per evitare che tutte le rotte si "gonfino" sempre dalla stessa parte.
+            // Curvatura contenuta (tratti via terra, non serve un arco vistoso)
             const seed = (lat1 + lng1 + lat2 + lng2 + (segmentIndex || 0) * 7.13);
-            const randomBend = 0.35 + seededRandom(seed) * 0.2;
+            const randomBend = 0.12 + seededRandom(seed) * 0.1;
             const side = seededRandom(seed * 1.7) > 0.5 ? 1 : -1;
 
             const offsetLat = -dx / Math.max(dist, 0.001) * dist * randomBend * side;
@@ -1021,7 +1084,6 @@
             const points = [];
             for (let i = 0; i <= numPoints; i++) {
                 const t = i / numPoints;
-                // Curva di Bézier quadratica
                 const lat = Math.pow(1 - t, 2) * lat1 + 2 * (1 - t) * t * controlLat + Math.pow(t, 2) * lat2;
                 const lng = Math.pow(1 - t, 2) * lng1 + 2 * (1 - t) * t * controlLng + Math.pow(t, 2) * lng2;
                 points.push([lat, lng]);
