@@ -846,14 +846,55 @@
            in ordine di percorso. Funziona sia per A→B (2 stops) sia per
            road trip multi-tappa (3+ stops, disegna un arco per ogni segmento).
 
-           Esempio già pronto, sostituiscilo o aggiungine altri:
+           Per aggiungere un itinerario: copia un oggetto, cambia "name" e
+           l'elenco di "stops" (in ordine di percorso). Ogni coppia di stops
+           consecutivi diventa un arco separato.
         */
         const travelRoutes = [
             {
-                name: "West Coast Road Trip",
+                name: "West Coast USA — Esplorazione Parchi Nazionali",
                 stops: [
-                    [47.6062, -122.3321],  // Seattle
-                    [36.1699, -115.1398]   // Las Vegas
+                    [47.6062, -122.3321],   // Seattle
+                    [46.8523, -121.7603],   // Mount Rainier NP
+                    [44.4280, -110.5885],   // Yellowstone NP (deviazione est)
+                    [37.8651, -119.5383],   // Yosemite NP
+                    [37.7749, -122.4194],   // San Francisco
+                    [36.1069, -112.1129],   // Grand Canyon NP
+                    [36.1699, -115.1398]    // Las Vegas
+                ]
+            },
+            {
+                name: "Mediterraneo — Milano-Tarifa",
+                stops: [
+                    [45.4642, 9.1900],      // Milano
+                    [43.7102, 7.2620],      // Nizza / Costa Azzurra
+                    [41.3851, 2.1734],      // Barcellona
+                    [38.5024, 0.1225],      // Alicante / Costa Blanca
+                    [36.7213, -4.4214],     // Malaga / Costa del Sol
+                    [36.0128, -5.6072]      // Tarifa
+                ]
+            },
+            {
+                name: "Road Trip Italia — Costa Est e Ovest",
+                stops: [
+                    [45.4642, 9.1900],      // Milano (partenza)
+                    [43.6158, 13.5189],     // Ancona / costa adriatica
+                    [41.8821, 16.1729],     // Vieste
+                    [42.4534, 14.2150],     // Gran Sasso
+                    [40.8518, 14.2681],     // Napoli / Campania
+                    [41.9028, 12.4964],     // Roma / Lazio
+                    [43.7696, 11.2558],     // Firenze / Toscana
+                    [45.4642, 9.1900]       // Milano (ritorno)
+                ]
+            },
+            {
+                name: "Thailandia — Nord e Isole",
+                stops: [
+                    [13.7563, 100.5018],    // Bangkok
+                    [18.7883, 98.9853],     // Chiang Mai
+                    [19.9105, 99.8406],     // Chiang Rai
+                    [9.5018, 100.0133],     // Koh Samui
+                    [9.7320, 100.0136]      // Koh Phangan
                 ]
             }
         ];
@@ -886,7 +927,7 @@
             if (routes && routes.length) {
                 routes.forEach(function (route) {
                     for (var i = 0; i < route.stops.length - 1; i++) {
-                        drawCurvedRoute(map, route.stops[i], route.stops[i + 1]);
+                        drawCurvedRoute(map, route.stops[i], route.stops[i + 1], i);
                     }
                 });
             }
@@ -927,35 +968,52 @@
            Leaflet non ha archi nativi: calcoliamo dei punti intermedi
            lungo una curva quadratica (il punto di controllo è spostato
            perpendicolarmente a metà strada) e li uniamo con una Polyline.
+
+           Stile "mappa del tesoro": curvatura più pronunciata e leggermente
+           irregolare (alterna lato e intensità in modo deterministico in
+           base alle coordinate, così resta identica a ogni reload ma non
+           è un arco sempre uguale e simmetrico per tutti i segmenti).
         */
-        function drawCurvedRoute(map, from, to) {
-            const latlngs = getArcPoints(from, to, 60); // 60 = quanto è "alto" l'arco
+        function drawCurvedRoute(map, from, to, segmentIndex) {
+            const latlngs = getArcPoints(from, to, segmentIndex);
 
             L.polyline(latlngs, {
-                color: '#8cb5ff',      // blu del gradiente banner, distinto dal rosa dei pin
+                color: '#bca5ff',      // viola del gradiente banner, distinto dal rosa dei pin
                 weight: 2.5,
-                opacity: 0.85,
-                dashArray: '6, 8',     // tratteggio
+                opacity: 0.8,
+                dashArray: '5, 9',     // tratteggio (in pixel schermo: più zoom = più trattini visibili)
                 lineCap: 'round',
+                smoothFactor: 1,
             }).addTo(map);
         }
 
-        function getArcPoints(from, to, bend) {
-            const numPoints = 60;
+        // Piccolo generatore pseudo-casuale deterministico (stesso seed = stesso risultato sempre)
+        function seededRandom(seed) {
+            const x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
+
+        function getArcPoints(from, to, segmentIndex) {
+            const numPoints = 80;
             const lat1 = from[0], lng1 = from[1];
             const lat2 = to[0], lng2 = to[1];
 
-            // Punto medio
             const midLat = (lat1 + lat2) / 2;
             const midLng = (lng1 + lng2) / 2;
 
-            // Vettore perpendicolare alla linea diretta, per "alzare" la curva
             const dx = lng2 - lng1;
             const dy = lat2 - lat1;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            const offsetFactor = bend / 100;
-            const offsetLat = -dx * offsetFactor / Math.max(dist, 0.001) * (dist * 0.3);
-            const offsetLng = dy * offsetFactor / Math.max(dist, 0.001) * (dist * 0.3);
+
+            // Curvatura base più pronunciata (era 0.3, ora tra 0.35 e 0.55)
+            // e lato dell'arco alternato in modo deterministico per segmento,
+            // per evitare che tutte le rotte si "gonfino" sempre dalla stessa parte.
+            const seed = (lat1 + lng1 + lat2 + lng2 + (segmentIndex || 0) * 7.13);
+            const randomBend = 0.35 + seededRandom(seed) * 0.2;
+            const side = seededRandom(seed * 1.7) > 0.5 ? 1 : -1;
+
+            const offsetLat = -dx / Math.max(dist, 0.001) * dist * randomBend * side;
+            const offsetLng = dy / Math.max(dist, 0.001) * dist * randomBend * side;
 
             const controlLat = midLat + offsetLat;
             const controlLng = midLng + offsetLng;
