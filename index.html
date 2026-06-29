@@ -774,6 +774,12 @@
          - date_label   text    -> es. "Marzo 2024" (testo libero)
          - caption      text    -> breve ricordo/descrizione
          - photo_url    text    -> URL pubblico da Supabase Storage
+
+         GLI ITINERARI (linee tratteggiate ad arco) sono gestiti separatamente
+         nell'array "travelRoutes" più sotto — non c'entrano con i pin.
+         Ogni rotta è { name, stops: [[lat,lng], [lat,lng], ...] }.
+         Con 2 stops fai un collegamento diretto A→B, con 3+ stops un
+         road trip multi-tappa (un arco per ogni segmento consecutivo).
     ===================================================== -->
     <script>
 
@@ -835,8 +841,25 @@
             }
         ];
 
+        /* ---- 2.1bis ITINERARI (rotte tratteggiate ad arco tra le tappe) ----
+           Struttura: ogni rotta è un oggetto con un array "stops" di [lat, lng]
+           in ordine di percorso. Funziona sia per A→B (2 stops) sia per
+           road trip multi-tappa (3+ stops, disegna un arco per ogni segmento).
+
+           Esempio già pronto, sostituiscilo o aggiungine altri:
+        */
+        const travelRoutes = [
+            {
+                name: "West Coast Road Trip",
+                stops: [
+                    [47.6062, -122.3321],  // Seattle
+                    [36.1699, -115.1398]   // Las Vegas
+                ]
+            }
+        ];
+
         /* ---- 2.2 INIZIALIZZAZIONE MAPPA (di norma non serve toccare qui sotto) ---- */
-        function initTravelMap(places) {
+        function initTravelMap(places, routes) {
             const mapEl = document.getElementById('travel-map');
             if (!mapEl || typeof L === 'undefined') return;
 
@@ -857,6 +880,16 @@
                 subdomains: 'abcd',
                 maxZoom: 19,
             }).addTo(map);
+
+            // ---- Itinerari: arco curvo tratteggiato tra le tappe ----
+            // Disegnato PRIMA dei pin così le linee restano "sotto" visivamente
+            if (routes && routes.length) {
+                routes.forEach(function (route) {
+                    for (var i = 0; i < route.stops.length - 1; i++) {
+                        drawCurvedRoute(map, route.stops[i], route.stops[i + 1]);
+                    }
+                });
+            }
 
             // Icona pin custom (goccia rosa/corallo)
             const customIcon = L.divIcon({
@@ -890,9 +923,57 @@
             if (placesEl) placesEl.textContent = places.length;
         }
 
+        /* ---- 2.2bis DISEGNO ARCO CURVO TRA DUE PUNTI ----
+           Leaflet non ha archi nativi: calcoliamo dei punti intermedi
+           lungo una curva quadratica (il punto di controllo è spostato
+           perpendicolarmente a metà strada) e li uniamo con una Polyline.
+        */
+        function drawCurvedRoute(map, from, to) {
+            const latlngs = getArcPoints(from, to, 60); // 60 = quanto è "alto" l'arco
+
+            L.polyline(latlngs, {
+                color: '#8cb5ff',      // blu del gradiente banner, distinto dal rosa dei pin
+                weight: 2.5,
+                opacity: 0.85,
+                dashArray: '6, 8',     // tratteggio
+                lineCap: 'round',
+            }).addTo(map);
+        }
+
+        function getArcPoints(from, to, bend) {
+            const numPoints = 60;
+            const lat1 = from[0], lng1 = from[1];
+            const lat2 = to[0], lng2 = to[1];
+
+            // Punto medio
+            const midLat = (lat1 + lat2) / 2;
+            const midLng = (lng1 + lng2) / 2;
+
+            // Vettore perpendicolare alla linea diretta, per "alzare" la curva
+            const dx = lng2 - lng1;
+            const dy = lat2 - lat1;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const offsetFactor = bend / 100;
+            const offsetLat = -dx * offsetFactor / Math.max(dist, 0.001) * (dist * 0.3);
+            const offsetLng = dy * offsetFactor / Math.max(dist, 0.001) * (dist * 0.3);
+
+            const controlLat = midLat + offsetLat;
+            const controlLng = midLng + offsetLng;
+
+            const points = [];
+            for (let i = 0; i <= numPoints; i++) {
+                const t = i / numPoints;
+                // Curva di Bézier quadratica
+                const lat = Math.pow(1 - t, 2) * lat1 + 2 * (1 - t) * t * controlLat + Math.pow(t, 2) * lat2;
+                const lng = Math.pow(1 - t, 2) * lng1 + 2 * (1 - t) * t * controlLng + Math.pow(t, 2) * lng2;
+                points.push([lat, lng]);
+            }
+            return points;
+        }
+
         /* ---- 2.3 AVVIO ---- */
         document.addEventListener('DOMContentLoaded', function () {
-            initTravelMap(travelPlaces);
+            initTravelMap(travelPlaces, travelRoutes);
         });
     </script>
 
