@@ -4,10 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>stef. | portfolio</title>
+
+    <!-- =====================================================
+         LIBRERIA MAPPA — Leaflet (gratis, no API key)
+         Usata solo dalla sezione Travel più in basso
+    ===================================================== -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <style>
+        /* =====================================================
+           1. VARIABILI GLOBALI
+           Cambia i colori del sito da qui
+        ===================================================== */
         :root {
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --bg-page: #0b0f19; /* Sfondo scuro profondo per far risaltare foto e gradienti */
+            --bg-page: #0b0f19;
             --text-light: #f8fafc;
             --text-muted: #94a3b8;
             --gradient-insta: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
@@ -28,7 +40,9 @@
             overflow-x: hidden;
         }
 
-        /* ================= HEADER STYLE SOCIAL ================= */
+        /* =====================================================
+           2. HEADER STILE SOCIAL (avatar + nome + ruolo)
+        ===================================================== */
         .profile-header {
             background: var(--gradient-banner);
             padding: 80px 20px;
@@ -81,7 +95,10 @@
             margin-top: 5px;
         }
 
-        /* ================= STORIES (HIGHLIGHTS) ================= */
+        /* =====================================================
+           3. STORIES / HIGHLIGHTS (la barra dei cerchietti nav)
+           Testo dei label modificabile direttamente nell'HTML
+        ===================================================== */
         .highlights-section {
             background: #111827;
             padding: 30px 20px;
@@ -142,7 +159,9 @@
             letter-spacing: 0.5px;
         }
 
-        /* ================= FULL-WIDTH ALTERNATE FEED ================= */
+        /* =====================================================
+           4. FEED A SCHEDE ALTERNATE (Work / Projects)
+        ===================================================== */
         .feed-container {
             width: 100%;
         }
@@ -166,7 +185,6 @@
             border-bottom: 1px solid #1f2937;
         }
 
-        /* Inversione automatica destra/sinistra delle righe */
         .social-post:nth-child(even) {
             flex-direction: row-reverse;
         }
@@ -178,7 +196,6 @@
             position: relative;
         }
 
-        /* Effetto Parallasse Leggero sull'immagine */
         .post-media-side img, .post-media-side video {
             width: 100%;
             height: 100%;
@@ -247,7 +264,6 @@
             font-size: 1rem;
         }
 
-        /* Animazioni di Fade-In allo Scroll */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -259,7 +275,238 @@
             transform: translateY(0);
         }
 
-        /* Responsive Layout */
+        /* =====================================================
+           5. SEZIONE TRAVEL MAP
+           Tutto lo stile della mappa e dei pin vive qui sotto.
+           Vedi anche il markup nel <body> e i dati nello <script>
+           in fondo alla pagina (sezione "TRAVEL MAP — DATI E LOGICA").
+        ===================================================== */
+
+        /* --- 5.1 Header della sezione (titolo + contatori) --- */
+        .travel-section {
+            background: #0b0f19;
+            padding: 60px 0 100px 0;
+        }
+
+        .travel-header {
+            max-width: 1400px;
+            margin: 0 auto 40px auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .travel-header-left h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            border-left: 5px solid #bca5ff;
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        .travel-header-left p {
+            padding-left: 25px;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .travel-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .travel-stat {
+            text-align: center;
+        }
+
+        .travel-stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: var(--gradient-banner);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .travel-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        /* --- 5.2 Contenitore della mappa --- */
+        .travel-map-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .travel-map-frame {
+            position: relative;
+            width: 100%;
+            height: 640px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #1f2937;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+        }
+
+        #travel-map {
+            width: 100%;
+            height: 100%;
+            background: #0e1118; /* colore visibile mentre i tile caricano */
+        }
+
+        /* --- 5.3 Override estetico di Leaflet (look "poster", non widget Google) --- */
+        .leaflet-container {
+            font-family: var(--font-main);
+            background: #0e1118;
+        }
+
+        .leaflet-control-zoom {
+            border: none !important;
+            margin: 18px !important;
+        }
+
+        .leaflet-control-zoom a {
+            background: rgba(17, 24, 39, 0.85) !important;
+            backdrop-filter: blur(6px);
+            color: #f8fafc !important;
+            border: 1px solid #2a3343 !important;
+            width: 36px !important;
+            height: 36px !important;
+            line-height: 36px !important;
+            font-size: 18px !important;
+            border-radius: 10px !important;
+            margin-bottom: 8px !important;
+        }
+
+        .leaflet-control-zoom a:hover {
+            background: rgba(30, 41, 59, 0.95) !important;
+        }
+
+        .leaflet-control-attribution {
+            background: rgba(11, 15, 25, 0.7) !important;
+            color: var(--text-muted) !important;
+            font-size: 10px !important;
+        }
+
+        .leaflet-control-attribution a {
+            color: #8cb5ff !important;
+        }
+
+        /* --- 5.4 Pin custom (goccia + pallino, stile WeRoad) --- */
+        .travel-pin {
+            position: relative;
+            width: 26px;
+            height: 26px;
+        }
+
+        .travel-pin-drop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            background: linear-gradient(135deg, #f196ff, #dc2743);
+            box-shadow: 0 4px 12px rgba(220, 39, 67, 0.5);
+            border: 2px solid #0b0f19;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .travel-pin-dot {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 10px;
+            height: 10px;
+            background: #0b0f19;
+            border-radius: 50%;
+        }
+
+        .travel-pin:hover .travel-pin-drop {
+            transform: rotate(-45deg) scale(1.15);
+            box-shadow: 0 6px 16px rgba(220, 39, 67, 0.7);
+        }
+
+        /* --- 5.5 Popup compatto al click sul pin --- */
+        .leaflet-popup-content-wrapper {
+            background: #111827 !important;
+            color: var(--text-light) !important;
+            border-radius: 16px !important;
+            padding: 0 !important;
+            border: 1px solid #2a3343;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5) !important;
+        }
+
+        .leaflet-popup-tip {
+            background: #111827 !important;
+        }
+
+        .leaflet-popup-content {
+            margin: 0 !important;
+            width: 240px !important;
+        }
+
+        .leaflet-popup-close-button {
+            color: var(--text-muted) !important;
+            font-size: 20px !important;
+            padding: 8px 10px 0 0 !important;
+            z-index: 10;
+        }
+
+        .leaflet-popup-close-button:hover {
+            color: var(--text-light) !important;
+        }
+
+        .travel-popup-photo {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 16px 16px 0 0;
+            display: block;
+        }
+
+        .travel-popup-body {
+            padding: 14px 16px 16px 16px;
+        }
+
+        .travel-popup-place {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            margin-bottom: 2px;
+        }
+
+        .travel-popup-date {
+            font-size: 0.8rem;
+            color: #d4537e;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .travel-popup-caption {
+            font-size: 0.88rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           6. RESPONSIVE (mobile/tablet)
+        ===================================================== */
         @media (max-width: 968px) {
             .profile-container { flex-direction: column; text-align: center; gap: 20px; }
             .social-post, .social-post:nth-child(even) { flex-direction: column; min-height: auto; }
@@ -267,10 +514,21 @@
             .post-text-side { width: 100%; padding: 40px 20px; }
             .post-title { font-size: 1.8rem; }
         }
+
+        @media (max-width: 768px) {
+            .travel-map-frame { height: 480px; border-radius: 16px; }
+            .travel-header { padding: 0 20px; }
+            .travel-map-wrapper { padding: 0 20px; }
+            .travel-stats { gap: 16px; }
+            .travel-stat-number { font-size: 1.6rem; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- =====================================================
+         HEADER — foto profilo, nome, ruolo
+    ===================================================== -->
     <header class="profile-header">
         <div class="profile-container">
             <div class="profile-avatar-wrapper">
@@ -285,6 +543,10 @@
         </div>
     </header>
 
+    <!-- =====================================================
+         NAV A "STORIE" — i 4 cerchietti che scrollano alle sezioni
+         Aggiungi qui un 5° cerchietto se vuoi anche "Passions" da solo
+    ===================================================== -->
     <nav class="highlights-section">
         <div class="highlights-container">
             <a href="#work-feed" class="story-circle-wrapper">
@@ -307,7 +569,10 @@
     </nav>
 
     <main class="feed-container">
-        
+
+        <!-- =====================================================
+             SEZIONE WORK EXPERIENCE
+        ===================================================== -->
         <div id="work-feed">
             <h2 class="feed-section-title">Work Experience</h2>
 
@@ -385,6 +650,9 @@
             </article>
         </div>
 
+        <!-- =====================================================
+             SEZIONE DIGITAL PRODUCTS
+        ===================================================== -->
         <div id="projects-feed">
             <h2 class="feed-section-title">Digital Products</h2>
 
@@ -423,27 +691,210 @@
             </article>
         </div>
 
-        </main>
+        <!-- =====================================================
+             SEZIONE TRAVEL MAP
+             - Titolo e sottotitolo: modifica il testo dentro .travel-header-left
+             - Contatori "Paesi" / "Tappe": calcolati automaticamente dallo script
+             - Mappa: il <div id="travel-map"> viene riempito da Leaflet via JS
+        ===================================================== -->
+        <section class="travel-section" id="travel-feed">
+            <div class="travel-header">
+                <div class="travel-header-left">
+                    <h2>Travel Map</h2>
+                    <p>I posti dove sono stato — clicca un pin per il ricordo.</p>
+                </div>
+                <div class="travel-stats">
+                    <div class="travel-stat">
+                        <div class="travel-stat-number" id="stat-countries">0</div>
+                        <div class="travel-stat-label">Paesi</div>
+                    </div>
+                    <div class="travel-stat">
+                        <div class="travel-stat-number" id="stat-places">0</div>
+                        <div class="travel-stat-label">Tappe</div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="travel-map-wrapper">
+                <div class="travel-map-frame">
+                    <div id="travel-map"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =====================================================
+         SCRIPT 1 — ANIMAZIONE "REVEAL" allo scroll (già presente)
+    ===================================================== -->
     <script>
         window.addEventListener('scroll', reveal);
 
         function reveal() {
             var reveals = document.querySelectorAll('.reveal');
-            
+
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var revealTop = reveals[i].getBoundingClientRect().top;
-                var revealPoint = 150; // Pixel prima che l'animazione si attivi
+                var revealPoint = 150;
 
                 if (revealTop < windowHeight - revealPoint) {
                     reveals[i].classList.add('active');
                 }
             }
         }
-        
-        // Esegui una volta all'avvio per attivare i blocchi già visibili
+
         document.addEventListener("DOMContentLoaded", reveal);
     </script>
+
+    <!-- =====================================================
+         SCRIPT 2 — TRAVEL MAP: DATI E LOGICA
+         =====================================================
+
+         COME SOSTITUIRE I DATI FINTI CON SUPABASE:
+         Al posto dell'array statico "travelPlaces" qui sotto, fai:
+
+            async function loadTravelPlaces() {
+                const { data, error } = await supabase
+                    .from('travel_places')
+                    .select('*');
+                if (error) {
+                    console.error(error);
+                    return;
+                }
+                initTravelMap(data);
+            }
+            document.addEventListener('DOMContentLoaded', loadTravelPlaces);
+
+         Schema tabella consigliato "travel_places" su Supabase:
+         - place        text    -> es. "Tokyo, Giappone"
+         - country      text    -> es. "Giappone" (usato per contare i paesi)
+         - lat          float8
+         - lng          float8
+         - date_label   text    -> es. "Marzo 2024" (testo libero)
+         - caption      text    -> breve ricordo/descrizione
+         - photo_url    text    -> URL pubblico da Supabase Storage
+    ===================================================== -->
+    <script>
+
+        /* ---- 2.1 DATI (sostituisci questo array con i tuoi viaggi reali) ---- */
+        const travelPlaces = [
+            {
+                place: "Tokyo, Giappone",
+                country: "Giappone",
+                lat: 35.6762,
+                lng: 139.6503,
+                date_label: "Marzo 2024",
+                caption: "Neon, ramen e silenzio operoso. Shibuya di notte resta impressa.",
+                photo_url: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=800"
+            },
+            {
+                place: "Lisbona, Portogallo",
+                country: "Portogallo",
+                lat: 38.7223,
+                lng: -9.1393,
+                date_label: "Settembre 2023",
+                caption: "Tram 28, salite infinite e tramonti sul Tago.",
+                photo_url: "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?q=80&w=800"
+            },
+            {
+                place: "Marrakech, Marocco",
+                country: "Marocco",
+                lat: 31.6295,
+                lng: -7.9811,
+                date_label: "Gennaio 2023",
+                caption: "Medina, spezie e caos organizzato: un altro ritmo del tempo.",
+                photo_url: "https://images.unsplash.com/photo-1597212720158-3462b3c5b1bb?q=80&w=800"
+            },
+            {
+                place: "Reykjavik, Islanda",
+                country: "Islanda",
+                lat: 64.1466,
+                lng: -21.9426,
+                date_label: "Luglio 2022",
+                caption: "Strade vuote, ghiacciai e un cielo che non sai mai cosa farà.",
+                photo_url: "https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=800"
+            },
+            {
+                place: "New York, USA",
+                country: "USA",
+                lat: 40.7128,
+                lng: -74.0060,
+                date_label: "Ottobre 2021",
+                caption: "Skyline da Brooklyn, energia che non si ferma mai.",
+                photo_url: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=800"
+            },
+            {
+                place: "Atene, Grecia",
+                country: "Grecia",
+                lat: 37.9838,
+                lng: 23.7275,
+                date_label: "Maggio 2021",
+                caption: "Acropoli all'alba prima delle folle: vale la sveglia presto.",
+                photo_url: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=800"
+            }
+        ];
+
+        /* ---- 2.2 INIZIALIZZAZIONE MAPPA (di norma non serve toccare qui sotto) ---- */
+        function initTravelMap(places) {
+            const mapEl = document.getElementById('travel-map');
+            if (!mapEl || typeof L === 'undefined') return;
+
+            // Mappa base, centrata sul mondo, zoom limitato per restare "poster"
+            const map = L.map('travel-map', {
+                center: [20, 10],
+                zoom: 2.4,
+                minZoom: 1.5,
+                maxZoom: 8,
+                worldCopyJump: true,
+                zoomControl: true,
+                scrollWheelZoom: true,
+            });
+
+            // Tile dark/minimal CARTO — niente nomi città/confini, stile poster
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nomap/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap &copy; CARTO',
+                subdomains: 'abcd',
+                maxZoom: 19,
+            }).addTo(map);
+
+            // Icona pin custom (goccia rosa/corallo)
+            const customIcon = L.divIcon({
+                className: '',
+                html: '<div class="travel-pin"><div class="travel-pin-drop"></div><div class="travel-pin-dot"></div></div>',
+                iconSize: [26, 26],
+                iconAnchor: [13, 26],
+                popupAnchor: [0, -28],
+            });
+
+            // Un marker + popup per ogni posto
+            places.forEach(function (p) {
+                const popupHtml =
+                    '<img class="travel-popup-photo" src="' + p.photo_url + '" alt="' + p.place + '" loading="lazy">' +
+                    '<div class="travel-popup-body">' +
+                        '<div class="travel-popup-place">' + p.place + '</div>' +
+                        '<div class="travel-popup-date">' + p.date_label + '</div>' +
+                        '<div class="travel-popup-caption">' + p.caption + '</div>' +
+                    '</div>';
+
+                L.marker([p.lat, p.lng], { icon: customIcon })
+                    .addTo(map)
+                    .bindPopup(popupHtml, { closeButton: true, maxWidth: 240, minWidth: 240 });
+            });
+
+            // Contatori automatici "Paesi" / "Tappe"
+            const uniqueCountries = new Set(places.map(function (p) { return p.country; }));
+            const countEl = document.getElementById('stat-countries');
+            const placesEl = document.getElementById('stat-places');
+            if (countEl) countEl.textContent = uniqueCountries.size;
+            if (placesEl) placesEl.textContent = places.length;
+        }
+
+        /* ---- 2.3 AVVIO ---- */
+        document.addEventListener('DOMContentLoaded', function () {
+            initTravelMap(travelPlaces);
+        });
+    </script>
+
 </body>
 </html>
