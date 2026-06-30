@@ -10,15 +10,13 @@
 
     <style>
         /* =====================================================
-           1. VARIABILI GLOBALI
-           Cambia i colori del sito da qui
+           1. VARIABILI GLOBALI & RESET
         ===================================================== */
         :root {
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --bg-page: #0b0f19;
             --text-light: #f8fafc;
             --text-muted: #94a3b8;
-            --gradient-insta: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             --gradient-banner: linear-gradient(90deg, #8cb5ff 0%, #bca5ff 50%, #f196ff 100%);
         }
 
@@ -37,7 +35,7 @@
         }
 
         /* =====================================================
-           2. HEADER STILE SOCIAL (avatar + nome + ruolo)
+           2. HEADER STILE SOCIAL
         ===================================================== */
         .profile-header {
             background: var(--gradient-banner);
@@ -65,7 +63,6 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0; 
-    
         }
 
         .profile-avatar {
@@ -99,8 +96,7 @@
         }
 
         /* =====================================================
-           3. STORIES / HIGHLIGHTS (la barra dei cerchietti nav)
-           Testo dei label modificabile direttamente nell'HTML
+           3. STORIES / HIGHLIGHTS DI NAVIGAZIONE
         ===================================================== */
         .highlights-section {
             background: #111827;
@@ -130,9 +126,7 @@
             transition: transform 0.2s ease;
         }
 
-        .story-circle-wrapper:hover {
-            transform: scale(1.05);
-        }
+        .story-circle-wrapper:hover { transform: scale(1.05); }
 
         .story-ring {
             width: 85px;
@@ -163,7 +157,7 @@
         }
 
         /* =====================================================
-           4. FEED A SCHEDE ALTERNATE (Work / Projects)
+           4. SEZIONE COMPLETA: COOL PROJECTS (FEED UNIFICATO)
         ===================================================== */
         .feed-container {
             width: 100%;
@@ -233,7 +227,10 @@
             padding: 2px;
         }
         .post-avatar-inner {
-            width: 100%; height: 100%; background: #000; border-radius: 50%;
+            width: 100%;
+            height: 100%; 
+            background: #000; 
+            border-radius: 50%;
         }
 
         .post-author { font-weight: 700; font-size: 1.1rem; }
@@ -278,8 +275,8 @@
             transform: translateY(0);
         }
 
-      /* =====================================================
-           5. SEZIONE TRAVEL MAP (CORRETTA E COMPLETA)
+        /* =====================================================
+           5. SEZIONE TRAVEL MAP (PULITA SENZA CONTATORI)
         ===================================================== */
         .travel-section {
             background: #0b0f19;
@@ -318,36 +315,8 @@
             font-weight: 500;
         }
 
-        .travel-stats {
-            display: flex;
-            gap: 30px;
-        }
-
-        .travel-stat {
-            text-align: center;
-        }
-
-        .travel-stat-number {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: var(--gradient-banner);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1;
-        }
-
-        .travel-stat-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 4px;
-        }
-
         .travel-map-wrapper {
-            max-width: 940px;      /* Centra e stringe la mappa lasciando il titolo a sinistra */
+            max-width: 940px;
             margin: 0 auto;
             padding: 0 40px;
             width: 100%;
@@ -356,7 +325,7 @@
         .travel-map-frame {
             position: relative;
             width: 100%;
-            height: 450px;         /* Finestra mappa compatta */
+            height: 450px;
             border-radius: 24px;
             overflow: hidden;
             border: 1px solid #1f2937;
@@ -402,11 +371,8 @@
             font-size: 10px !important;
         }
 
-        .leaflet-control-attribution a {
-            color: #8cb5ff !important;
-        }
+        .leaflet-control-attribution a { color: #8cb5ff !important; }
 
-        /* STILI DEI PIN (QUANTO RENDONO VISIBILI I PIN) */
         .travel-pin {
             position: relative;
             width: 26px;
@@ -460,7 +426,6 @@
             box-shadow: 0 6px 18px rgba(255, 184, 77, 0.75);
         }
 
-        /* STILI POPUP */
         .leaflet-popup-content-wrapper {
             background: #111827 !important;
             color: var(--text-light) !important;
@@ -470,25 +435,15 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5) !important;
         }
 
-        .leaflet-popup-tip {
-            background: #111827 !important;
-        }
-
-        .leaflet-popup-content {
-            margin: 0 !important;
-            width: 240px !important;
-        }
-
+        .leaflet-popup-tip { background: #111827 !important; }
+        .leaflet-popup-content { margin: 0 !important; width: 240px !important; }
         .leaflet-popup-close-button {
             color: var(--text-muted) !important;
             font-size: 20px !important;
             padding: 8px 10px 0 0 !important;
             z-index: 10;
         }
-
-        .leaflet-popup-close-button:hover {
-            color: var(--text-light) !important;
-        }
+        .leaflet-popup-close-button:hover { color: var(--text-light) !important; }
 
         .travel-popup-photo {
             width: 100%;
@@ -498,49 +453,79 @@
             display: block;
         }
 
-        .travel-popup-body {
-            padding: 14px 16px 16px 16px;
-        }
+        .travel-popup-body { padding: 14px 16px 16px 16px; }
+        .travel-popup-place { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 2px; }
+        .travel-popup-date { font-size: 0.8rem; color: #d4537e; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .travel-popup-caption { font-size: 0.88rem; color: #cbd5e1; line-height: 1.5; }
 
-        .travel-popup-place {
-            font-size: 1.05rem;
-            font-weight: 800;
-            letter-spacing: -0.3px;
-            margin-bottom: 2px;
-        }
-
-        .travel-popup-date {
-            font-size: 0.8rem;
-            color: #d4537e;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-
-        .travel-popup-caption {
-            font-size: 0.88rem;
-            color: #cbd5e1;
-            line-height: 1.5;
-        }
         /* =====================================================
-           6. SEZIONE PASSIONS & SOUNDCLOUD PLAYER (INTEGRATA)
+           6. SEZIONE CAMERA ROLL (GRIGLIA POLAROID 3 PER RIGA)
         ===================================================== */
-        .passions-section {
+        .camera-roll-section {
             background: #0b0f19;
-            padding: 60px 0 120px 0;
+            padding: 60px 0 60px 0;
             border-top: 1px solid #1f2937;
         }
 
-        .passions-container {
+        .camera-roll-container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 40px;
         }
 
+        .polaroid-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .polaroid-item {
+            background: #ffffff;
+            padding: 18px 18px 28px 18px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            transform: rotate(var(--polaroid-angle, 0deg));
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border-radius: 2px;
+        }
+
+        .polaroid-item:hover {
+            transform: scale(1.03) rotate(0deg) !important;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            z-index: 5;
+        }
+
+        .polaroid-media-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #0b0f19;
+            border: 1px solid #e2e8f0;
+        }
+
+        .polaroid-media-box img, .polaroid-media-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .polaroid-caption {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e293b;
+            text-align: center;
+            margin-top: 18px;
+            line-height: 1.3;
+            word-wrap: break-word;
+        }
+
+        /* SOUNDCLOUD INTEGRATO IN CODA ALLA SEZIONE */
         .audio-feed-container {
             max-width: 800px;
-            margin: 40px 0 0 20px;
+            margin: 60px auto 0 auto;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -646,18 +631,16 @@
             .post-media-side { width: 100%; height: 50vh; }
             .post-text-side { width: 100%; padding: 40px 20px; }
             .post-title { font-size: 1.8rem; }
-            .audio-feed-container { margin: 40px 0 0 0; }
+            .polaroid-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; }
         }
 
         @media (max-width: 768px) {
             .travel-map-frame { height: 480px; border-radius: 16px; }
             .travel-header { padding: 0 20px; }
             .travel-map-wrapper { padding: 0 20px; }
-            .travel-stats { gap: 16px; }
-            .travel-stat-number { font-size: 1.6rem; }
-            .passions-container { padding: 0 20px; }
             .soundcloud-track { padding: 15px; gap: 15px; }
             .sc-play-btn { width: 50px; height: 50px; }
+            .polaroid-grid { grid-template-columns: 1fr; gap: 30px; }
         }
     </style>
 </head>
@@ -679,30 +662,30 @@
 
     <nav class="highlights-section">
         <div class="highlights-container">
-            <a href="#work-feed" class="story-circle-wrapper">
-                <div class="story-ring"><div class="story-content">💼</div></div>
-                <span class="story-label">Work</span>
-            </a>
             <a href="#projects-feed" class="story-circle-wrapper">
-                <div class="story-ring"><div class="story-content">🚀</div></div>
-                <span class="story-label">Projects</span>
+                <div class="story-ring"><div class="story-content"></div></div>
+                <span class="story-label">Cool Projects</span>
             </a>
             <a href="#travel-feed" class="story-circle-wrapper">
-                <div class="story-ring"><div class="story-content">🗺️</div></div>
+                <div class="story-ring"><div class="story-content"></div></div>
                 <span class="story-label">Travel</span>
             </a>
-            <a href="#passions-feed" class="story-circle-wrapper">
-                <div class="story-ring"><div class="story-content">⚡</div></div>
-                <span class="story-label">Passions</span>
+            <a href="#camera-roll-feed" class="story-circle-wrapper">
+                <div class="story-ring"><div class="story-content"></div></div>
+                <span class="story-label">Camera Roll</span>
             </a>
         </div>
     </nav>
 
     <main class="feed-container">
 
-        <div id="work-feed">
-            <h2 class="feed-section-title">Work Experience</h2>
+        <!-- =====================================================
+             SEZIONE UNICA ED INTEGRATA: COOL PROJECTS
+        ===================================================== -->
+        <div id="projects-feed">
+            <h2 class="feed-section-title">Cool Projects</h2>
 
+            <!-- 1. BARILLA -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barilla-neve.JPG" alt="Barilla Innevata">
@@ -717,7 +700,7 @@
                     </div>
                     <h3 class="post-title">Ottimizzazione Flussi Outbound & Automazione dei Processi</h3>
                     <p class="post-caption">
-                        Gestivo tutte le spedizioni in outbound dal magazzino centrale con oltre 100 camion al giorno, facendo da pivot tra produzione, logistica e vendite. Durante la pandemia, con shortage fortissimi e ritmi da 15 ore al giorno, ho azzerato le inefficienze sviluppando un sistema automatizzato integrato con SAP. Incrociando ordini e produzione in tempo reale, ho ridotto l'effort operativo a sole 4 ore al giorno, ottenendo la promozione al team strategico di Network Design per investimenti internazionali.
+                        Gestivo tutte le spedizioni in outbound dal magazzino centrale con oltre 100 camion al giorno, facendo da pivot tra produzione, logistica e vendite. Durante la pandemia, con shortage fortissimi ho azzerato le inefficienze sviluppando un sistema automatizzato integrato con SAP.
                     </p>
                     <div class="post-tags">
                         <a href="#" class="hashtag">#SAPAutomation</a>
@@ -727,6 +710,7 @@
                 </div>
             </article>
 
+            <!-- 2. GETIR -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Getir.jpg" alt="Getir Operations">
@@ -741,7 +725,7 @@
                     </div>
                     <h3 class="post-title">Taglio del 50% dei Costi Last Mile con la Predizione Algoritmica</h3>
                     <p class="post-caption">
-                        Per risolvere il problema dell'alto costo del personale dovuto allo scheduling manuale dei singoli store manager, ho sviluppato interamente su Google Scripts una web app predittiva. Elaborando lo storico ordini, la stagionalità e le promozioni attive, l'app generava i turni perfetti ottimizzando rider e picker sul territorio nazionale. Abbiamo guidato il cambio di processo con formazione dedicata, abbattendo i costi di consegna del 50%.
+                        Per risolvere il problema dell'alto costo del personale dovuto allo scheduling manuale dei singoli store manager, ho sviluppato interamente su Google Scripts una web app predittiva che ottimizzava rider e picker sul territorio nazionale.
                     </p>
                     <div class="post-tags">
                         <a href="#" class="hashtag">#GoogleAppsScript</a>
@@ -751,6 +735,7 @@
                 </div>
             </article>
 
+            <!-- 3. EY -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" alt="EY Project Management">
@@ -765,7 +750,7 @@
                     </div>
                     <h3 class="post-title">Migrazione Sistemi Cloud WMS/TMS in 7 Nazioni</h3>
                     <p class="post-caption">
-                        Nel ruolo di Project Manager per una multinazionale da 1.5 miliardi di euro di fatturato, ho guidato la transizione tecnologica dei vecchi sistemi legacy AS400 verso nuove e moderne piattaforme WMS e TMS. Ho orchestrato i flussi di lavoro gestendo i rapporti tra il fornitore tecnologico, i team di eccellenza del cliente e i dipartimenti logistici distribuiti in 7 nazioni.
+                        Nel ruolo di Project Manager per una multinazionale da 1.5 miliardi di euro di fatturato, ho guidato la transizione tecnologica dei vecchi sistemi legacy AS400 verso nuove e moderne piattaforme WMS e TMS, orchestrando i flussi in 7 nazioni differenti.
                     </p>
                     <div class="post-tags">
                         <a href="#" class="hashtag">#ProjectManagement</a>
@@ -775,19 +760,23 @@
                     </div>
                 </div>
             </article>
-        </div>
 
-        <div id="projects-feed">
-            <h2 class="feed-section-title">Digital Products</h2>
-
+            <!-- 4. PERSEBES -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/persebes.png" alt="Persebes Design">
                 </div>
                 <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">Persebes</p>
+                            <p class="post-date">Brand & E-commerce</p>
+                        </div>
+                    </div>
                     <h3 class="post-title">Persebes: Da un Foglio Bianco a un E-commerce di Design in 6 Mesi</h3>
                     <p class="post-caption">
-                        Incaricato da un'artista contemporanea, ho costruito interamente da zero un brand di design e gestito tutto il lancio sul mercato. Mi sono occupato di ogni singolo pilastro aziendale: ingegnerizzazione dei prodotti fisici, supply chain produttiva, logistica di distribuzione, marketing strategy, impianto legale e sviluppo completo del sito e-commerce funzionante.
+                        Incaricato da un'artista contemporanea, ho costruito interamente da zero un brand di design e gestito tutto il lancio sul mercato: ingegnerizzazione dei prodotti fisici, marketing strategy, supply chain produttiva e sviluppo completo dell'e-commerce.
                     </p>
                     <div class="post-tags">
                         <a href="#" class="hashtag">#BrandBuilding</a>
@@ -797,14 +786,22 @@
                 </div>
             </article>
 
+            <!-- 5. SMART MENU -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200" alt="SmartMenu Local SaaS">
                 </div>
                 <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">SmartMenu</p>
+                            <p class="post-date">SaaS Product Design</p>
+                        </div>
+                    </div>
                     <h3 class="post-title">SmartMenu: Il SaaS Agile da Pochi Centesimi per la Ristorazione</h3>
                     <p class="post-caption">
-                        Sviluppato per perfezionare le mie competenze di gestione del prodotto digitale, risolve la totale assenza web delle piccole pizzerie italiane. Ho ingegnerizzato un'applicazione in grado di generare un sito web pubblico e indicizzato semplicemente scattando una foto al menu cartaceo del locale e compilando un modulo veloce a 4 campi, riducendo i costi di infrastruttura al minimo.
+                        Ho ingegnerizzato un'applicazione in grado di generare un sito web pubblico semplicemente scattando una foto al menu cartaceo del locale e compilando un modulo veloce a 4 campi, riducendo i costi di infrastruttura al minimo storico per le piccole pizzerie.
                     </p>
                     <div class="post-tags">
                         <a href="#" class="hashtag">#SaaS</a>
@@ -813,28 +810,67 @@
                     </div>
                 </div>
             </article>
+
+            <!-- 6. HUMAN UNIVERSE -->
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200" alt="Human Universe">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">Human Universe</p>
+                            <p class="post-date">Digital Architecture</p>
+                        </div>
+                    </div>
+                    <h3 class="post-title">Human Universe</h3>
+                    <p class="post-caption">
+                        Inserisci qui la descrizione dettagliata per il progetto Human Universe. Racconta gli obiettivi, le sfide superate e la tecnologia impiegata per la sua realizzazione.
+                    </p>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#HumanUniverse</a>
+                        <a href="#" class="hashtag">#DigitalInnovation</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 7. 3D MODELS -->
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200" alt="3D Models">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">3D Modelling</p>
+                            <p class="post-date">Creative Engine</p>
+                        </div>
+                    </div>
+                    <h3 class="post-title">3D Models Collection</h3>
+                    <p class="post-caption">
+                        Inserisci qui la descrizione dettagliata per la sezione 3D Models. Puoi illustrare i software utilizzati (es. Blender, Rhino, Cinema4D) e lo scopo dei modelli poligonali realizzati.
+                    </p>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#3DModelling</a>
+                        <a href="#" class="hashtag">#Render</a>
+                        <a href="#" class="hashtag">#CGI</a>
+                    </div>
+                </div>
+            </article>
         </div>
 
+        <!-- =====================================================
+             SEZIONE: TRAVEL MAP (PULITA)
+        ===================================================== -->
         <section class="travel-section" id="travel-feed">
             <div class="travel-header">
-                <div class="travel-header">
-                    <div class="travel-header-left" style="padding-left: 0;">
-                        <h2>Travel Map</h2>
-                        <p>I posti dove sono stato — clicca un pin per il ricordo.</p>
-                    </div>
-                </div>
-                <div class="travel-stats">
-                    <div class="travel-stat">
-                        <div class="travel-stat-number" id="stat-countries">0</div>
-                        <div class="travel-stat-label">Paesi</div>
-                    </div>
-                    <div class="travel-stat">
-                        <div class="travel-stat-number" id="stat-places">0</div>
-                        <div class="travel-stat-label">Tappe</div>
-                    </div>
+                <div class="travel-header-left" style="padding-left: 0;">
+                    <h2>Travel Map</h2>
+                    <p>I posti dove sono stato — clicca un pin per il ricordo.</p>
                 </div>
             </div>
-
             <div class="travel-map-wrapper">
                 <div class="travel-map-frame">
                     <div id="travel-map"></div>
@@ -842,15 +878,48 @@
             </div>
         </section>
 
-        <section class="passions-section" id="passions-feed">
-            <div class="passions-container">
+        <!-- =====================================================
+             SEZIONE: CAMERA ROLL (FOTO DELLE PASSIONI STILE POLAROID)
+        ===================================================== -->
+        <section class="camera-roll-section" id="camera-roll-feed">
+            <div class="camera-roll-container">
                 <div class="travel-header-left" style="padding: 0;">
-                    <h2>Creative & Music Production</h2>
-                    <p>Ascolta le mie produzioni originali — Player interattivo in stile SoundCloud.</p>
+                    <h2>Camera Roll</h2>
+                    <p>Frammenti visivi delle mie passioni più grandi.</p>
                 </div>
 
+                <div class="polaroid-grid">
+                    
+                    <!-- FOTO 1: MOTO -->
+                    <div class="polaroid-item reveal" style="--polaroid-angle: -1.5deg;">
+                        <div class="polaroid-media-box">
+                            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=800" alt="Moto">
+                        </div>
+                        <div class="polaroid-caption">On the road — Ride Hard</div>
+                    </div>
+
+                    <!-- FOTO 2: MAGIC CANVAS -->
+                    <div class="polaroid-item reveal" style="--polaroid-angle: 2deg;">
+                        <div class="polaroid-media-box">
+                            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=800" alt="Magic Canvas">
+                        </div>
+                        <div class="polaroid-caption">Magic Canvas Art Studio</div>
+                    </div>
+
+                    <!-- FOTO 3: SOFT MIRRORS -->
+                    <div class="polaroid-item reveal" style="--polaroid-angle: -2.5deg;">
+                        <div class="polaroid-media-box">
+                            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=800" alt="Soft Mirrors">
+                        </div>
+                        <div class="polaroid-caption">Soft Mirrors Reflection</div>
+                    </div>
+
+                </div>
+
+                <!-- PLAYER SOUNDCLOUD IN CODA AL RULLINO -->
                 <div class="audio-feed-container">
                     
+                    <!-- TRACCIA 1 -->
                     <div class="soundcloud-track reveal" data-track-id="track1">
                         <audio id="audio-track1" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Ambient%20Souls.mp3"></audio>
                         <button class="sc-play-btn" onclick="togglePlay('track1')">
@@ -866,6 +935,7 @@
                         </div>
                     </div>
 
+                    <!-- TRACCIA 2 -->
                     <div class="soundcloud-track reveal" data-track-id="track2">
                         <audio id="audio-track2" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Bamboo%20Forest.mp3"></audio>
                         <button class="sc-play-btn" onclick="togglePlay('track2')">
@@ -881,6 +951,7 @@
                         </div>
                     </div>
 
+                    <!-- TRACCIA 3 -->
                     <div class="soundcloud-track reveal" data-track-id="track3">
                         <audio id="audio-track3" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Fly.mp3"></audio>
                         <button class="sc-play-btn" onclick="togglePlay('track3')">
@@ -902,7 +973,11 @@
 
     </main>
 
+    <!-- =====================================================
+         SCRIPT LOGICI SITO
+    ===================================================== -->
     <script>
+        // Effetto scorrimento schede fluide
         window.addEventListener('scroll', reveal);
         function reveal() {
             var reveals = document.querySelectorAll('.reveal');
@@ -910,7 +985,6 @@
                 var windowHeight = window.innerHeight;
                 var revealTop = reveals[i].getBoundingClientRect().top;
                 var revealPoint = 150;
-
                 if (revealTop < windowHeight - revealPoint) {
                     reveals[i].classList.add('active');
                 }
@@ -919,131 +993,29 @@
         document.addEventListener("DOMContentLoaded", reveal);
     </script>
 
-   <script>
-        /* tappe */
+    <script>
+        /* ---- DATI DELLE TAPPE SULLA MAPPA ---- */
         const travelPlaces = [
-            {
-                place: "Favignana, Italia",
-                country: "Italia",
-                lat: 37.9304,
-                lng: 12.3256,
-                date_label: "2022",
-                caption: "",
-                photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/favy.png"
-            },
-            {
-                place: "Agadir, Marocco",
-                country: "Marocco",
-                lat: 30.4278,
-                lng: -9.5981,
-                date_label: "2025",
-                caption: "Io e G",
-                photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Agadirdesert.jpg"
-            },
-            {
-                place: "Gran Sasso, Italia",
-                country: "Italia",
-                lat: 42.4812,
-                lng: 13.5574,
-                date_label: "2025",
-                caption: "",
-                photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/GranSasso.jpg"
-            },
-            {
-                place: "Bangkok, Thailandia",
-                country: "Thailandia",
-                lat: 13.7563,
-                lng: 100.5018,
-                date_label: "2022",
-                caption: "",
-                photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Bangkok.jpg"
-            },
-            {
-                place: "Tempio Bianco, Chiang Rai",
-                country: "Thailandia",
-                lat: 19.8242,
-                lng: 99.8234,
-                date_label: "2022",
-                caption: "",
-                photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/tempio.jpg"
-            },
-            {
-                place: "Il Cairo, Egitto",
-                country: "Egitto",
-                lat: 30.0444,
-                lng: 31.2357,
-                date_label: "2023",
-                caption: "",
-                video_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Cairo.mp4"
-            },
-            {
-                place: "Jeddah, Arabia Saudita",
-                country: "Arabia Saudita",
-                lat: 21.5433,
-                lng: 39.1728,
-                date_label: "2025",
-                caption: "",
-                photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/jeddah.jpg"
-            },
-            {
-                place: "Bari, Italia",
-                country: "Italia",
-                lat: 41.1171,
-                lng: 16.8719,
-                date_label: "2025",
-                caption: "",
-                photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/bari.jpg"
-            },
-            {
-                place: "L'Aia, Paesi Bassi",
-                country: "Paesi Bassi",
-                lat: 52.0705,
-                lng: 4.3007,
-                date_label: "2019",
-                caption: "",
-                photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Aia.jpg"
-            },
-            {
-                place: "Tenerife, Spagna",
-                country: "Spagna",
-                lat: 28.2916,
-                lng: -16.6291,
-                date_label: "2022",
-                caption: "",
-                photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/tenerife.jpg"
-            },
-            {
-                place: "Barcellona, Spagna",
-                country: "Spagna",
-                lat: 41.3851,
-                lng: 2.1734,
-                date_label: "2016",
-                caption: "",
-                photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barcellona.jpg"
-            },
-            {
-                place: "San Francisco, California",
-                country: "USA",
-                lat: 37.7775,
-                lng: -122.4164,
-                date_label: "2008",
-                caption: "",
-                photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/San%20Francisco.jpg"
-            }
+            { place: "Favignana, Italia", country: "Italia", lat: 37.9304, lng: 12.3256, date_label: "2022", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/favy.png" },
+            { place: "Agadir, Marocco", country: "Marocco", lat: 30.4278, lng: -9.5981, date_label: "2025", caption: "Io e G", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Agadirdesert.jpg" },
+            { place: "Gran Sasso, Italia", country: "Italia", lat: 42.4812, lng: 13.5574, date_label: "2025", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/GranSasso.jpg" },
+            { place: "Bangkok, Thailandia", country: "Thailandia", lat: 13.7563, lng: 100.5018, date_label: "2022", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Bangkok.jpg" },
+            { place: "Tempio Bianco, Chiang Rai", country: "Thailandia", lat: 19.8242, lng: 99.8234, date_label: "2022", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/tempio.jpg" },
+            { place: "Il Cairo, Egitto", country: "Egitto", lat: 30.0444, lng: 31.2357, date_label: "2023", caption: "", video_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Cairo.mp4" },
+            { place: "Jeddah, Arabia Saudita", country: "Arabia Saudita", lat: 21.5433, lng: 39.1728, date_label: "2025", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/jeddah.jpg" },
+            { place: "Bari, Italia", country: "Italia", lat: 41.1171, lng: 16.8719, date_label: "2025", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/bari.jpg" },
+            { place: "L'Aia, Paesi Bassi", country: "Paesi Bassi", lat: 52.0705, lng: 4.3007, date_label: "2024", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/L_aia.jpg" },
+            { place: "Tenerife, Spagna", country: "Spagna", lat: 28.2916, lng: -16.6291, date_label: "2024", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/tenerife.jpg" },
+            { place: "Barcellona, Spagna", country: "Spagna", lat: 41.3851, lng: 2.1734, date_label: "2024", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barcellona.jpg" }
         ];
 
-        const homeLocation = {
-            place: "Milano — Base",
-            lat: 45.4642,
-            lng: 9.1900
-        };
+        const homeLocation = { place: "Milano — Base", lat: 45.4642, lng: 9.1900 };
 
-        /* ---- 2.2 INIZIALIZZAZIONE MAPPA ---- */
+        /* ---- INIZIALIZZAZIONE MAPPA LEAFLET ---- */
         function initTravelMap(places, home) {
             const mapEl = document.getElementById('travel-map');
             if (!mapEl || typeof L === 'undefined') return;
 
-            // Inizializziamo senza centro fisso per attivare l'autofocus completo
             const map = L.map('travel-map', {
                 minZoom: 1.5,
                 maxZoom: 8,
@@ -1066,7 +1038,6 @@
                 popupAnchor: [0, -28],
             });
 
-            // 🌟 RISOLTO: Ora l'array dei punti è definito correttamente!
             const points = [];
 
             places.forEach(function (p) {
@@ -1118,90 +1089,89 @@
                 points.push([home.lat, home.lng]);
             }
 
-            // 🌟 AUTOFOCUS: Allarga la mappa in automatico per includere tutti gli 11 pin + la base
             if (points.length > 0) {
                 const bounds = L.latLngBounds(points);
                 map.fitBounds(bounds, { padding: [50, 50] });
             }
-
-            const uniqueCountries = new Set(places.map(function (p) { return p.country; }));
-            const countEl = document.getElementById('stat-countries');
-            const placesEl = document.getElementById('stat-places');
-            if (countEl) countEl.textContent = uniqueCountries.size;
-            if (placesEl) placesEl.textContent = places.length;
         }
 
         document.addEventListener('DOMContentLoaded', function () {
             initTravelMap(travelPlaces, homeLocation);
+            initAudioPlayers();
         });
     </script>
 
     <script>
-        const wavePattern = [30,45,60,25,40,75,50,60,85,40,30,55,70,45,65,90,35,50,75,60,40,65,80,45,30,55,70,60,75,40,50,35,65,80,55,45,70,85,40,30,60,50,45,75,90,55,40,65,70,35];
+        /* ---- COMPONENTE AUDIO PLAYER STILE SOUNDCLOUD ---- */
+        let currentAudio = null;
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const tracks = ['track1', 'track2', 'track3'];
-            
-            tracks.forEach(trackId => {
-                const container = document.getElementById(`wave-${trackId}`);
+        function initAudioPlayers() {
+            const tracks = document.querySelectorAll('.soundcloud-track');
+            tracks.forEach(track => {
+                const trackId = track.getAttribute('data-track-id');
                 const audio = document.getElementById(`audio-${trackId}`);
+                const waveContainer = document.getElementById(`wave-${trackId}`);
                 
-                if (!container || !audio) return;
+                if (!audio || !waveContainer) return;
 
-                wavePattern.forEach((height, index) => {
+                const barCount = 45;
+                waveContainer.innerHTML = '';
+                for (let i = 0; i < barCount; i++) {
                     const bar = document.createElement('div');
-                    bar.className = 'sc-wave-bar';
-                    bar.style.height = height + '%';
-                    container.appendChild(bar);
-                });
+                    bar.classList.add('sc-wave-bar');
+                    const height = Math.floor(Math.sin(i * 0.15) * 15) + Math.floor(Math.random() * 12) + 15;
+                    bar.style.height = `${Math.min(height, 40)}px`;
+                    waveContainer.appendChild(bar);
+                }
 
                 audio.addEventListener('timeupdate', () => {
-                    const progress = audio.currentTime / audio.duration;
-                    const bars = container.querySelectorAll('.sc-wave-bar');
-                    const barsToColor = Math.floor(progress * bars.length);
+                    const actualTimeEl = track.querySelector('.sc-track-time');
+                    if (actualTimeEl) {
+                        actualTimeEl.textContent = formatTime(audio.currentTime);
+                    }
+
+                    const pct = audio.currentTime / audio.duration;
+                    const bars = waveContainer.querySelectorAll('.sc-wave-bar');
+                    const fillUntil = Math.floor(bars.length * pct);
                     
-                    bars.forEach((bar, idx) => {
-                        if (idx <= barsToColor && progress > 0) {
-                            bar.classList.add('played');
+                    bars.forEach((b, idx) => {
+                        if (idx <= fillUntil && audio.currentTime > 0) {
+                            b.classList.add('played');
                         } else {
-                            bar.classList.remove('played');
+                            b.classList.remove('played');
                         }
                     });
-
-                    const current = formatTime(audio.currentTime);
-                    const total = isNaN(audio.duration) ? "00:00" : formatTime(audio.duration);
-                    document.getElementById(`time-${trackId}`).textContent = `${current} / ${total}`;
                 });
 
-                audio.addEventListener('loadedmetadata', () => {
-                    document.getElementById(`time-${trackId}`).textContent = `00:00 / ${formatTime(audio.duration)}`;
+                audio.addEventListener('ended', () => {
+                    track.querySelector('.play-icon').style.display = 'block';
+                    track.querySelector('.pause-icon').style.display = 'none';
+                    const bars = waveContainer.querySelectorAll('.sc-wave-bar');
+                    bars.forEach(b => b.classList.remove('played'));
                 });
             });
-        });
+        }
 
         function togglePlay(trackId) {
-            const currentAudio = document.getElementById(`audio-${trackId}`);
-            const currentTrackElement = document.querySelector(`[data-track-id="${trackId}"]`);
-            const playIcon = currentTrackElement.querySelector('.play-icon');
-            const pauseIcon = currentTrackElement.querySelector('.pause-icon');
+            const audio = document.getElementById(`audio-${trackId}`);
+            const btn = document.querySelector(`[data-track-id="${trackId}"] .sc-play-btn`);
+            const playIcon = btn.querySelector('.play-icon');
+            const pauseIcon = btn.querySelector('.pause-icon');
 
-            if (currentAudio.paused) {
-                document.querySelectorAll('audio').forEach(audio => {
-                    if (audio.id !== `audio-${trackId}`) {
-                        audio.pause();
-                        const parent = audio.closest('.soundcloud-track');
-                        if(parent) {
-                            parent.querySelector('.play-icon').style.display = 'block';
-                            parent.querySelector('.pause-icon').style.display = 'none';
-                        }
-                    }
-                });
-                
-                currentAudio.play();
+            if (currentAudio && currentAudio !== audio) {
+                currentAudio.pause();
+                document.querySelectorAll('.pause-icon').forEach(i => i.style.display = 'none');
+                document.querySelectorAll('.play-icon').forEach(i => i.style.display = 'block');
+            }
+
+            currentAudio = audio;
+
+            if (audio.paused) {
+                audio.play();
                 playIcon.style.display = 'none';
                 pauseIcon.style.display = 'block';
             } else {
-                currentAudio.pause();
+                audio.pause();
                 playIcon.style.display = 'block';
                 pauseIcon.style.display = 'none';
             }
@@ -1221,6 +1191,7 @@
         }
 
         function formatTime(seconds) {
+            if (isNaN(seconds)) return "00:00";
             const min = Math.floor(seconds / 60);
             const sec = Math.floor(seconds % 60);
             return (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
