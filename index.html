@@ -922,58 +922,103 @@
     <script>
         const travelPlaces = [
             {
-                place: "Tokyo, Giappone",
-                country: "Giappone",
-                lat: 35.6762,
-                lng: 139.6503,
-                date_label: "Marzo 2024",
-                caption: "Neon, ramen e silenzio operoso. Shibuya di notte resta impressa.",
-                photo_url: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=800"
+                place: "Favignana, Italia",
+                country: "Italia",
+                lat: 37.9304,
+                lng: 12.3256,
+                date_label: "MESE ANNO",
+                caption: "Inserisci qui il tuo ricordo o la didascalia per Favignana.",
+                photo_url: "LINK_FOTO_SUPABASE_FAVIGNANA"
             },
             {
-                place: "Lisbona, Portogallo",
-                country: "Portogallo",
-                lat: 38.7223,
-                lng: -9.1393,
-                date_label: "Settembre 2023",
-                caption: "Tram 28, salite infinite e tramonti sul Tago.",
-                photo_url: "https://images.unsplash.com/photo-1585208798174-6cedd86e019a?q=80&w=800"
-            },
-            {
-                place: "Marrakech, Marocco",
+                place: "Agadir, Marocco",
                 country: "Marocco",
-                lat: 31.6295,
-                lng: -7.9811,
-                date_label: "Gennaio 2023",
-                caption: "Medina, spezie e caos organizzato: un altro ritmo del tempo.",
-                photo_url: "https://images.unsplash.com/photo-1597212720158-3462b3c5b1bb?q=80&w=800"
+                lat: 30.4278,
+                lng: -9.5981,
+                date_label: "MESE ANNO",
+                caption: "Inserisci qui il tuo ricordo o la didascalia per Agadir.",
+                photo_url: "LINK_FOTO_SUPABASE_AGADIR"
             },
             {
-                place: "Reykjavik, Islanda",
-                country: "Islanda",
-                lat: 64.1466,
-                lng: -21.9426,
-                date_label: "Luglio 2022",
-                caption: "Strade vuote, ghiacciai e un cielo che non sai mai cosa farà.",
-                photo_url: "https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=800"
+                place: "Gran Sasso, Italia",
+                country: "Italia",
+                lat: 42.4812,
+                lng: 13.5574,
+                date_label: "MESE ANNO",
+                caption: "Inserisci qui il tuo ricordo o la didascalia per il Gran Sasso.",
+                photo_url: "LINK_FOTO_SUPABASE_GRAN_SASSO"
             },
             {
-                place: "New York, USA",
-                country: "USA",
-                lat: 40.7128,
-                lng: -74.0060,
-                date_label: "Ottobre 2021",
-                caption: "Skyline da Brooklyn, energia che non si ferma mai.",
-                photo_url: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=800"
+                place: "Bangkok, Thailandia",
+                country: "Thailandia",
+                lat: 13.7563,
+                lng: 100.5018,
+                date_label: "MESE ANNO",
+                caption: "Inserisci qui il tuo ricordo o la didascalia per Bangkok.",
+                photo_url: "LINK_FOTO_SUPABASE_BANGKOK"
             },
             {
-                place: "Atene, Grecia",
-                country: "Grecia",
-                lat: 37.9838,
-                lng: 23.7275,
-                date_label: "Maggio 2021",
-                caption: "Acropoli all'alba prima delle folle: vale la sveglia presto.",
-                photo_url: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=800"
+                place: "Tempio Bianco, Chiang Rai",
+                country: "Thailandia",
+                lat: 19.8242,
+                lng: 99.8234,
+                date_label: "MESE ANNO",
+                caption: "Inserisci qui il tuo ricordo o la didascalia per il Tempio Bianco.",
+                photo_url: "LINK_FOTO_SUPABASE_CHIANG_RAI"
+            },
+            {
+                place: "Il Cairo, Egitto",
+                country: "Egitto",
+                lat: 30.0444,
+                lng: 31.2357,
+                date_label: "MESE ANNO",
+                caption: "Inserisci qui il tuo ricordo o la didascalia per Il Cairo.",
+                video_url: "LINK_VIDEO_SUPABASE_CAIRO" // 🎥 Usiamo video_url invece di photo_url
+            },
+            {
+                place: "Jeddah, Arabia Saudita",
+                country: "Arabia Saudita",
+                lat: 21.5433,
+                lng: 39.1728,
+                date_label: "MESE ANNO",
+                caption: "Inserisci qui il tuo ricordo o la didascalia per Jeddah.",
+                photo_url: "LINK_FOTO_SUPABASE_JEDDAH"
+            },
+            {
+                place: "Bari, Italia",
+                country: "Italia",
+                lat: 41.1171,
+                lng: 16.8719,
+                date_label: "MESE ANNO",
+                caption: "Inserisci qui il tuo ricordo o la didascalia per Bari.",
+                photo_url: "LINK_FOTO_SUPABASE_BARI"
+            },
+            {
+                place: "L'Aia, Paesi Bassi",
+                country: "Paesi Bassi",
+                lat: 52.0705,
+                lng: 4.3007,
+                date_label: "MESE ANNO",
+                caption: "Inserisci qui il tuo ricordo o la didascalia per L'Aia.",
+                photo_url: "LINK_FOTO_SUPABASE_LA_AIA"
+            },
+            {
+                place: "Tenerife, Spagna",
+                country: "Spagna",
+                lat: 28.2916,
+                lng: -16.6291,
+                date_label: "MESE ANNO",
+                caption: "Inserisci qui il tuo ricordo o la didascalia per Tenerife.",
+                photo_url: "LINK_FOTO_SUPABASE_TENERIFE"
+            },
+            {
+                place: "Barcellona, Spagna",
+                country: "Spagna",
+                lat: 41.3851,
+                lng: 2.1734,
+                date_label: "MESE ANNO",
+                caption: "Inserisci qui il tuo ricordo o la didascalia per Barcellona.",
+                photo_url: "LINK_FOTO_SUPABASE_BARCELLONA"
             }
         ];
 
@@ -1011,9 +1056,17 @@
                 popupAnchor: [0, -28],
             });
 
-            places.forEach(function (p) {
+           places.forEach(function (p) {
+                // Scegliamo se mostrare il video (se presente) o la foto
+                let mediaHtml = '';
+                if (p.video_url) {
+                    mediaHtml = '<video class="travel-popup-photo" src="' + p.video_url + '" autoplay loop muted playsinline></video>';
+                } else {
+                    mediaHtml = '<img class="travel-popup-photo" src="' + p.photo_url + '" alt="' + p.place + '" loading="lazy">';
+                }
+
                 const popupHtml =
-                    '<img class="travel-popup-photo" src="' + p.photo_url + '" alt="' + p.place + '" loading="lazy">' +
+                    mediaHtml +
                     '<div class="travel-popup-body">' +
                         '<div class="travel-popup-place">' + p.place + '</div>' +
                         '<div class="travel-popup-date">' + p.date_label + '</div>' +
@@ -1023,6 +1076,8 @@
                 L.marker([p.lat, p.lng], { icon: customIcon })
                     .addTo(map)
                     .bindPopup(popupHtml, { closeButton: true, maxWidth: 240, minWidth: 240 });
+
+                points.push([p.lat, p.lng]);
             });
 
             if (home) {
