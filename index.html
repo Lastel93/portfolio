@@ -920,6 +920,9 @@
     </script>
 
     <script>
+        <script>
+
+        /* ---- 2.1 DATI DEI TUOI VIAGGI REALI (Modifica qui gli URL di Supabase e le date) ---- */
         const travelPlaces = [
             {
                 place: "Favignana, Italia",
@@ -928,7 +931,7 @@
                 lng: 12.3256,
                 date_label: "MESE ANNO",
                 caption: "Inserisci qui il tuo ricordo o la didascalia per Favignana.",
-                photo_url: "LINK_FOTO_SUPABASE_FAVIGNANA"
+                photo_url: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=800" // Sostituisci con link Supabase
             },
             {
                 place: "Agadir, Marocco",
@@ -973,7 +976,7 @@
                 lng: 31.2357,
                 date_label: "MESE ANNO",
                 caption: "Inserisci qui il tuo ricordo o la didascalia per Il Cairo.",
-                video_url: "LINK_VIDEO_SUPABASE_CAIRO" // 🎥 Usiamo video_url invece di photo_url
+                video_url: "LINK_VIDEO_SUPABASE_CAIRO" // 🎥 Questo pin userà il video!
             },
             {
                 place: "Jeddah, Arabia Saudita",
@@ -1022,19 +1025,20 @@
             }
         ];
 
+        /* ---- 2.1bis CASA — punto base della mappa ---- */
         const homeLocation = {
             place: "Milano — Base",
             lat: 45.4642,
             lng: 9.1900
         };
 
+        /* ---- 2.2 INIZIALIZZAZIONE MAPPA CON LOGICA FOTO/VIDEO + AUTOFOCUS ---- */
         function initTravelMap(places, home) {
             const mapEl = document.getElementById('travel-map');
             if (!mapEl || typeof L === 'undefined') return;
 
+            // Inizializziamo senza centro fisso per permettere l'autofocus su tutti i pin
             const map = L.map('travel-map', {
-                center: [20, 10],
-                zoom: 2.4,
                 minZoom: 1.5,
                 maxZoom: 8,
                 worldCopyJump: true,
@@ -1056,8 +1060,11 @@
                 popupAnchor: [0, -28],
             });
 
-           places.forEach(function (p) {
-                // Scegliamo se mostrare il video (se presente) o la foto
+            // Array di supporto per calcolare l'inquadratura globale di tutti i pin
+            const points = [];
+
+            places.forEach(function (p) {
+                // Generazione intelligente del media: video_url se presente, altrimenti photo_url
                 let mediaHtml = '';
                 if (p.video_url) {
                     mediaHtml = '<video class="travel-popup-photo" src="' + p.video_url + '" autoplay loop muted playsinline></video>';
@@ -1102,8 +1109,17 @@
                         '</div>',
                         { closeButton: true, maxWidth: 200, minWidth: 160 }
                     );
+
+                points.push([home.lat, home.lng]);
             }
 
+            // Forza l'inquadratura automatica basandosi su TUTTE le coordinate inserite
+            if (points.length > 0) {
+                const bounds = L.latLngBounds(points);
+                map.fitBounds(bounds, { padding: [50, 50] });
+            }
+
+            // Gestione automatica delle statistiche in alto
             const uniqueCountries = new Set(places.map(function (p) { return p.country; }));
             const countEl = document.getElementById('stat-countries');
             const placesEl = document.getElementById('stat-places');
@@ -1111,101 +1127,10 @@
             if (placesEl) placesEl.textContent = places.length;
         }
 
+        /* ---- 2.3 AVVIO ---- */
         document.addEventListener('DOMContentLoaded', function () {
             initTravelMap(travelPlaces, homeLocation);
         });
     </script>
-
-    <script>
-        const wavePattern = [30,45,60,25,40,75,50,60,85,40,30,55,70,45,65,90,35,50,75,60,40,65,80,45,30,55,70,60,75,40,50,35,65,80,55,45,70,85,40,30,60,50,45,75,90,55,40,65,70,35];
-
-        document.addEventListener("DOMContentLoaded", function() {
-            const tracks = ['track1', 'track2', 'track3'];
-            
-            tracks.forEach(trackId => {
-                const container = document.getElementById(`wave-${trackId}`);
-                const audio = document.getElementById(`audio-${trackId}`);
-                
-                if (!container || !audio) return;
-
-                wavePattern.forEach((height, index) => {
-                    const bar = document.createElement('div');
-                    bar.className = 'sc-wave-bar';
-                    bar.style.height = height + '%';
-                    container.appendChild(bar);
-                });
-
-                audio.addEventListener('timeupdate', () => {
-                    const progress = audio.currentTime / audio.duration;
-                    const bars = container.querySelectorAll('.sc-wave-bar');
-                    const barsToColor = Math.floor(progress * bars.length);
-                    
-                    bars.forEach((bar, idx) => {
-                        if (idx <= barsToColor && progress > 0) {
-                            bar.classList.add('played');
-                        } else {
-                            bar.classList.remove('played');
-                        }
-                    });
-
-                    const current = formatTime(audio.currentTime);
-                    const total = isNaN(audio.duration) ? "00:00" : formatTime(audio.duration);
-                    document.getElementById(`time-${trackId}`).textContent = `${current} / ${total}`;
-                });
-
-                audio.addEventListener('loadedmetadata', () => {
-                    document.getElementById(`time-${trackId}`).textContent = `00:00 / ${formatTime(audio.duration)}`;
-                });
-            });
-        });
-
-        function togglePlay(trackId) {
-            const currentAudio = document.getElementById(`audio-${trackId}`);
-            const currentTrackElement = document.querySelector(`[data-track-id="${trackId}"]`);
-            const playIcon = currentTrackElement.querySelector('.play-icon');
-            const pauseIcon = currentTrackElement.querySelector('.pause-icon');
-
-            if (currentAudio.paused) {
-                document.querySelectorAll('audio').forEach(audio => {
-                    if (audio.id !== `audio-${trackId}`) {
-                        audio.pause();
-                        const parent = audio.closest('.soundcloud-track');
-                        if(parent) {
-                            parent.querySelector('.play-icon').style.display = 'block';
-                            parent.querySelector('.pause-icon').style.display = 'none';
-                        }
-                    }
-                });
-                
-                currentAudio.play();
-                playIcon.style.display = 'none';
-                pauseIcon.style.display = 'block';
-            } else {
-                currentAudio.pause();
-                playIcon.style.display = 'block';
-                pauseIcon.style.display = 'none';
-            }
-        }
-
-        function seekTrack(event, trackId) {
-            const audio = document.getElementById(`audio-${trackId}`);
-            const container = document.getElementById(`wave-${trackId}`);
-            if (!audio || !container) return;
-
-            const rect = container.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const width = rect.width;
-            const percentage = clickX / width;
-
-            audio.currentTime = percentage * audio.duration;
-        }
-
-        function formatTime(seconds) {
-            const min = Math.floor(seconds / 60);
-            const sec = Math.floor(seconds % 60);
-            return (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
-        }
-    </script>
-
 </body>
 </html>
