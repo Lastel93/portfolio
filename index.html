@@ -271,7 +271,7 @@
             transform: translateY(0);
         }
 
-        /* =====================================================
+       /* =====================================================
            5. SEZIONE TRAVEL MAP
         ===================================================== */
         .travel-section {
@@ -288,6 +288,11 @@
             align-items: flex-end;
             flex-wrap: wrap;
             gap: 20px;
+            width: 100%;
+        }
+
+        .travel-header-left {
+            text-align: left;
         }
 
         .travel-header-left h2 {
@@ -300,7 +305,7 @@
         }
 
         .travel-header-left p {
-            padding-left: 25px;
+            padding-left: 20px;
             color: var(--text-muted);
             font-size: 1.05rem;
             font-weight: 500;
@@ -335,8 +340,8 @@
         }
 
         .travel-map-wrapper {
-            max-width: 940px;
-            margin: 0 auto;
+            max-width: 940px;      /* 👈 La mappa rimane della dimensione ridotta desiderata */
+            margin: 0 auto;        /* 👈 Centra solo la mappa */
             padding: 0 40px;
             width: 100%;
         }
@@ -344,7 +349,7 @@
         .travel-map-frame {
             position: relative;
             width: 100%;
-            height: 640px;
+            height: 450px;         /* 👈 Altezza ridotta a una finestra più compatta */
             border-radius: 24px;
             overflow: hidden;
             border: 1px solid #1f2937;
@@ -356,160 +361,6 @@
             height: 100%;
             background: #0e1118;
         }
-
-        .leaflet-container {
-            font-family: var(--font-main);
-            background: #0e1118;
-        }
-
-        .leaflet-control-zoom {
-            border: none !important;
-            margin: 18px !important;
-        }
-
-        .leaflet-control-zoom a {
-            background: rgba(17, 24, 39, 0.85) !important;
-            backdrop-filter: blur(6px);
-            color: #f8fafc !important;
-            border: 1px solid #2a3343 !important;
-            width: 36px !important;
-            height: 36px !important;
-            line-height: 36px !important;
-            font-size: 18px !important;
-            border-radius: 10px !important;
-            margin-bottom: 8px !important;
-        }
-
-        .leaflet-control-zoom a:hover {
-            background: rgba(30, 41, 59, 0.95) !important;
-        }
-
-        .leaflet-control-attribution {
-            background: rgba(11, 15, 25, 0.7) !important;
-            color: var(--text-muted) !important;
-            font-size: 10px !important;
-        }
-
-        .leaflet-control-attribution a {
-            color: #8cb5ff !important;
-        }
-
-        .travel-pin {
-            position: relative;
-            width: 26px;
-            height: 26px;
-        }
-
-        .travel-pin-drop {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 26px;
-            height: 26px;
-            border-radius: 50% 50% 50% 0;
-            transform: rotate(-45deg);
-            background: linear-gradient(135deg, #f196ff, #dc2743);
-            box-shadow: 0 4px 12px rgba(220, 39, 67, 0.5);
-            border: 2px solid #0b0f19;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .travel-pin-dot {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            width: 10px;
-            height: 10px;
-            background: #0b0f19;
-            border-radius: 50%;
-        }
-
-        .travel-pin:hover .travel-pin-drop {
-            transform: rotate(-45deg) scale(1.15);
-            box-shadow: 0 6px 16px rgba(220, 39, 67, 0.7);
-        }
-
-        .home-pin {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ffe08a, #ffb84d);
-            border: 2px solid #0b0f19;
-            box-shadow: 0 4px 14px rgba(255, 184, 77, 0.55);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .home-pin:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 18px rgba(255, 184, 77, 0.75);
-        }
-
-        .leaflet-popup-content-wrapper {
-            background: #111827 !important;
-            color: var(--text-light) !important;
-            border-radius: 16px !important;
-            padding: 0 !important;
-            border: 1px solid #2a3343;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5) !important;
-        }
-
-        .leaflet-popup-tip {
-            background: #111827 !important;
-        }
-
-        .leaflet-popup-content {
-            margin: 0 !important;
-            width: 240px !important;
-        }
-
-        .leaflet-popup-close-button {
-            color: var(--text-muted) !important;
-            font-size: 20px !important;
-            padding: 8px 10px 0 0 !important;
-            z-index: 10;
-        }
-
-        .leaflet-popup-close-button:hover {
-            color: var(--text-light) !important;
-        }
-
-        .travel-popup-photo {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 16px 16px 0 0;
-            display: block;
-        }
-
-        .travel-popup-body {
-            padding: 14px 16px 16px 16px;
-        }
-
-        .travel-popup-place {
-            font-size: 1.05rem;
-            font-weight: 800;
-            letter-spacing: -0.3px;
-            margin-bottom: 2px;
-        }
-
-        .travel-popup-date {
-            font-size: 0.8rem;
-            color: #d4537e;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-
-        .travel-popup-caption {
-            font-size: 0.88rem;
-            color: #cbd5e1;
-            line-height: 1.5;
-        }
-
         /* =====================================================
            6. SEZIONE PASSIONS & SOUNDCLOUD PLAYER (INTEGRATA)
         ===================================================== */
