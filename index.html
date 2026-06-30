@@ -919,7 +919,8 @@
         document.addEventListener("DOMContentLoaded", reveal);
     </script>
 
-    <script>
+   <script>
+        /* ---- 2.1 DATI DEI TUOI VIAGGI REALI ---- */
         const travelPlaces = [
             {
                 place: "Favignana, Italia",
@@ -973,7 +974,7 @@
                 lng: 31.2357,
                 date_label: "MESE ANNO",
                 caption: "Inserisci qui il tuo ricordo o la didascalia per Il Cairo.",
-                video_url: "LINK_VIDEO_SUPABASE_CAIRO" // 🎥 Usiamo video_url invece di photo_url
+                video_url: "LINK_VIDEO_SUPABASE_CAIRO"
             },
             {
                 place: "Jeddah, Arabia Saudita",
@@ -1028,13 +1029,13 @@
             lng: 9.1900
         };
 
+        /* ---- 2.2 INIZIALIZZAZIONE MAPPA ---- */
         function initTravelMap(places, home) {
             const mapEl = document.getElementById('travel-map');
             if (!mapEl || typeof L === 'undefined') return;
 
+            // Inizializziamo senza centro fisso per attivare l'autofocus completo
             const map = L.map('travel-map', {
-                center: [20, 10],
-                zoom: 2.4,
                 minZoom: 1.5,
                 maxZoom: 8,
                 worldCopyJump: true,
@@ -1056,8 +1057,10 @@
                 popupAnchor: [0, -28],
             });
 
-           places.forEach(function (p) {
-                // Scegliamo se mostrare il video (se presente) o la foto
+            // 🌟 RISOLTO: Ora l'array dei punti è definito correttamente!
+            const points = [];
+
+            places.forEach(function (p) {
                 let mediaHtml = '';
                 if (p.video_url) {
                     mediaHtml = '<video class="travel-popup-photo" src="' + p.video_url + '" autoplay loop muted playsinline></video>';
@@ -1102,6 +1105,14 @@
                         '</div>',
                         { closeButton: true, maxWidth: 200, minWidth: 160 }
                     );
+
+                points.push([home.lat, home.lng]);
+            }
+
+            // 🌟 AUTOFOCUS: Allarga la mappa in automatico per includere tutti gli 11 pin + la base
+            if (points.length > 0) {
+                const bounds = L.latLngBounds(points);
+                map.fitBounds(bounds, { padding: [50, 50] });
             }
 
             const uniqueCountries = new Set(places.map(function (p) { return p.country; }));
