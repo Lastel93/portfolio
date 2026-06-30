@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>stef. | portfolio</title>
 
-    <!-- =====================================================
-         LIBRERIA MAPPA — Leaflet (gratis, no API key)
-         Usata solo dalla sezione Travel più in basso
-    ===================================================== -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -277,12 +273,7 @@
 
         /* =====================================================
            5. SEZIONE TRAVEL MAP
-           Tutto lo stile della mappa e dei pin vive qui sotto.
-           Vedi anche il markup nel <body> e i dati nello <script>
-           in fondo alla pagina (sezione "TRAVEL MAP — DATI E LOGICA").
         ===================================================== */
-
-        /* --- 5.1 Header della sezione (titolo + contatori) --- */
         .travel-section {
             background: #0b0f19;
             padding: 60px 0 100px 0;
@@ -343,7 +334,6 @@
             margin-top: 4px;
         }
 
-        /* --- 5.2 Contenitore della mappa --- */
         .travel-map-wrapper {
             max-width: 1400px;
             margin: 0 auto;
@@ -363,10 +353,9 @@
         #travel-map {
             width: 100%;
             height: 100%;
-            background: #0e1118; /* colore visibile mentre i tile caricano */
+            background: #0e1118;
         }
 
-        /* --- 5.3 Override estetico di Leaflet (look "poster", non widget Google) --- */
         .leaflet-container {
             font-family: var(--font-main);
             background: #0e1118;
@@ -404,7 +393,6 @@
             color: #8cb5ff !important;
         }
 
-        /* --- 5.4 Pin custom (goccia + pallino, stile WeRoad) --- */
         .travel-pin {
             position: relative;
             width: 26px;
@@ -440,7 +428,6 @@
             box-shadow: 0 6px 16px rgba(220, 39, 67, 0.7);
         }
 
-        /* --- 5.4bis Pin "Casa" — cerchio dorato con icona casetta, sempre su Milano --- */
         .home-pin {
             width: 36px;
             height: 36px;
@@ -459,7 +446,6 @@
             box-shadow: 0 6px 18px rgba(255, 184, 77, 0.75);
         }
 
-        /* --- 5.5 Popup compatto al click sul pin --- */
         .leaflet-popup-content-wrapper {
             background: #111827 !important;
             color: var(--text-light) !important;
@@ -524,7 +510,121 @@
         }
 
         /* =====================================================
-           6. RESPONSIVE (mobile/tablet)
+           6. SEZIONE PASSIONS & SOUNDCLOUD PLAYER (INTEGRATA)
+        ===================================================== */
+        .passions-section {
+            background: #0b0f19;
+            padding: 60px 0 120px 0;
+            border-top: 1px solid #1f2937;
+        }
+
+        .passions-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .audio-feed-container {
+            max-width: 800px;
+            margin: 40px 0 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .soundcloud-track {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .soundcloud-track:hover {
+            border-color: #f196ff;
+            transform: translateY(-2px);
+        }
+
+        .sc-play-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-banner);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .sc-play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(188, 165, 255, 0.4);
+        }
+
+        .sc-play-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: #0b0f19;
+            transition: transform 0.1s ease;
+        }
+
+        .sc-track-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .sc-track-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .sc-track-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: -0.3px;
+        }
+
+        .sc-track-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .sc-waveform-container {
+            height: 40px;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .sc-wave-bar {
+            flex-grow: 1;
+            background-color: #374151;
+            border-radius: 2px 2px 0 0;
+            transition: background-color 0.1s ease;
+        }
+
+        .sc-wave-bar.played {
+            background: linear-gradient(to top, #ffe08a, #f196ff);
+        }
+
+        /* =====================================================
+           7. RESPONSIVE (mobile/tablet)
         ===================================================== */
         @media (max-width: 968px) {
             .profile-container { flex-direction: column; text-align: center; gap: 20px; }
@@ -532,6 +632,7 @@
             .post-media-side { width: 100%; height: 50vh; }
             .post-text-side { width: 100%; padding: 40px 20px; }
             .post-title { font-size: 1.8rem; }
+            .audio-feed-container { margin: 40px 0 0 0; }
         }
 
         @media (max-width: 768px) {
@@ -540,14 +641,14 @@
             .travel-map-wrapper { padding: 0 20px; }
             .travel-stats { gap: 16px; }
             .travel-stat-number { font-size: 1.6rem; }
+            .passions-container { padding: 0 20px; }
+            .soundcloud-track { padding: 15px; gap: 15px; }
+            .sc-play-btn { width: 50px; height: 50px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- =====================================================
-         HEADER — foto profilo, nome, ruolo
-    ===================================================== -->
     <header class="profile-header">
         <div class="profile-container">
             <div class="profile-avatar-wrapper">
@@ -562,10 +663,6 @@
         </div>
     </header>
 
-    <!-- =====================================================
-         NAV A "STORIE" — i 4 cerchietti che scrollano alle sezioni
-         Aggiungi qui un 5° cerchietto se vuoi anche "Passions" da solo
-    ===================================================== -->
     <nav class="highlights-section">
         <div class="highlights-container">
             <a href="#work-feed" class="story-circle-wrapper">
@@ -589,9 +686,6 @@
 
     <main class="feed-container">
 
-        <!-- =====================================================
-             SEZIONE WORK EXPERIENCE
-        ===================================================== -->
         <div id="work-feed">
             <h2 class="feed-section-title">Work Experience</h2>
 
@@ -669,9 +763,6 @@
             </article>
         </div>
 
-        <!-- =====================================================
-             SEZIONE DIGITAL PRODUCTS
-        ===================================================== -->
         <div id="projects-feed">
             <h2 class="feed-section-title">Digital Products</h2>
 
@@ -710,17 +801,13 @@
             </article>
         </div>
 
-        <!-- =====================================================
-             SEZIONE TRAVEL MAP
-             - Titolo e sottotitolo: modifica il testo dentro .travel-header-left
-             - Contatori "Paesi" / "Tappe": calcolati automaticamente dallo script
-             - Mappa: il <div id="travel-map"> viene riempito da Leaflet via JS
-        ===================================================== -->
         <section class="travel-section" id="travel-feed">
             <div class="travel-header">
-                <div class="travel-header-left">
-                    <h2>Travel Map</h2>
-                    <p>I posti dove sono stato — clicca un pin per il ricordo.</p>
+                <div class="travel-header">
+                    <div class="travel-header-left" style="padding-left: 0;">
+                        <h2>Travel Map</h2>
+                        <p>I posti dove sono stato — clicca un pin per il ricordo.</p>
+                    </div>
                 </div>
                 <div class="travel-stats">
                     <div class="travel-stat">
@@ -741,17 +828,70 @@
             </div>
         </section>
 
+        <section class="passions-section" id="passions-feed">
+            <div class="passions-container">
+                <div class="travel-header-left" style="padding: 0;">
+                    <h2>Creative & Music Production</h2>
+                    <p>Ascolta le mie produzioni originali — Player interattivo in stile SoundCloud.</p>
+                </div>
+
+                <div class="audio-feed-container">
+                    
+                    <div class="soundcloud-track reveal" data-track-id="track1">
+                        <audio id="audio-track1" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Ambient%20Souls.mp3"></audio>
+                        <button class="sc-play-btn" onclick="togglePlay('track1')">
+                            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                        <div class="sc-track-info">
+                            <div class="sc-track-meta">
+                                <span class="sc-track-title">Ambient Souls</span>
+                                <span class="sc-track-time" id="time-track1">00:00</span>
+                            </div>
+                            <div class="sc-waveform-container" id="wave-track1" onclick="seekTrack(event, 'track1')"></div>
+                        </div>
+                    </div>
+
+                    <div class="soundcloud-track reveal" data-track-id="track2">
+                        <audio id="audio-track2" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Bamboo%20Forest.mp3"></audio>
+                        <button class="sc-play-btn" onclick="togglePlay('track2')">
+                            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                        <div class="sc-track-info">
+                            <div class="sc-track-meta">
+                                <span class="sc-track-title">Bamboo Forest</span>
+                                <span class="sc-track-time" id="time-track2">00:00</span>
+                            </div>
+                            <div class="sc-waveform-container" id="wave-track2" onclick="seekTrack(event, 'track2')"></div>
+                        </div>
+                    </div>
+
+                    <div class="soundcloud-track reveal" data-track-id="track3">
+                        <audio id="audio-track3" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Fly.mp3"></audio>
+                        <button class="sc-play-btn" onclick="togglePlay('track3')">
+                            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                        <div class="sc-track-info">
+                            <div class="sc-track-meta">
+                                <span class="sc-track-title">Fly</span>
+                                <span class="sc-track-time" id="time-track3">00:00</span>
+                            </div>
+                            <div class="sc-waveform-container" id="wave-track3" onclick="seekTrack(event, 'track3')"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- =====================================================
-         SCRIPT 1 — ANIMAZIONE "REVEAL" allo scroll (già presente)
-    ===================================================== -->
     <script>
         window.addEventListener('scroll', reveal);
-
         function reveal() {
             var reveals = document.querySelectorAll('.reveal');
-
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var revealTop = reveals[i].getBoundingClientRect().top;
@@ -762,41 +902,10 @@
                 }
             }
         }
-
         document.addEventListener("DOMContentLoaded", reveal);
     </script>
 
-    <!-- =====================================================
-         SCRIPT 2 — TRAVEL MAP: DATI E LOGICA
-         =====================================================
-
-         COME SOSTITUIRE I DATI FINTI CON SUPABASE:
-         Al posto dell'array statico "travelPlaces" qui sotto, fai:
-
-            async function loadTravelPlaces() {
-                const { data, error } = await supabase
-                    .from('travel_places')
-                    .select('*');
-                if (error) {
-                    console.error(error);
-                    return;
-                }
-                initTravelMap(data);
-            }
-            document.addEventListener('DOMContentLoaded', loadTravelPlaces);
-
-         Schema tabella consigliato "travel_places" su Supabase:
-         - place        text    -> es. "Tokyo, Giappone"
-         - country      text    -> es. "Giappone" (usato per contare i paesi)
-         - lat          float8
-         - lng          float8
-         - date_label   text    -> es. "Marzo 2024" (testo libero)
-         - caption      text    -> breve ricordo/descrizione
-         - photo_url    text    -> URL pubblico da Supabase Storage
-    ===================================================== -->
     <script>
-
-        /* ---- 2.1 DATI (sostituisci questo array con i tuoi viaggi reali) ---- */
         const travelPlaces = [
             {
                 place: "Tokyo, Giappone",
@@ -854,23 +963,16 @@
             }
         ];
 
-        /* ---- 2.1bis CASA — pin speciale a forma di casetta, separato dai viaggi ----
-           Non entra nei contatori "Paesi"/"Tappe" e non finisce nella lista
-           viaggi: è semplicemente il punto "base" sulla mappa.
-           Per spostarlo, cambia solo lat/lng.
-        */
         const homeLocation = {
             place: "Milano — Base",
             lat: 45.4642,
             lng: 9.1900
         };
 
-        /* ---- 2.2 INIZIALIZZAZIONE MAPPA (di norma non serve toccare qui sotto) ---- */
         function initTravelMap(places, home) {
             const mapEl = document.getElementById('travel-map');
             if (!mapEl || typeof L === 'undefined') return;
 
-            // Mappa base, centrata sul mondo, zoom limitato per restare "poster"
             const map = L.map('travel-map', {
                 center: [20, 10],
                 zoom: 2.4,
@@ -881,14 +983,12 @@
                 scrollWheelZoom: true,
             });
 
-            // Tile dark/minimal CARTO — stile poster, niente nomi città/paesi
             L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
                 attribution: '&copy; OpenStreetMap &copy; CARTO',
                 subdomains: 'abcd',
                 maxZoom: 19,
             }).addTo(map);
 
-            // Icona pin custom (goccia rosa/corallo)
             const customIcon = L.divIcon({
                 className: '',
                 html: '<div class="travel-pin"><div class="travel-pin-drop"></div><div class="travel-pin-dot"></div></div>',
@@ -897,7 +997,6 @@
                 popupAnchor: [0, -28],
             });
 
-            // Un marker + popup per ogni posto
             places.forEach(function (p) {
                 const popupHtml =
                     '<img class="travel-popup-photo" src="' + p.photo_url + '" alt="' + p.place + '" loading="lazy">' +
@@ -912,7 +1011,6 @@
                     .bindPopup(popupHtml, { closeButton: true, maxWidth: 240, minWidth: 240 });
             });
 
-            // ---- Pin "Casa" — icona a forma di casetta, distinta dai viaggi ----
             if (home) {
                 const homeIcon = L.divIcon({
                     className: '',
@@ -931,13 +1029,12 @@
                     .addTo(map)
                     .bindPopup(
                         '<div class="travel-popup-body">' +
-                            '<div class="travel-popup-place">🏠 ' + home.place + '</div>' +
+                            '<div class="travel-popup-place"> ' + home.place + '</div>' +
                         '</div>',
                         { closeButton: true, maxWidth: 200, minWidth: 160 }
                     );
             }
 
-            // Contatori automatici "Paesi" / "Tappe"
             const uniqueCountries = new Set(places.map(function (p) { return p.country; }));
             const countEl = document.getElementById('stat-countries');
             const placesEl = document.getElementById('stat-places');
@@ -945,10 +1042,100 @@
             if (placesEl) placesEl.textContent = places.length;
         }
 
-        /* ---- 2.3 AVVIO ---- */
         document.addEventListener('DOMContentLoaded', function () {
             initTravelMap(travelPlaces, homeLocation);
         });
+    </script>
+
+    <script>
+        const wavePattern = [30,45,60,25,40,75,50,60,85,40,30,55,70,45,65,90,35,50,75,60,40,65,80,45,30,55,70,60,75,40,50,35,65,80,55,45,70,85,40,30,60,50,45,75,90,55,40,65,70,35];
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const tracks = ['track1', 'track2', 'track3'];
+            
+            tracks.forEach(trackId => {
+                const container = document.getElementById(`wave-${trackId}`);
+                const audio = document.getElementById(`audio-${trackId}`);
+                
+                if (!container || !audio) return;
+
+                wavePattern.forEach((height, index) => {
+                    const bar = document.createElement('div');
+                    bar.className = 'sc-wave-bar';
+                    bar.style.height = height + '%';
+                    container.appendChild(bar);
+                });
+
+                audio.addEventListener('timeupdate', () => {
+                    const progress = audio.currentTime / audio.duration;
+                    const bars = container.querySelectorAll('.sc-wave-bar');
+                    const barsToColor = Math.floor(progress * bars.length);
+                    
+                    bars.forEach((bar, idx) => {
+                        if (idx <= barsToColor && progress > 0) {
+                            bar.classList.add('played');
+                        } else {
+                            bar.classList.remove('played');
+                        }
+                    });
+
+                    const current = formatTime(audio.currentTime);
+                    const total = isNaN(audio.duration) ? "00:00" : formatTime(audio.duration);
+                    document.getElementById(`time-${trackId}`).textContent = `${current} / ${total}`;
+                });
+
+                audio.addEventListener('loadedmetadata', () => {
+                    document.getElementById(`time-${trackId}`).textContent = `00:00 / ${formatTime(audio.duration)}`;
+                });
+            });
+        });
+
+        function togglePlay(trackId) {
+            const currentAudio = document.getElementById(`audio-${trackId}`);
+            const currentTrackElement = document.querySelector(`[data-track-id="${trackId}"]`);
+            const playIcon = currentTrackElement.querySelector('.play-icon');
+            const pauseIcon = currentTrackElement.querySelector('.pause-icon');
+
+            if (currentAudio.paused) {
+                document.querySelectorAll('audio').forEach(audio => {
+                    if (audio.id !== `audio-${trackId}`) {
+                        audio.pause();
+                        const parent = audio.closest('.soundcloud-track');
+                        if(parent) {
+                            parent.querySelector('.play-icon').style.display = 'block';
+                            parent.querySelector('.pause-icon').style.display = 'none';
+                        }
+                    }
+                });
+                
+                currentAudio.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            } else {
+                currentAudio.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            }
+        }
+
+        function seekTrack(event, trackId) {
+            const audio = document.getElementById(`audio-${trackId}`);
+            const container = document.getElementById(`wave-${trackId}`);
+            if (!audio || !container) return;
+
+            const rect = container.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const width = rect.width;
+            const percentage = clickX / width;
+
+            audio.currentTime = percentage * audio.duration;
+        }
+
+        function formatTime(seconds) {
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
+        }
     </script>
 
 </body>
