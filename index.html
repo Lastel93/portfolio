@@ -158,7 +158,7 @@
 
         /* =====================================================
            4. SEZIONE COMPLETA: COOL PROJECTS (FEED UNIFICATO)
-        ===================================================== */
+        ==================================================== */
         .feed-container {
             width: 100%;
         }
@@ -531,6 +531,17 @@
             gap: 20px;
         }
 
+        .music-section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-align: center;
+            margin-bottom: 10px;
+            background: var(--gradient-banner);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .soundcloud-track {
             background: #111827;
             border: 1px solid #1f2937;
@@ -679,13 +690,9 @@
 
     <main class="feed-container">
 
-        <!-- =====================================================
-             SEZIONE UNICA ED INTEGRATA: COOL PROJECTS
-        ===================================================== -->
         <div id="projects-feed">
             <h2 class="feed-section-title">Cool Projects</h2>
 
-            <!-- 1. BARILLA -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barilla-neve.JPG" alt="Barilla Innevata">
@@ -710,7 +717,6 @@
                 </div>
             </article>
 
-            <!-- 2. GETIR -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Getir.jpg" alt="Getir Operations">
@@ -735,7 +741,6 @@
                 </div>
             </article>
 
-            <!-- 3. EY -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" alt="EY Project Management">
@@ -761,7 +766,6 @@
                 </div>
             </article>
 
-            <!-- 4. PERSEBES -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/persebes.png" alt="Persebes Design">
@@ -786,7 +790,6 @@
                 </div>
             </article>
 
-            <!-- 5. SMART MENU -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200" alt="SmartMenu Local SaaS">
@@ -811,7 +814,6 @@
                 </div>
             </article>
 
-            <!-- 6. HUMAN UNIVERSE -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200" alt="Human Universe">
@@ -835,7 +837,6 @@
                 </div>
             </article>
 
-            <!-- 7. 3D MODELS -->
             <article class="social-post">
                 <div class="post-media-side">
                     <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200" alt="3D Models">
@@ -861,14 +862,11 @@
             </article>
         </div>
 
-        <!-- =====================================================
-             SEZIONE: TRAVEL MAP (PULITA)
-        ===================================================== -->
         <section class="travel-section" id="travel-feed">
             <div class="travel-header">
                 <div class="travel-header-left" style="padding-left: 0;">
                     <h2>Travel Map</h2>
-                    <p>I posti dove sono stato — clicca un pin per il ricordo.</p>
+                    <p>I posti dove sono stato, clicca per vedere il ricordo</p>
                 </div>
             </div>
             <div class="travel-map-wrapper">
@@ -878,9 +876,6 @@
             </div>
         </section>
 
-        <!-- =====================================================
-             SEZIONE: CAMERA ROLL (FOTO DELLE PASSIONI STILE POLAROID)
-        ===================================================== -->
         <section class="camera-roll-section" id="camera-roll-feed">
             <div class="camera-roll-container">
                 <div class="travel-header-left" style="padding: 0;">
@@ -890,36 +885,33 @@
 
                 <div class="polaroid-grid">
                     
-                    <!-- FOTO 1: MOTO -->
                     <div class="polaroid-item reveal" style="--polaroid-angle: -1.5deg;">
                         <div class="polaroid-media-box">
-                            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=800" alt="Moto">
+                            <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/gallianopark.jpg" alt="Galliano Park">
                         </div>
-                        <div class="polaroid-caption">On the road — Ride Hard</div>
+                        <div class="polaroid-caption">In pista con qualunque cosa mi capiti</div>
                     </div>
 
-                    <!-- FOTO 2: MAGIC CANVAS -->
                     <div class="polaroid-item reveal" style="--polaroid-angle: 2deg;">
                         <div class="polaroid-media-box">
-                            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=800" alt="Magic Canvas">
+                            <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/softmirror.jpg" alt="Soft Mirrors">
                         </div>
-                        <div class="polaroid-caption">Magic Canvas Art Studio</div>
+                        <div class="polaroid-caption">specchi artigianali, morbidissimi</div>
                     </div>
 
-                    <!-- FOTO 3: SOFT MIRRORS -->
                     <div class="polaroid-item reveal" style="--polaroid-angle: -2.5deg;">
                         <div class="polaroid-media-box">
-                            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=800" alt="Soft Mirrors">
+                            <video src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/magicanvas.mp4" autoplay loop muted playsinline></video>
                         </div>
-                        <div class="polaroid-caption">Soft Mirrors Reflection</div>
+                        <div class="polaroid-caption">quadri che cambiano con la luce</div>
                     </div>
 
                 </div>
 
-                <!-- PLAYER SOUNDCLOUD IN CODA AL RULLINO -->
                 <div class="audio-feed-container">
                     
-                    <!-- TRACCIA 1 -->
+                    <h2 class="music-section-title">La mia musica</h2>
+                    
                     <div class="soundcloud-track reveal" data-track-id="track1">
                         <audio id="audio-track1" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Ambient%20Souls.mp3"></audio>
                         <button class="sc-play-btn" onclick="togglePlay('track1')">
@@ -935,7 +927,6 @@
                         </div>
                     </div>
 
-                    <!-- TRACCIA 2 -->
                     <div class="soundcloud-track reveal" data-track-id="track2">
                         <audio id="audio-track2" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Bamboo%20Forest.mp3"></audio>
                         <button class="sc-play-btn" onclick="togglePlay('track2')">
@@ -951,7 +942,6 @@
                         </div>
                     </div>
 
-                    <!-- TRACCIA 3 -->
                     <div class="soundcloud-track reveal" data-track-id="track3">
                         <audio id="audio-track3" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Fly.mp3"></audio>
                         <button class="sc-play-btn" onclick="togglePlay('track3')">
@@ -973,9 +963,6 @@
 
     </main>
 
-    <!-- =====================================================
-         SCRIPT LOGICI SITO
-    ===================================================== -->
     <script>
         // Effetto scorrimento schede fluide
         window.addEventListener('scroll', reveal);
@@ -1008,7 +995,6 @@
             { place: "Tenerife, Spagna", country: "Spagna", lat: 28.2916, lng: -16.6291, date_label: "2024", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/tenerife.jpg" },
             { place: "Barcellona, Spagna", country: "Spagna", lat: 41.3851, lng: 2.1734, date_label: "2024", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barcellona.jpg" }
         ];
-
         const homeLocation = { place: "Milano — Base", lat: 45.4642, lng: 9.1900 };
 
         /* ---- INIZIALIZZAZIONE MAPPA LEAFLET ---- */
@@ -1039,7 +1025,6 @@
             });
 
             const points = [];
-
             places.forEach(function (p) {
                 let mediaHtml = '';
                 if (p.video_url) {
@@ -1059,7 +1044,6 @@
                 L.marker([p.lat, p.lng], { icon: customIcon })
                     .addTo(map)
                     .bindPopup(popupHtml, { closeButton: true, maxWidth: 240, minWidth: 240 });
-
                 points.push([p.lat, p.lng]);
             });
 
@@ -1076,7 +1060,6 @@
                     iconAnchor: [18, 30],
                     popupAnchor: [0, -28],
                 });
-
                 L.marker([home.lat, home.lng], { icon: homeIcon })
                     .addTo(map)
                     .bindPopup(
@@ -1085,7 +1068,6 @@
                         '</div>',
                         { closeButton: true, maxWidth: 200, minWidth: 160 }
                     );
-
                 points.push([home.lat, home.lng]);
             }
 
@@ -1104,7 +1086,6 @@
     <script>
         /* ---- COMPONENTE AUDIO PLAYER STILE SOUNDCLOUD ---- */
         let currentAudio = null;
-
         function initAudioPlayers() {
             const tracks = document.querySelectorAll('.soundcloud-track');
             tracks.forEach(track => {
@@ -1133,7 +1114,6 @@
                     const pct = audio.currentTime / audio.duration;
                     const bars = waveContainer.querySelectorAll('.sc-wave-bar');
                     const fillUntil = Math.floor(bars.length * pct);
-                    
                     bars.forEach((b, idx) => {
                         if (idx <= fillUntil && audio.currentTime > 0) {
                             b.classList.add('played');
@@ -1165,7 +1145,6 @@
             }
 
             currentAudio = audio;
-
             if (audio.paused) {
                 audio.play();
                 playIcon.style.display = 'none';
