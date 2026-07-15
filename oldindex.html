@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>stef. | personal portfolio</title>
+    <title>stef. | portfolio</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <style>
+        /* =====================================================
+           1. VARIABILI GLOBALI & RESET
+        ===================================================== */
         :root {
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --bg-page: #f8fafc;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            
-            /* Gradienti e colori presi direttamente dal tuo screenshot */
+            --bg-page: #0b0f19;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
             --gradient-banner: linear-gradient(90deg, #8cb5ff 0%, #bca5ff 50%, #f196ff 100%);
-            --color-pill-work: #a0c4ff;
-            --color-pill-projects: #b8b2ff;
-            --color-pill-travel: #d6a6ff;
-            --color-pill-passions: #f39eff;
         }
 
         * {
@@ -29,36 +30,47 @@
         body {
             font-family: var(--font-main);
             background-color: var(--bg-page);
-            color: var(--text-dark);
-            line-height: 1.6;
+            color: var(--text-light);
+            overflow-x: hidden;
         }
 
-        /* ================= INTESTAZIONE (HEADER) ================= */
-        .cover-banner {
+        /* =====================================================
+           2. HEADER STILE SOCIAL
+        ===================================================== */
+        .profile-header {
             background: var(--gradient-banner);
-            padding: 60px 20px;
-            display: flex;
-            align-items: center;
+            padding: 80px 20px;
+            position: relative;
         }
 
-        .header-container {
-            max-width: 1000px;
-            width: 100%;
+        .profile-container {
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 50px;
+        }
+
+        .profile-avatar-wrapper {
+            position: relative;
+            padding: 5px;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            width: 160px;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0; 
         }
 
         .profile-avatar {
-            width: 160px;
-            height: 160px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            border: 4px solid #ffffff;
             overflow: hidden;
-            background-color: #e2e8f0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            flex-shrink: 0;
+            background: #1e293b;
         }
 
         .profile-avatar img {
@@ -67,577 +79,1124 @@
             object-fit: cover;
         }
 
-        .header-titles {
+        .profile-info h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #0b0f19;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .profile-info p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0b0f19;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* =====================================================
+           3. STORIES / HIGHLIGHTS DI NAVIGAZIONE
+        ===================================================== */
+        .highlights-section {
+            background: #111827;
+            padding: 30px 20px;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        .highlights-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 35px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .highlights-container::-webkit-scrollbar { display: none; }
+
+        .story-circle-wrapper {
+            text-decoration: none;
+            color: var(--text-light);
             display: flex;
             flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
         }
 
-        .main-title {
-            font-size: 5rem;
-            font-weight: 800;
-            line-height: 1;
-            margin: 0;
-            letter-spacing: -2px;
-        }
+        .story-circle-wrapper:hover { transform: scale(1.05); }
 
-        .sub-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 10px 0 0 0;
-            letter-spacing: -0.5px;
-        }
-
-        /* ================= STRISCIA NAVBAR STICKY ================= */
-        .pill-nav {
-            background-color: rgba(248, 250, 252, 0.8);
-            backdrop-filter: blur(8px);
-            padding: 15px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .nav-container {
-            max-width: 1000px;
-            margin: 0 auto;
+        .story-ring {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background: var(--gradient-banner);
+            padding: 3px;
             display: flex;
-            gap: 15px;
+            align-items: center;
+            justify-content: center;
         }
 
-        .pill-btn {
-            display: inline-block;
-            padding: 12px 28px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-decoration: none;
-            color: #000000;
-            border-radius: 30px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .pill-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .pill-work { background-color: var(--color-pill-work); }
-        .pill-projects { background-color: var(--color-pill-projects); }
-        .pill-travel { background-color: var(--color-pill-travel); }
-        .pill-passions { background-color: var(--color-pill-passions); }
-
-
-        /* ================= CORPO PAGINA (NOTION STYLE) ================= */
-        .main-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px 100px 20px;
-        }
-
-        .notion-section {
-            padding-top: 40px;
-            margin-bottom: 60px;
-        }
-
-        .section-title {
+        .story-content {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #111827;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.8rem;
-            font-weight: 700;
+        }
+
+        .story-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* =====================================================
+           4. SEZIONE COMPLETA: COOL PROJECTS (FEED UNIFICATO)
+        ===================================================== */
+        .feed-container {
+            width: 100%;
+        }
+
+        .feed-section-title {
+            max-width: 1400px;
+            margin: 60px auto 20px auto;
+            padding: 0 40px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            border-left: 5px solid #bca5ff;
+        }
+
+        .social-post {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            min-height: 80vh;
+            position: relative;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        .social-post:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .post-media-side {
+            width: 50%;
+            height: 80vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .post-media-side img, .post-media-side video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease-out;
+        }
+
+        .social-post:hover .post-media-side img {
+            transform: scale(1.03);
+        }
+
+        .post-text-side {
+            width: 50%;
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .post-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient-banner);
+            padding: 2px;
+        }
+        .post-avatar-inner {
+            width: 100%;
+            height: 100%; 
+            background: #000; 
+            border-radius: 50%;
+        }
+
+        .post-author { font-weight: 700; font-size: 1.1rem; }
+        .post-date { color: var(--text-muted); font-size: 0.9rem; }
+
+        .post-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
             margin-bottom: 20px;
             letter-spacing: -0.5px;
         }
 
-        .notion-intro-text {
-            color: var(--text-muted);
-            font-size: 1rem;
+        .post-caption {
+            font-size: 1.15rem;
+            color: #cbd5e1;
+            line-height: 1.7;
             margin-bottom: 25px;
         }
 
-        /* Toggle Card */
-        .notion-toggle-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            padding: 24px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-        }
-
-        .toggle-header {
+        .post-tags {
             display: flex;
-            align-items: center;
-            cursor: pointer;
-            gap: 14px;
-            list-style: none;
-        }
-        .toggle-header::-webkit-details-marker { display: none; }
-        
-        .arrow { font-size: 0.8rem; color: #94a3b8; transition: transform 0.2s ease; }
-        .notion-toggle-card[open] .arrow { transform: rotate(90deg); }
-
-        .company-logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 8px;
-            overflow: hidden;
-            flex-shrink: 0;
-            border: 1px solid #e2e8f0;
-        }
-        .company-logo img { width: 100%; height: 100%; object-fit: cover; }
-
-        .company-meta { display: flex; flex-direction: column; }
-        .role-title { font-size: 1.2rem; font-weight: 700; margin: 0; }
-        .company-name { font-size: 0.95rem; color: var(--text-muted); margin-top: 2px; }
-        .date-badge { font-size: 0.8rem; background: #f1f5f9; padding: 2px 8px; border-radius: 4px; margin-left: 8px; color: var(--text-dark); }
-
-        .toggle-content {
-            padding-left: 28px;
-            margin-top: 20px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
-        /* Foto Asset */
-        .project-media {
-            margin: 20px 0;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #e2e8f0;
-        }
-        .project-media img { width: 100%; display: block; height: auto; }
-        .media-caption { display: block; font-size: 0.85rem; color: var(--text-muted); padding: 10px 14px; background: #f8fafc; border-top: 1px solid #e2e8f0; }
-
-        /* Blocchi di Evidenziazione (Callout) */
-        .notion-callout {
-            border-radius: 8px;
-            padding: 18px;
-            display: flex;
-            gap: 14px;
-            margin: 18px 0;
-        }
-        .callout-icon { font-size: 1.4rem; line-height: 1; }
-        .callout-text h4 { margin: 0 0 6px 0; font-size: 1.05rem; }
-        .callout-text p { margin: 4px 0; font-size: 0.98rem; color: #334155; }
-        .callout-text ul { margin: 8px 0 0 20px; padding: 0; font-size: 0.98rem; color: #334155; }
-        .callout-text li { margin-bottom: 4px; }
-
-        .bg-blue { background: #eff6ff; border: 1px solid #bfdbfe; }
-        .bg-purple { background: #faf5ff; border: 1px solid #e9d5ff; }
-        .bg-yellow { background: #fefce8; border: 1px solid #fef08a; }
-        .bg-gray { background: #f8fafc; border: 1px solid #e2e8f0; }
-
-        .w-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
-        .tag { background: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 500; }
-
-        /* Griglia Prodotti Digitali */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 20px;
-        }
-        .product-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .prod-media { height: 160px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.9rem; border-bottom: 1px solid #e2e8f0; }
-        .prod-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        .prod-content h3 { font-size: 1.3rem; margin-bottom: 2px; }
-        .prod-tagline { font-size: 0.85rem; color: #d97706; font-weight: 600; margin-bottom: 12px; }
-        .prod-content p { font-size: 0.95rem; color: #334155; margin-bottom: 16px; flex-grow: 1; }
-
-        /* ================= CSS TRAVELS & PASSIONS ================= */
-        .scratch-map-container {
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .map-placeholder {
-            height: 400px;
-            background: #f1f5f9;
-            border: 2px dashed #cbd5e1;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #64748b;
-        }
-
-        .map-icon { font-size: 3rem; margin-bottom: 10px; }
-
-        .passion-block {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 30px;
-        }
-
-        .passion-sub-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: var(--text-dark);
-        }
-
-        .passion-text {
+        .hashtag {
+            color: #8cb5ff;
+            font-weight: 600;
+            text-decoration: none;
             font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
         }
 
-        .media-gallery {
-            display: grid;
-            gap: 12px;
-            margin-bottom: 15px;
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
 
-        .triple-gallery { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-        .double-gallery { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-
-        .media-box {
-            height: 180px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #94a3b8;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: background 0.2s ease;
-        }
-        
-        .media-box:hover { background: #f1f5f9; }
-
-        .art-group h4, .audio-tracks-container h4 {
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-            font-weight: 700;
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .audio-tracks-container {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #f1f5f9;
+        /* =====================================================
+           5. SEZIONE TRAVEL MAP (PULITA SENZA CONTATORI)
+        ===================================================== */
+        .travel-section {
+            background: #0b0f19;
+            padding: 60px 0 100px 0;
         }
 
-        .notion-audio-player {
-            background: #f1f5f9;
-            border-radius: 6px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .notion-audio-player:hover { background: #e2e8f0; }
-        .audio-icon { font-size: 1.2rem; color: var(--text-dark); }
-        
-        .audio-info {
+        .travel-header {
+            max-width: 1400px;
+            margin: 0 auto 40px auto;
+            padding: 0 40px;
             display: flex;
             justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 20px;
             width: 100%;
-            font-size: 0.95rem;
+        }
+
+        .travel-header-left {
+            text-align: left;
+        }
+
+        .travel-header-left h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            border-left: 5px solid #bca5ff;
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        .travel-header-left p {
+            padding-left: 20px;
+            color: var(--text-muted);
+            font-size: 1.05rem;
             font-weight: 500;
         }
 
-        .track-duration { color: var(--text-muted); font-size: 0.85rem; }
+        .travel-map-wrapper {
+            max-width: 940px;
+            margin: 0 auto;
+            padding: 0 40px;
+            width: 100%;
+        }
 
-        @media (max-width: 640px) {
-            .header-container { flex-direction: column; text-align: center; gap: 20px; }
-            .main-title { font-size: 3.5rem; }
-            .sub-title { font-size: 1.4rem; }
-            .nav-container { justify-content: center; flex-wrap: wrap; }
-            .pill-btn { padding: 8px 18px; font-size: 0.95rem; }
-            .double-gallery { grid-template-columns: 1fr; }
-            .map-placeholder { height: 250px; }
+        .travel-map-frame {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #1f2937;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+        }
+
+        #travel-map {
+            width: 100%;
+            height: 100%;
+            background: #0e1118;
+        }
+
+        .leaflet-container {
+            font-family: var(--font-main);
+            background: #0e1118;
+        }
+
+        .leaflet-control-zoom {
+            border: none !important;
+            margin: 18px !important;
+        }
+
+        .leaflet-control-zoom a {
+            background: rgba(17, 24, 39, 0.85) !important;
+            backdrop-filter: blur(6px);
+            color: #f8fafc !important;
+            border: 1px solid #2a3343 !important;
+            width: 36px !important;
+            height: 36px !important;
+            line-height: 36px !important;
+            font-size: 18px !important;
+            border-radius: 10px !important;
+            margin-bottom: 8px !important;
+        }
+
+        .leaflet-control-zoom a:hover {
+            background: rgba(30, 41, 59, 0.95) !important;
+        }
+
+        .leaflet-control-attribution {
+            background: rgba(11, 15, 25, 0.7) !important;
+            color: var(--text-muted) !important;
+            font-size: 10px !important;
+        }
+
+        .leaflet-control-attribution a { color: #8cb5ff !important; }
+
+        .travel-pin {
+            position: relative;
+            width: 26px;
+            height: 26px;
+        }
+
+        .travel-pin-drop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            background: linear-gradient(135deg, #f196ff, #dc2743);
+            box-shadow: 0 4px 12px rgba(220, 39, 67, 0.5);
+            border: 2px solid #0b0f19;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .travel-pin-dot {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 10px;
+            height: 10px;
+            background: #0b0f19;
+            border-radius: 50%;
+        }
+
+        .travel-pin:hover .travel-pin-drop {
+            transform: rotate(-45deg) scale(1.15);
+            box-shadow: 0 6px 16px rgba(220, 39, 67, 0.7);
+        }
+
+        .home-pin {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffe08a, #ffb84d);
+            border: 2px solid #0b0f19;
+            box-shadow: 0 4px 14px rgba(255, 184, 77, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .home-pin:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 18px rgba(255, 184, 77, 0.75);
+        }
+
+        .leaflet-popup-content-wrapper {
+            background: #111827 !important;
+            color: var(--text-light) !important;
+            border-radius: 16px !important;
+            padding: 0 !important;
+            border: 1px solid #2a3343;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5) !important;
+        }
+
+        .leaflet-popup-tip { background: #111827 !important; }
+        .leaflet-popup-content { margin: 0 !important; width: 240px !important; }
+        .leaflet-popup-close-button {
+            color: var(--text-muted) !important;
+            font-size: 20px !important;
+            padding: 8px 10px 0 0 !important;
+            z-index: 10;
+        }
+        .leaflet-popup-close-button:hover { color: var(--text-light) !important; }
+
+        .travel-popup-photo {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 16px 16px 0 0;
+            display: block;
+        }
+
+        .travel-popup-body { padding: 14px 16px 16px 16px; }
+        .travel-popup-place { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 2px; }
+        .travel-popup-date { font-size: 0.8rem; color: #d4537e; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .travel-popup-caption { font-size: 0.88rem; color: #cbd5e1; line-height: 1.5; }
+
+        /* =====================================================
+           6. SEZIONE CAMERA ROLL (GRIGLIA POLAROID 3 PER RIGA)
+        ===================================================== */
+        .camera-roll-section {
+            background: #0b0f19;
+            padding: 60px 0 60px 0;
+            border-top: 1px solid #1f2937;
+        }
+
+        .camera-roll-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .polaroid-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .polaroid-item {
+            background: #ffffff;
+            padding: 18px 18px 28px 18px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            transform: rotate(var(--polaroid-angle, 0deg));
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border-radius: 2px;
+        }
+
+        .polaroid-item:hover {
+            transform: scale(1.03) rotate(0deg) !important;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            z-index: 5;
+        }
+
+        .polaroid-media-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #0b0f19;
+            border: 1px solid #e2e8f0;
+        }
+
+        .polaroid-media-box img, .polaroid-media-box video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .polaroid-caption {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e293b;
+            text-align: center;
+            margin-top: 18px;
+            line-height: 1.3;
+            word-wrap: break-word;
+        }
+
+        /* SOUNDCLOUD INTEGRATO IN CODA ALLA SEZIONE */
+        .audio-feed-container {
+            max-width: 800px;
+            margin: 60px auto 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .soundcloud-track {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .soundcloud-track:hover {
+            border-color: #f196ff;
+            transform: translateY(-2px);
+        }
+
+        .sc-play-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-banner);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .sc-play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(188, 165, 255, 0.4);
+        }
+
+        .sc-play-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: #0b0f19;
+            transition: transform 0.1s ease;
+        }
+
+        .sc-track-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .sc-track-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .sc-track-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: -0.3px;
+        }
+
+        .sc-track-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .sc-waveform-container {
+            height: 40px;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .sc-wave-bar {
+            flex-grow: 1;
+            background-color: #374151;
+            border-radius: 2px 2px 0 0;
+            transition: background-color 0.1s ease;
+        }
+
+        .sc-wave-bar.played {
+            background: linear-gradient(to top, #ffe08a, #f196ff);
+        }
+
+        /* =====================================================
+           7. RESPONSIVE (mobile/tablet)
+        ===================================================== */
+        @media (max-width: 968px) {
+            .profile-container { flex-direction: column; text-align: center; gap: 20px; }
+            .social-post, .social-post:nth-child(even) { flex-direction: column; min-height: auto; }
+            .post-media-side { width: 100%; height: 50vh; }
+            .post-text-side { width: 100%; padding: 40px 20px; }
+            .post-title { font-size: 1.8rem; }
+            .polaroid-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        }
+
+        @media (max-width: 768px) {
+            .travel-map-frame { height: 480px; border-radius: 16px; }
+            .travel-header { padding: 0 20px; }
+            .travel-map-wrapper { padding: 0 20px; }
+            .soundcloud-track { padding: 15px; gap: 15px; }
+            .sc-play-btn { width: 50px; height: 50px; }
+            .polaroid-grid { grid-template-columns: 1fr; gap: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="cover-banner">
-        <div class="header-container">
-            <div class="profile-avatar">
-                <img src="https://via.placeholder.com/160" alt="stef. profile">
+    <header class="profile-header">
+        <div class="profile-container">
+            <div class="profile-avatar-wrapper">
+                <div class="profile-avatar">
+                    <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Stef.png" alt="stef.">
+                </div>
             </div>
-            <div class="header-titles">
-                <h1 class="main-title">stef.</h1>
-                <p class="sub-title">my personal portfolio</p>
+            <div class="profile-info">
+                <h1>stef.</h1>
+                <p>Something more about me</p>
             </div>
         </div>
     </header>
 
-    <nav class="pill-nav">
-        <div class="nav-container">
-            <a href="#work" class="pill-btn pill-work">Work</a>
-            <a href="#projects" class="pill-btn pill-projects">Projects</a>
-            <a href="#travel" class="pill-btn pill-travel">Travel</a>
-            <a href="#passions" class="pill-btn pill-passions">Passions</a>
+    <nav class="highlights-section">
+        <div class="highlights-container">
+            <a href="#projects-feed" class="story-circle-wrapper">
+                <div class="story-ring"><div class="story-content"></div></div>
+                <span class="story-label">Cool Projects</span>
+            </a>
+            <a href="#travel-feed" class="story-circle-wrapper">
+                <div class="story-ring"><div class="story-content"></div></div>
+                <span class="story-label">Travel</span>
+            </a>
+            <a href="#camera-roll-feed" class="story-circle-wrapper">
+                <div class="story-ring"><div class="story-content"></div></div>
+                <span class="story-label">Camera Roll</span>
+            </a>
         </div>
     </nav>
 
-    <main class="main-content">
+    <main class="feed-container">
 
-        <section id="work" class="notion-section">
-            <h2 class="section-title">Work Experience</h2>
+        <!-- =====================================================
+             SEZIONE UNICA ED INTEGRATA: COOL PROJECTS
+        ===================================================== -->
+        <div id="projects-feed">
+            <h2 class="feed-section-title">Cool Projects</h2>
 
-            <details class="notion-toggle-card" open>
-                <summary class="toggle-header">
-                    <span class="arrow">▶</span>
-                    <div class="company-logo" style="background: #002f6c;"></div>
-                    <div class="company-meta">
-                        <h3 class="role-title">Central Distribution Planner & Strategic Planner</h3>
-                        <p class="company-name">Barilla Group <span class="date-badge">Nazionale / Internazionale</span></p>
-                    </div>
-                </summary>
-                <div class="toggle-content">
-                    <div class="project-media">
-                        <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barilla-neve.JPG" alt="Barilla Innevata">
-                        <span class="media-caption">Nel ruolo di Central Distribution Planner gestivo tutte le spedizioni in outbound dal magazzino centrale (100+ FTL/day), facendo da pivot tra produzione, logistica e vendite.</span>
-                    </div>
-
-                    <p class="project-brief">
-                        Il mio compito era coordinare la produzione per evitare shortage, organizzare il lavoro in magazzino, assicurare la disponibilità dei mezzi e gestire le criticità direttamente con i team di sales e customer. Durante la pandemia gli shortage sono stati fortissimi e il carico di lavoro era diventato folle (minimo 15 ore al giorno). Ho capito che il processo doveva fare un salto in avanti.
-                    </p>
-
-                    <div class="notion-callout bg-blue">
-                        <span class="callout-icon">💡</span>
-                        <div class="callout-text">
-                            <h4>L'automazione del processo di prenotazione</h4>
-                            <p>Ho costruito un foglio di calcolo che scaricava tutti i dati necessari direttamente da SAP, integrando produzione, disponibilità e ordini. Puscando queste informazioni al mattino a tutte le funzioni, ognuno sapeva in anticipo i rischi di rottura stock (produzione), le previsioni sulla disponibilità merci (sales) e i volumi dei pallet richiesti (logistica). <strong>In questo modo ho ridotto l'effort del mio ruolo da 10-15 ore al giorno a circa 4-5.</strong></p>
+            <!-- 1. BARILLA -->
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barilla-neve.JPG" alt="Barilla Innevata">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">Barilla Group</p>
+                            <p class="post-date">Central & Strategic Planner</p>
                         </div>
                     </div>
+                    <h3 class="post-title">Ottimizzazione Flussi Outbound & Automazione dei Processi</h3>
+                    <p class="post-caption">
+                        Gestivo tutte le spedizioni in outbound dal magazzino centrale con oltre 100 camion al giorno, facendo da pivot tra produzione, logistica e vendite. Durante la pandemia, con shortage fortissimi ho azzerato le inefficienze sviluppando un sistema automatizzato integrato con SAP.
+                    </p>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#SAPAutomation</a>
+                        <a href="#" class="hashtag">#SupplyChain</a>
+                        <a href="#" class="hashtag">#StrategicPlanning</a>
+                    </div>
+                </div>
+            </article>
 
-                    <div class="notion-callout bg-purple">
-                        <span class="callout-icon">📈</span>
-                        <div class="callout-text">
-                            <h4>La promozione allo Strategic Planning & Network Design</h4>
-                            <p>Grazie a questo risultato sono stato inserito nel team strategico, lavorando su progetti ad alto livello come:</p>
-                            <ul>
-                                <li>Pianificazione degli investimenti per nuovi asset (es. dove costruire il nuovo mulino per l'Est Europa).</li>
-                                <li>Ottimizzazione del last mile delivery per i prodotti fresh in Francia.</li>
-                            </ul>
+            <!-- 2. GETIR -->
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Getir.jpg" alt="Getir Operations">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">Getir</p>
+                            <p class="post-date">Operations & Supply Chain</p>
                         </div>
                     </div>
-                    <div class="w-tags">
-                        <span class="tag">SAP</span>
-                        <span class="tag">Process Automation</span>
-                        <span class="tag">Strategic Planning</span>
-                        <span class="tag">Network Design</span>
+                    <h3 class="post-title">Taglio del 50% dei Costi Last Mile con la Predizione Algoritmica</h3>
+                    <p class="post-caption">
+                        Per risolvere il problema dell'alto costo del personale dovuto allo scheduling manuale dei singoli store manager, ho sviluppato interamente su Google Scripts una web app predittiva che ottimizzava rider e picker sul territorio nazionale.
+                    </p>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#GoogleAppsScript</a>
+                        <a href="#" class="hashtag">#PredictivePlanning</a>
+                        <a href="#" class="hashtag">#LastMile</a>
                     </div>
                 </div>
-            </details>
+            </article>
 
-            <details class="notion-toggle-card">
-                <summary class="toggle-header">
-                    <span class="arrow">▶</span>
-                    <div class="company-logo" style="background: #5d3ebd;"></div>
-                    <div class="company-meta">
-                        <h3 class="role-title">Operations & Supply Chain Specialist</h3>
-                        <p class="company-name">Getir</p>
-                    </div>
-                </summary>
-                <div class="toggle-content">
-                    <div class="project-media">
-                        <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Getir.jpg" alt="Getir Operations">
-                        <span class="media-caption">Pianificazione e ottimizzazione dei flussi di delivery urbani e scheduling del personale degli store.</span>
-                    </div>
-
-                    <p class="project-brief">
-                        Il problema principale qui era l'impatto sul costo del personale: lo scheduling dei turni veniva fatto manualmente da ogni singolo store manager. Per azzerare questo workload e avere una pianificazione efficace ma non centralizzata in modo rigido, ho preso in mano la situazione.
-                    </p>
-
-                    <div class="notion-callout bg-yellow">
-                        <span class="callout-icon">🤖</span>
-                        <div class="callout-text">
-                            <h4>Previsione della domanda su Google Scripts</h4>
-                            <p>Ho sviluppato interamente su Google Scripts una web app di planning che prevedeva la domanda della settimana successiva (incrociando storico, stagionalità e promozioni attive). Il software creava uno schedule preciso per ogni store basandosi su organico e contratti, ottimizzando la utilization di rider e picker senza intaccare il livello di servizio. Ho gestito l'intero cambio di processo in Italia con webinar, formazione e assistenza diretta. <strong>Risultato: costo del Last Mile Delivery ridotto del 50%.</strong></p>
+            <!-- 3. EY -->
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" alt="EY Project Management">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">EY (Ernst & Young)</p>
+                            <p class="post-date">Project Manager</p>
                         </div>
                     </div>
-                    <div class="w-tags">
-                        <span class="tag">Google Apps Script</span>
-                        <span class="tag">Predictive Planning</span>
-                        <span class="tag">Last Mile Optimization</span>
-                    </div>
-                </div>
-            </details>
-
-            <details class="notion-toggle-card">
-                <summary class="toggle-header">
-                    <span class="arrow">▶</span>
-                    <div class="company-logo" style="background: #ffe600;"></div>
-                    <div class="company-meta">
-                        <h3 class="role-title">Project Manager - Supply Chain</h3>
-                        <p class="company-name">EY (Ernst & Young)</p>
-                    </div>
-                </summary>
-                <div class="toggle-content">
-                    <p class="project-brief">
-                        Per una multinazionale da 1.5B€ di fatturato, ho gestito come PM l'intera transizione tecnologica dei vecchi sistemi WMS e TMS basati su AS400 verso le nuove piattaforme di gestione. Ho coordinato operativamente il fornitore della tecnologia, i dipartimenti di eccellenza del cliente e le funzioni locali dislocate in 7 diverse nazioni.
+                    <h3 class="post-title">Migrazione Sistemi Cloud WMS/TMS in 7 Nazioni</h3>
+                    <p class="post-caption">
+                        Nel ruolo di Project Manager per una multinazionale da 1.5 miliardi di euro di fatturato, ho guidato la transizione tecnologica dei vecchi sistemi legacy AS400 verso nuove e moderne piattaforme WMS e TMS, orchestrando i flussi in 7 nazioni differenti.
                     </p>
-                    <div class="w-tags">
-                        <span class="tag">Project Management</span>
-                        <span class="tag">Systems Migration</span>
-                        <span class="tag">WMS & TMS</span>
-                        <span class="tag">AS400</span>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#ProjectManagement</a>
+                        <a href="#" class="hashtag">#SystemMigration</a>
+                        <a href="#" class="hashtag">#WMS</a>
+                        <a href="#" class="hashtag">#TMS</a>
                     </div>
                 </div>
-            </details>
+            </article>
+
+            <!-- 4. PERSEBES -->
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/persebes.png" alt="Persebes Design">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">Persebes</p>
+                            <p class="post-date">Brand & E-commerce</p>
+                        </div>
+                    </div>
+                    <h3 class="post-title">Persebes: Da un Foglio Bianco a un E-commerce di Design in 6 Mesi</h3>
+                    <p class="post-caption">
+                        Incaricato da un'artista contemporanea, ho costruito interamente da zero un brand di design e gestito tutto il lancio sul mercato: ingegnerizzazione dei prodotti fisici, marketing strategy, supply chain produttiva e sviluppo completo dell'e-commerce.
+                    </p>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#BrandBuilding</a>
+                        <a href="#" class="hashtag">#Ecommerce</a>
+                        <a href="#" class="hashtag">#Operations</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 5. SMART MENU -->
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200" alt="SmartMenu Local SaaS">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">SmartMenu</p>
+                            <p class="post-date">SaaS Product Design</p>
+                        </div>
+                    </div>
+                    <h3 class="post-title">SmartMenu: Il SaaS Agile da Pochi Centesimi per la Ristorazione</h3>
+                    <p class="post-caption">
+                        Ho ingegnerizzato un'applicazione in grado di generare un sito web pubblico semplicemente scattando una foto al menu cartaceo del locale e compilando un modulo veloce a 4 campi, riducendo i costi di infrastruttura al minimo storico per le piccole pizzerie.
+                    </p>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#SaaS</a>
+                        <a href="#" class="hashtag">#ProductDesign</a>
+                        <a href="#" class="hashtag">#MVP</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 6. HUMAN UNIVERSE -->
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200" alt="Human Universe">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">Human Universe</p>
+                            <p class="post-date">Digital Architecture</p>
+                        </div>
+                    </div>
+                    <h3 class="post-title">Human Universe</h3>
+                    <p class="post-caption">
+                        Inserisci qui la descrizione dettagliata per il progetto Human Universe. Racconta gli obiettivi, le sfide superate e la tecnologia impiegata per la sua realizzazione.
+                    </p>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#HumanUniverse</a>
+                        <a href="#" class="hashtag">#DigitalInnovation</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 7. 3D MODELS -->
+            <article class="social-post">
+                <div class="post-media-side">
+                    <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200" alt="3D Models">
+                </div>
+                <div class="post-text-side reveal">
+                    <div class="post-meta">
+                        <div class="post-avatar"><div class="post-avatar-inner"></div></div>
+                        <div>
+                            <p class="post-author">3D Modelling</p>
+                            <p class="post-date">Creative Engine</p>
+                        </div>
+                    </div>
+                    <h3 class="post-title">3D Models Collection</h3>
+                    <p class="post-caption">
+                        Inserisci qui la descrizione dettagliata per la sezione 3D Models. Puoi illustrare i software utilizzati (es. Blender, Rhino, Cinema4D) e lo scopo dei modelli poligonali realizzati.
+                    </p>
+                    <div class="post-tags">
+                        <a href="#" class="hashtag">#3DModelling</a>
+                        <a href="#" class="hashtag">#Render</a>
+                        <a href="#" class="hashtag">#CGI</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <!-- =====================================================
+             SEZIONE: TRAVEL MAP (PULITA)
+        ===================================================== -->
+        <section class="travel-section" id="travel-feed">
+            <div class="travel-header">
+                <div class="travel-header-left" style="padding-left: 0;">
+                    <h2>Travel Map</h2>
+                    <p>I posti dove sono stato — clicca un pin per il ricordo.</p>
+                </div>
+            </div>
+            <div class="travel-map-wrapper">
+                <div class="travel-map-frame">
+                    <div id="travel-map"></div>
+                </div>
+            </div>
         </section>
 
-
-        <section id="projects" class="notion-section">
-            <h2 class="section-title">🚀 Digital Products & Projects</h2>
-            <div class="products-grid">
-
-                <div class="product-card">
-                    <div class="prod-media">[ Immagine E-commerce / Prodotti ]</div>
-                    <div class="prod-content">
-                        <h3>Persebes</h3>
-                        <p class="prod-tagline">Brand di Design & Go-To-Market</p>
-                        <p>Costruzione da zero di un brand di design partendo dalle opere di un'artista contemporanea. Mi sono occupato di tutto il ciclo dalla A alla Z: ingegnerizzazione dei prodotti, predisposizione della catena produttiva e distributiva, marketing strategy, aspetti legali e website. In soli 6 mesi siamo passati da un foglio bianco a un e-commerce perfettamente funzionante.</p>
-                        <div class="w-tags">
-                            <span class="tag">E-commerce</span>
-                            <span class="tag">Product Engineering</span>
-                        </div>
-                    </div>
+        <!-- =====================================================
+             SEZIONE: CAMERA ROLL (FOTO DELLE PASSIONI STILE POLAROID)
+        ===================================================== -->
+        <section class="camera-roll-section" id="camera-roll-feed">
+            <div class="camera-roll-container">
+                <div class="travel-header-left" style="padding: 0;">
+                    <h2>Camera Roll</h2>
+                    <p>Frammenti visivi delle mie passioni più grandi.</p>
                 </div>
 
-                <div class="product-card">
-                    <div class="prod-media">[ Screenshot Form / Menu QR ]</div>
-                    <div class="prod-content">
-                        <h3>SmartMenu</h3>
-                        <p class="prod-tagline">SaaS per la Ristorazione Locale</p>
-                        <p>Nato per mettermi alla prova su un prodotto digitale mio, risolve un problema stupidamente comune: le pizzerie in Italia spesso non hanno un sito o un menu online. Ho sviluppato un sistema che, al costo di pochissimi centesimi, mette online il menu di un locale. Basta compilare un form con 4 campi e fare una foto al menu cartaceo per generare un sito web pubblico.</p>
-                        <div class="w-tags">
-                            <span class="tag">SaaS</span>
-                            <span class="tag">Product Design</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="prod-media">[ Mockup Piattaforma Gamificata ]</div>
-                    <div class="prod-content">
-                        <h3>Universe of Humanity</h3>
-                        <p class="prod-tagline">Gamification & Cooperazione Umana</p>
-                        <p>La sfida parte da una riflessione: qual è il modo per far andare d'accordo tutti gli esseri umani? Un'invasione aliena. Ma perché non provarci anche senza alieni? Ho creato un MVP pilota: una piattaforma web dove la comprensione degli altri è gamificata. Gli utenti si connettono e affrontano mini-giochi psicologici e test celebri della sociologia per mappare la propria personalità e scoprire come integrarsi costruttivamente con quella degli altri.</p>
-                        <div class="w-tags">
-                            <span class="tag">MVP</span>
-                            <span class="tag">Gamification</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="prod-media">[ Render 3D Digital Twin ]</div>
-                    <div class="prod-content">
-                        <h3>3D Models</h3>
-                        <p class="prod-tagline">Gaussian Splatting & Image Processing</p>
-                        <p>Un'esplorazione nel potenziale sottosfruttato dei digital twin in 3D. Utilizzando tecnologie di Gaussian Splatting e modelli di comprensione delle immagini, ho noleggiato macchine virtuali in cloud per superare i limiti hardware fisici e ho strutturato una pipeline di elaborazione video complessa, riuscendo a trasformare un semplice video della mia cucina in una sua fedele riproduzione 3D.</p>
-                        <div class="w-tags">
-                            <span class="tag">Gaussian Splatting</span>
-                            <span class="tag">Cloud Compute</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-
-        <section id="travel" class="notion-section">
-            <h2 class="section-title">🗺️ Travels</h2>
-            <p class="notion-intro-text">La mia mappa dei luoghi esplorati nel mondo. Una scratch map interattiva per tenere traccia dei viaggi e delle prossime mete.</p>
-            
-            <div class="scratch-map-container">
-                <div class="map-placeholder">
-                    <span class="map-icon">🌍</span>
-                    <p><strong>[ Scratch Map Live Window ]</strong></p>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Caricamento della mappa dei luoghi visitati...</p>
-                </div>
-            </div>
-        </section>
-
-
-        <section id="passions" class="notion-section">
-            <h2 class="section-title">⚡ Passions</h2>
-            <p class="notion-intro-text">Adrenalina, arti visive e sound design. Tutto ciò che mi mette in movimento fuori dal codice e dalla supply chain.</p>
-
-            <div class="passion-block">
-                <h3 class="passion-sub-title">🏁 Velocità</h3>
-                <p class="passion-text">Kart e moto. La ricerca del limite, la traiettoria perfetta e l'adrenalina pura della pista.</p>
-                
-                <div class="media-gallery triple-gallery">
-                    <div class="media-box">[ Foto Moto ]</div>
-                    <div class="media-box">[ Foto Kart ]</div>
-                    <div class="media-box">[ Video Breve Pista 🎥 ]</div>
-                </div>
-            </div>
-
-            <div class="passion-block">
-                <h3 class="passion-sub-title">🎨 Arte: Magic Canvas & Mirrors</h3>
-                <p class="passion-text">Esplorazioni visive e installazioni. Progetti che uniscono percezione, riflessi e interazione nello spazio.</p>
-                
-                <div class="art-group">
-                    <h4>Magic Canvas</h4>
-                    <div class="media-gallery double-gallery">
-                        <div class="media-box">[ Video Magic Canvas 1 🎥 ]</div>
-                        <div class="media-box">[ Video Magic Canvas 2 🎥 ]</div>
-                    </div>
-                </div>
-                <div class="art-group" style="margin-top: 20px;">
-                    <h4>Mirrors</h4>
-                    <div class="media-gallery double-gallery">
-                        <div class="media-box">[ Foto Mirrors 1 ]</div>
-                        <div class="media-box">[ Foto Mirrors 2 ]</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="passion-block">
-                <h3 class="passion-sub-title">🎵 Music & Sound Design</h3>
-                <p class="passion-text">Produzione musicale e creazione di panorami sonori. Ritmo e frequenze per dare forma alle idee.</p>
-                
-                <div class="media-gallery double-gallery">
-                    <div class="media-box">[ Video Studio Session 🎥 ]</div>
-                    <div class="media-box">[ Foto Setup / Live ]</div>
-                </div>
-                
-                <div class="audio-tracks-container">
-                    <h4>Sintonizzati sulle tracce:</h4>
+                <div class="polaroid-grid">
                     
-                    <div class="notion-audio-player">
-                        <span class="audio-icon">▶️</span>
-                        <div class="audio-info">
-                            <span class="track-name">Traccia Audio 01 - Progetto Originale</span>
-                            <span class="track-duration">0:00 / 3:15</span>
+                    <!-- FOTO 1: MOTO -->
+                    <div class="polaroid-item reveal" style="--polaroid-angle: -1.5deg;">
+                        <div class="polaroid-media-box">
+                            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=800" alt="Moto">
+                        </div>
+                        <div class="polaroid-caption">On the road — Ride Hard</div>
+                    </div>
+
+                    <!-- FOTO 2: MAGIC CANVAS -->
+                    <div class="polaroid-item reveal" style="--polaroid-angle: 2deg;">
+                        <div class="polaroid-media-box">
+                            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=800" alt="Magic Canvas">
+                        </div>
+                        <div class="polaroid-caption">Magic Canvas Art Studio</div>
+                    </div>
+
+                    <!-- FOTO 3: SOFT MIRRORS -->
+                    <div class="polaroid-item reveal" style="--polaroid-angle: -2.5deg;">
+                        <div class="polaroid-media-box">
+                            <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=800" alt="Soft Mirrors">
+                        </div>
+                        <div class="polaroid-caption">Soft Mirrors Reflection</div>
+                    </div>
+
+                </div>
+
+                <!-- PLAYER SOUNDCLOUD IN CODA AL RULLINO -->
+                <div class="audio-feed-container">
+                    
+                    <!-- TRACCIA 1 -->
+                    <div class="soundcloud-track reveal" data-track-id="track1">
+                        <audio id="audio-track1" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Ambient%20Souls.mp3"></audio>
+                        <button class="sc-play-btn" onclick="togglePlay('track1')">
+                            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                        <div class="sc-track-info">
+                            <div class="sc-track-meta">
+                                <span class="sc-track-title">Ambient Souls</span>
+                                <span class="sc-track-time" id="time-track1">00:00</span>
+                            </div>
+                            <div class="sc-waveform-container" id="wave-track1" onclick="seekTrack(event, 'track1')"></div>
                         </div>
                     </div>
 
-                    <div class="notion-audio-player">
-                        <span class="audio-icon">▶️</span>
-                        <div class="audio-info">
-                            <span class="track-name">Traccia Audio 02 - Sound Design Experiment</span>
-                            <span class="track-duration">0:00 / 2:40</span>
+                    <!-- TRACCIA 2 -->
+                    <div class="soundcloud-track reveal" data-track-id="track2">
+                        <audio id="audio-track2" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Bamboo%20Forest.mp3"></audio>
+                        <button class="sc-play-btn" onclick="togglePlay('track2')">
+                            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                        <div class="sc-track-info">
+                            <div class="sc-track-meta">
+                                <span class="sc-track-title">Bamboo Forest</span>
+                                <span class="sc-track-time" id="time-track2">00:00</span>
+                            </div>
+                            <div class="sc-waveform-container" id="wave-track2" onclick="seekTrack(event, 'track2')"></div>
                         </div>
                     </div>
+
+                    <!-- TRACCIA 3 -->
+                    <div class="soundcloud-track reveal" data-track-id="track3">
+                        <audio id="audio-track3" src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Fly.mp3"></audio>
+                        <button class="sc-play-btn" onclick="togglePlay('track3')">
+                            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                        <div class="sc-track-info">
+                            <div class="sc-track-meta">
+                                <span class="sc-track-title">Fly</span>
+                                <span class="sc-track-time" id="time-track3">00:00</span>
+                            </div>
+                            <div class="sc-waveform-container" id="wave-track3" onclick="seekTrack(event, 'track3')"></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
         </section>
 
     </main>
+
+    <!-- =====================================================
+         SCRIPT LOGICI SITO
+    ===================================================== -->
+    <script>
+        // Effetto scorrimento schede fluide
+        window.addEventListener('scroll', reveal);
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var revealTop = reveals[i].getBoundingClientRect().top;
+                var revealPoint = 150;
+                if (revealTop < windowHeight - revealPoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        document.addEventListener("DOMContentLoaded", reveal);
+    </script>
+
+    <script>
+        /* ---- DATI DELLE TAPPE SULLA MAPPA ---- */
+        const travelPlaces = [
+            { place: "Favignana, Italia", country: "Italia", lat: 37.9304, lng: 12.3256, date_label: "2022", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/favy.png" },
+            { place: "Agadir, Marocco", country: "Marocco", lat: 30.4278, lng: -9.5981, date_label: "2025", caption: "Io e G", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Agadirdesert.jpg" },
+            { place: "Gran Sasso, Italia", country: "Italia", lat: 42.4812, lng: 13.5574, date_label: "2025", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/GranSasso.jpg" },
+            { place: "Bangkok, Thailandia", country: "Thailandia", lat: 13.7563, lng: 100.5018, date_label: "2022", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Bangkok.jpg" },
+            { place: "Tempio Bianco, Chiang Rai", country: "Thailandia", lat: 19.8242, lng: 99.8234, date_label: "2022", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/tempio.jpg" },
+            { place: "Il Cairo, Egitto", country: "Egitto", lat: 30.0444, lng: 31.2357, date_label: "2023", caption: "", video_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Cairo.mp4" },
+            { place: "Jeddah, Arabia Saudita", country: "Arabia Saudita", lat: 21.5433, lng: 39.1728, date_label: "2025", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/jeddah.jpg" },
+            { place: "Bari, Italia", country: "Italia", lat: 41.1171, lng: 16.8719, date_label: "2025", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/bari.jpg" },
+            { place: "L'Aia, Paesi Bassi", country: "Paesi Bassi", lat: 52.0705, lng: 4.3007, date_label: "2024", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/L_aia.jpg" },
+            { place: "Tenerife, Spagna", country: "Spagna", lat: 28.2916, lng: -16.6291, date_label: "2024", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/tenerife.jpg" },
+            { place: "Barcellona, Spagna", country: "Spagna", lat: 41.3851, lng: 2.1734, date_label: "2024", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barcellona.jpg" }
+        ];
+
+        const homeLocation = { place: "Milano — Base", lat: 45.4642, lng: 9.1900 };
+
+        /* ---- INIZIALIZZAZIONE MAPPA LEAFLET ---- */
+        function initTravelMap(places, home) {
+            const mapEl = document.getElementById('travel-map');
+            if (!mapEl || typeof L === 'undefined') return;
+
+            const map = L.map('travel-map', {
+                minZoom: 1.5,
+                maxZoom: 8,
+                worldCopyJump: true,
+                zoomControl: true,
+                scrollWheelZoom: true,
+            });
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap &copy; CARTO',
+                subdomains: 'abcd',
+                maxZoom: 19,
+            }).addTo(map);
+
+            const customIcon = L.divIcon({
+                className: '',
+                html: '<div class="travel-pin"><div class="travel-pin-drop"></div><div class="travel-pin-dot"></div></div>',
+                iconSize: [26, 26],
+                iconAnchor: [13, 26],
+                popupAnchor: [0, -28],
+            });
+
+            const points = [];
+
+            places.forEach(function (p) {
+                let mediaHtml = '';
+                if (p.video_url) {
+                    mediaHtml = '<video class="travel-popup-photo" src="' + p.video_url + '" autoplay loop muted playsinline></video>';
+                } else {
+                    mediaHtml = '<img class="travel-popup-photo" src="' + p.photo_url + '" alt="' + p.place + '" loading="lazy">';
+                }
+
+                const popupHtml =
+                    mediaHtml +
+                    '<div class="travel-popup-body">' +
+                        '<div class="travel-popup-place">' + p.place + '</div>' +
+                        '<div class="travel-popup-date">' + p.date_label + '</div>' +
+                        '<div class="travel-popup-caption">' + p.caption + '</div>' +
+                    '</div>';
+
+                L.marker([p.lat, p.lng], { icon: customIcon })
+                    .addTo(map)
+                    .bindPopup(popupHtml, { closeButton: true, maxWidth: 240, minWidth: 240 });
+
+                points.push([p.lat, p.lng]);
+            });
+
+            if (home) {
+                const homeIcon = L.divIcon({
+                    className: '',
+                    html: '<div class="home-pin">' +
+                              '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+                                  '<path d="M3 11.5L12 4L21 11.5" stroke="#0b0f19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+                                  '<path d="M5.5 9.5V19C5.5 19.5523 5.94772 20 6.5 20H9.5C10.0523 20 10.5 19.5523 10.5 19V15C10.5 14.4477 10.9477 14 11.5 14H12.5C13.0523 14 13.5 14.4477 13.5 15V19C13.5 19.5523 13.9477 20 14.5 20H17.5C18.0523 20 18.5 19.5523 18.5 19V9.5" stroke="#0b0f19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+                              '</svg>' +
+                          '</div>',
+                    iconSize: [36, 36],
+                    iconAnchor: [18, 30],
+                    popupAnchor: [0, -28],
+                });
+
+                L.marker([home.lat, home.lng], { icon: homeIcon })
+                    .addTo(map)
+                    .bindPopup(
+                        '<div class="travel-popup-body">' +
+                            '<div class="travel-popup-place"> ' + home.place + '</div>' +
+                        '</div>',
+                        { closeButton: true, maxWidth: 200, minWidth: 160 }
+                    );
+
+                points.push([home.lat, home.lng]);
+            }
+
+            if (points.length > 0) {
+                const bounds = L.latLngBounds(points);
+                map.fitBounds(bounds, { padding: [50, 50] });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            initTravelMap(travelPlaces, homeLocation);
+            initAudioPlayers();
+        });
+    </script>
+
+    <script>
+        /* ---- COMPONENTE AUDIO PLAYER STILE SOUNDCLOUD ---- */
+        let currentAudio = null;
+
+        function initAudioPlayers() {
+            const tracks = document.querySelectorAll('.soundcloud-track');
+            tracks.forEach(track => {
+                const trackId = track.getAttribute('data-track-id');
+                const audio = document.getElementById(`audio-${trackId}`);
+                const waveContainer = document.getElementById(`wave-${trackId}`);
+                
+                if (!audio || !waveContainer) return;
+
+                const barCount = 45;
+                waveContainer.innerHTML = '';
+                for (let i = 0; i < barCount; i++) {
+                    const bar = document.createElement('div');
+                    bar.classList.add('sc-wave-bar');
+                    const height = Math.floor(Math.sin(i * 0.15) * 15) + Math.floor(Math.random() * 12) + 15;
+                    bar.style.height = `${Math.min(height, 40)}px`;
+                    waveContainer.appendChild(bar);
+                }
+
+                audio.addEventListener('timeupdate', () => {
+                    const actualTimeEl = track.querySelector('.sc-track-time');
+                    if (actualTimeEl) {
+                        actualTimeEl.textContent = formatTime(audio.currentTime);
+                    }
+
+                    const pct = audio.currentTime / audio.duration;
+                    const bars = waveContainer.querySelectorAll('.sc-wave-bar');
+                    const fillUntil = Math.floor(bars.length * pct);
+                    
+                    bars.forEach((b, idx) => {
+                        if (idx <= fillUntil && audio.currentTime > 0) {
+                            b.classList.add('played');
+                        } else {
+                            b.classList.remove('played');
+                        }
+                    });
+                });
+
+                audio.addEventListener('ended', () => {
+                    track.querySelector('.play-icon').style.display = 'block';
+                    track.querySelector('.pause-icon').style.display = 'none';
+                    const bars = waveContainer.querySelectorAll('.sc-wave-bar');
+                    bars.forEach(b => b.classList.remove('played'));
+                });
+            });
+        }
+
+        function togglePlay(trackId) {
+            const audio = document.getElementById(`audio-${trackId}`);
+            const btn = document.querySelector(`[data-track-id="${trackId}"] .sc-play-btn`);
+            const playIcon = btn.querySelector('.play-icon');
+            const pauseIcon = btn.querySelector('.pause-icon');
+
+            if (currentAudio && currentAudio !== audio) {
+                currentAudio.pause();
+                document.querySelectorAll('.pause-icon').forEach(i => i.style.display = 'none');
+                document.querySelectorAll('.play-icon').forEach(i => i.style.display = 'block');
+            }
+
+            currentAudio = audio;
+
+            if (audio.paused) {
+                audio.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            } else {
+                audio.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            }
+        }
+
+        function seekTrack(event, trackId) {
+            const audio = document.getElementById(`audio-${trackId}`);
+            const container = document.getElementById(`wave-${trackId}`);
+            if (!audio || !container) return;
+
+            const rect = container.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const width = rect.width;
+            const percentage = clickX / width;
+
+            audio.currentTime = percentage * audio.duration;
+        }
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "00:00";
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
+        }
+    </script>
 
 </body>
 </html>
