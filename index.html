@@ -637,6 +637,47 @@
             background: linear-gradient(to top, #ffe08a, #f196ff);
         }
 
+
+        /* =====================================================
+           SELETTORE LINGUA
+        ===================================================== */
+        .language-switcher {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .language-btn {
+            width: 44px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid rgba(11, 15, 25, 0.22);
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            cursor: pointer;
+            font-size: 1.35rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .language-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        .language-btn.active {
+            background: #ffffff;
+            box-shadow: 0 5px 16px rgba(11, 15, 25, 0.2);
+            border-color: rgba(11, 15, 25, 0.38);
+        }
+
         /* =====================================================
            7. RESPONSIVE (mobile/tablet)
         ===================================================== */
@@ -650,6 +691,8 @@
         }
 
         @media (max-width: 768px) {
+            .language-switcher { top: 14px; right: 14px; }
+            .language-btn { width: 40px; height: 34px; font-size: 1.2rem; }
             .travel-map-frame { height: 480px; border-radius: 16px; }
             .travel-header { padding: 0 20px; }
             .travel-map-wrapper { padding: 0 20px; }
@@ -662,6 +705,10 @@
 <body>
 
     <header class="profile-header">
+        <div class="language-switcher" aria-label="Seleziona lingua">
+            <button class="language-btn active" type="button" data-language="it" aria-label="Italiano" title="Italiano">🇮🇹</button>
+            <button class="language-btn" type="button" data-language="en" aria-label="English" title="English">🇬🇧</button>
+        </div>
         <div class="profile-container">
             <div class="profile-avatar-wrapper">
                 <div class="profile-avatar">
@@ -670,7 +717,7 @@
             </div>
             <div class="profile-info">
                 <h1>stef.</h1>
-                <p>Something more about me</p>
+                <p data-i18n="profileSubtitle">Something more about me</p>
             </div>
         </div>
     </header>
@@ -679,15 +726,15 @@
         <div class="highlights-container">
             <a href="#projects-feed" class="story-circle-wrapper">
                 <div class="story-ring"><div class="story-content"></div></div>
-                <span class="story-label">Cool Projects</span>
+                <span class="story-label" data-i18n="navProjects">Cool Projects</span>
             </a>
             <a href="#travel-feed" class="story-circle-wrapper">
                 <div class="story-ring"><div class="story-content"></div></div>
-                <span class="story-label">Travel</span>
+                <span class="story-label" data-i18n="navTravel">Travel</span>
             </a>
             <a href="#camera-roll-feed" class="story-circle-wrapper">
                 <div class="story-ring"><div class="story-content"></div></div>
-                <span class="story-label">Camera Roll</span>
+                <span class="story-label" data-i18n="navCamera">Camera Roll</span>
             </a>
         </div>
     </nav>
@@ -698,7 +745,7 @@
              SEZIONE UNICA ED INTEGRATA: COOL PROJECTS
         ===================================================== -->
         <div id="projects-feed">
-            <h2 class="feed-section-title">Cool Projects</h2>
+            <h2 class="feed-section-title" data-i18n="projectsTitle">Cool Projects</h2>
             <!-- 1. BARILLA -->
             <article class="social-post">
                 <div class="post-media-side">
@@ -709,11 +756,11 @@
                         <div class="post-avatar"><div class="post-avatar-inner"></div></div>
                         <div>
                             <p class="post-author">Barilla Group</p>
-                            <p class="post-date">Central Distribution Worldwide</p>
+                            <p class="post-date" data-i18n="barillaRole">Central Distribution Worldwide</p>
                         </div>
                     </div>
-                    <h3 class="post-title">Da 12 a 4 ore al giorno</h3>
-                    <p class="post-caption">
+                    <h3 class="post-title" data-i18n="barillaTitle">Da 12 a 4 ore al giorno</h3>
+                    <p class="post-caption" data-i18n="barillaCaption">
                         Gestivo tutte le spedizioni in outbound dal magazzino centrale con oltre 100 camion al giorno, facendo da pivot tra produzione, logistica e vendite. Durante la pandemia la situazione era delirante: per sopravvivere, ho sviluppato una serie di automazioni che hanno ridotto il tempo di gestione dei processi da 12 ore al giorno a solo 4.
                     </p>
                     <div class="post-tags">
@@ -733,11 +780,11 @@
                         <div class="post-avatar"><div class="post-avatar-inner"></div></div>
                         <div>
                             <p class="post-author">Getir</p>
-                            <p class="post-date">Performance</p>
+                            <p class="post-date" data-i18n="getirRole">Performance</p>
                         </div>
                     </div>
-                    <h3 class="post-title">Riduzione dei costi di consegna</h3>
-                    <p class="post-caption">
+                    <h3 class="post-title" data-i18n="getirTitle">Riduzione dei costi di consegna</h3>
+                    <p class="post-caption" data-i18n="getirCaption">
                         In Getir ero assegnato al team di Performance, lavoravamo sulle maggiori voci di costo del P&amp;L. Qui in foto cercavo di capire come abbassare il costo delle consegne, aumentando il throughput. Ho sviluppato e implementato un software di scheduling automatico, che permetteva a tutti i manager di avere la pianificazione dei turni, ottimizzata sulla domanda prevista della settimana, ora per ora. In pochi mesi abbiamo ridotto il costo di consegna di almeno il 200%.
                     </p>
                     <div class="post-tags">
@@ -760,8 +807,8 @@
                             <p class="post-date">Project Manager</p>
                         </div>
                     </div>
-                    <h3 class="post-title">Migrazione Sistemi Cloud WMS/TMS in 7 Nazioni</h3>
-                    <p class="post-caption">
+                    <h3 class="post-title" data-i18n="eyTitle">Migrazione Sistemi Cloud WMS/TMS in 7 Nazioni</h3>
+                    <p class="post-caption" data-i18n="eyCaption">
                         Nel ruolo di Project Manager per una multinazionale da 1.5 miliardi di euro di fatturato, ho guidato la transizione tecnologica dei vecchi sistemi legacy AS400 verso nuove e moderne piattaforme WMS e TMS, orchestrando i flussi e i Go Live in 7 nazioni differenti.
                     </p>
                     <div class="post-tags">
@@ -785,8 +832,8 @@
                             <p class="post-date">Brand &amp; E-commerce</p>
                         </div>
                     </div>
-                    <h3 class="post-title">Persebes: Da un foglio bianco a un e-commerce di Design in 6 Mesi</h3>
-                    <p class="post-caption">
+                    <h3 class="post-title" data-i18n="persebesTitle">Persebes: Da un foglio bianco a un e-commerce di Design in 6 Mesi</h3>
+                    <p class="post-caption" data-i18n="persebesCaption">
                         Per un'artista contemporanea (Sofia), ho costruito interamente da zero un brand di design e gestito il lancio: produzione, distribuzione, marketing, contenuti digital, infrastruttura e legal.
                     </p>
                     <div class="post-tags">
@@ -806,11 +853,11 @@
                         <div class="post-avatar"><div class="post-avatar-inner"></div></div>
                         <div>
                             <p class="post-author">SmartMenu</p>
-                            <p class="post-date">Digital Product Design</p>
+                            <p class="post-date" data-i18n="smartmenuRole">Digital Product Design</p>
                         </div>
                     </div>
-                    <h3 class="post-title">Un sito web per ristorante online in 3 click</h3>
-                    <p class="post-caption">
+                    <h3 class="post-title" data-i18n="smartmenuTitle">Un sito web per ristorante online in 3 click</h3>
+                    <p class="post-caption" data-i18n="smartmenuCaption">
                         Ho creato un'applicazione open source in grado di generare un sito web pubblico semplicemente scattando una foto al menu cartaceo del locale e compilando un modulo veloce con 3 campi, rendendo la presenza online semplice e accessibile a tutti.
                     </p>
                     <div class="post-tags">
@@ -829,11 +876,11 @@
                         <div class="post-avatar"><div class="post-avatar-inner"></div></div>
                         <div>
                             <p class="post-author">Human Universe</p>
-                            <p class="post-date">Social Game</p>
+                            <p class="post-date" data-i18n="universeRole">Social Game</p>
                         </div>
                     </div>
                     <h3 class="post-title">Human Universe</h3>
-                    <p class="post-caption">
+                    <p class="post-caption" data-i18n="universeCaption">
                         “Un’invasione aliena è l’unica cosa che potrebbe immediatamente mettere d’accordo tutti gli esseri umani sulla Terra”. Perché non provarci anche senza gli alieni? In questo gioco online, le persone possono interagire in giochi e dilemmi morali e sociali, conoscendo gli altri e se stessi.
                     </p>
                     <div class="post-tags">
@@ -855,8 +902,8 @@
                             <p class="post-date">Creative Engine</p>
                         </div>
                     </div>
-                    <h3 class="post-title">Video to 3D technology</h3>
-                    <p class="post-caption">
+                    <h3 class="post-title" data-i18n="threeDTitle">Video to 3D technology</h3>
+                    <p class="post-caption" data-i18n="threeDCaption">
                         Ho sviluppato un flusso di processing video che permette di trasformare immagini piatte in gemelli digitali tridimensionali, a partire da un semplice video. Il prodotto è un MVP funzionante, applicabile in svariati settori: immobiliare, manifatturiero, manutenzioni, formazione e sicurezza.
                     </p>
                     <div class="post-tags">
@@ -875,8 +922,8 @@
         <section class="travel-section" id="travel-feed">
             <div class="travel-header">
                 <div class="travel-header-left" style="padding-left: 0;">
-                    <h2>Travel Map</h2>
-                    <p>I posti dove sono stato, clicca per vedere il ricordo</p>
+                    <h2 data-i18n="travelTitle">Travel Map</h2>
+                    <p data-i18n="travelSubtitle">I posti dove sono stato, clicca per vedere il ricordo</p>
                 </div>
             </div>
             <div class="travel-map-wrapper">
@@ -892,8 +939,8 @@
         <section class="camera-roll-section" id="camera-roll-feed">
             <div class="camera-roll-container">
                 <div class="travel-header-left" style="padding: 0;">
-                    <h2>Camera Roll</h2>
-                    <p>Frammenti visivi delle mie passioni più grandi.</p>
+                    <h2 data-i18n="cameraTitle">Camera Roll</h2>
+                    <p data-i18n="cameraSubtitle">Frammenti visivi delle mie passioni più grandi.</p>
                 </div>
 
                 <div class="polaroid-grid">
@@ -903,7 +950,7 @@
                         <div class="polaroid-media-box">
                             <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/gallianopark.jpg" alt="In pista">
                         </div>
-                        <div class="polaroid-caption">In pista con qualunque cosa mi capiti</div>
+                        <div class="polaroid-caption" data-i18n="cameraCaption1">In pista con qualunque cosa mi capiti</div>
                     </div>
 
                     <!-- FOTO 2: SOFT MIRROR -->
@@ -911,7 +958,7 @@
                         <div class="polaroid-media-box">
                             <img src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/softmirror.jpg" alt="Specchi artigianali">
                         </div>
-                        <div class="polaroid-caption">specchi artigianali, morbidissimi</div>
+                        <div class="polaroid-caption" data-i18n="cameraCaption2">specchi artigianali, morbidissimi</div>
                     </div>
 
                     <!-- VIDEO 3: MAGIC CANVAS -->
@@ -919,14 +966,14 @@
                         <div class="polaroid-media-box">
                             <video src="https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/magicanvas.mp4" autoplay loop muted playsinline preload="metadata"></video>
                         </div>
-                        <div class="polaroid-caption">quadri che cambiano con la luce</div>
+                        <div class="polaroid-caption" data-i18n="cameraCaption3">quadri che cambiano con la luce</div>
                     </div>
 
                 </div>
 
                 <!-- SEZIONE MUSICA -->
                 <div class="music-section-header">
-                    <h2>La mia musica</h2>
+                    <h2 data-i18n="musicTitle">La mia musica</h2>
                 </div>
 
                 <div class="audio-feed-container">
@@ -985,6 +1032,137 @@
 
     </main>
 
+
+    <script>
+        /* ---- SISTEMA MULTILINGUA ITALIANO / INGLESE ---- */
+        const translations = {
+            it: {
+                profileSubtitle: "Something more about me",
+                navProjects: "Cool Projects",
+                navTravel: "Travel",
+                navCamera: "Camera Roll",
+                projectsTitle: "Cool Projects",
+
+                barillaRole: "Central Distribution Worldwide",
+                barillaTitle: "Da 12 a 4 ore al giorno",
+                barillaCaption: "Gestivo tutte le spedizioni in outbound dal magazzino centrale con oltre 100 camion al giorno, facendo da pivot tra produzione, logistica e vendite. Durante la pandemia la situazione era delirante: per sopravvivere, ho sviluppato una serie di automazioni che hanno ridotto il tempo di gestione dei processi da 12 ore al giorno a solo 4.",
+
+                getirRole: "Performance",
+                getirTitle: "Riduzione dei costi di consegna",
+                getirCaption: "In Getir ero assegnato al team di Performance, lavoravamo sulle maggiori voci di costo del P&L. Qui in foto cercavo di capire come abbassare il costo delle consegne, aumentando il throughput. Ho sviluppato e implementato un software di scheduling automatico, che permetteva a tutti i manager di avere la pianificazione dei turni, ottimizzata sulla domanda prevista della settimana, ora per ora. In pochi mesi abbiamo ridotto il costo di consegna di almeno il 200%.",
+
+                eyTitle: "Migrazione Sistemi Cloud WMS/TMS in 7 Nazioni",
+                eyCaption: "Nel ruolo di Project Manager per una multinazionale da 1.5 miliardi di euro di fatturato, ho guidato la transizione tecnologica dei vecchi sistemi legacy AS400 verso nuove e moderne piattaforme WMS e TMS, orchestrando i flussi e i Go Live in 7 nazioni differenti.",
+
+                persebesTitle: "Persebes: Da un foglio bianco a un e-commerce di Design in 6 Mesi",
+                persebesCaption: "Per un'artista contemporanea (Sofia), ho costruito interamente da zero un brand di design e gestito il lancio: produzione, distribuzione, marketing, contenuti digital, infrastruttura e legal.",
+
+                smartmenuRole: "Digital Product Design",
+                smartmenuTitle: "Un sito web per ristorante online in 3 click",
+                smartmenuCaption: "Ho creato un'applicazione open source in grado di generare un sito web pubblico semplicemente scattando una foto al menu cartaceo del locale e compilando un modulo veloce con 3 campi, rendendo la presenza online semplice e accessibile a tutti.",
+
+                universeRole: "Social Game",
+                universeCaption: "“Un’invasione aliena è l’unica cosa che potrebbe immediatamente mettere d’accordo tutti gli esseri umani sulla Terra”. Perché non provarci anche senza gli alieni? In questo gioco online, le persone possono interagire in giochi e dilemmi morali e sociali, conoscendo gli altri e se stessi.",
+
+                threeDTitle: "Video to 3D technology",
+                threeDCaption: "Ho sviluppato un flusso di processing video che permette di trasformare immagini piatte in gemelli digitali tridimensionali, a partire da un semplice video. Il prodotto è un MVP funzionante, applicabile in svariati settori: immobiliare, manifatturiero, manutenzioni, formazione e sicurezza.",
+
+                travelTitle: "Travel Map",
+                travelSubtitle: "I posti dove sono stato, clicca per vedere il ricordo",
+                cameraTitle: "Camera Roll",
+                cameraSubtitle: "Frammenti visivi delle mie passioni più grandi.",
+                cameraCaption1: "In pista con qualunque cosa mi capiti",
+                cameraCaption2: "specchi artigianali, morbidissimi",
+                cameraCaption3: "quadri che cambiano con la luce",
+                musicTitle: "La mia musica"
+            },
+
+            en: {
+                profileSubtitle: "Something more about me",
+                navProjects: "Cool Projects",
+                navTravel: "Travel",
+                navCamera: "Camera Roll",
+                projectsTitle: "Cool Projects",
+
+                barillaRole: "Worldwide Central Distribution",
+                barillaTitle: "From 12 to 4 hours a day",
+                barillaCaption: "I managed all outbound shipments from the central warehouse, handling more than 100 trucks per day and acting as the link between production, logistics and sales. During the pandemic, the situation became extremely challenging. To keep operations under control, I developed a series of automations that reduced process-management time from 12 hours a day to just 4.",
+
+                getirRole: "Performance",
+                getirTitle: "Reducing delivery costs",
+                getirCaption: "At Getir, I was part of the Performance team, working on the largest cost items in the P&L. In this photo, I was analysing how to reduce delivery costs by increasing throughput. I developed and implemented an automated scheduling tool that gave every manager an hourly shift plan optimised around the following week's forecast demand. Within a few months, we reduced delivery costs by at least 200%.",
+
+                eyTitle: "Cloud WMS/TMS migration across 7 countries",
+                eyCaption: "As Project Manager for a multinational company with €1.5 billion in revenue, I led the technology transition from legacy AS400 systems to modern WMS and TMS platforms, coordinating process flows and go-lives across seven countries.",
+
+                persebesTitle: "Persebes: From a blank sheet to a design e-commerce brand in 6 months",
+                persebesCaption: "For a contemporary artist, Sofia, I built a design brand entirely from scratch and managed its launch: production, distribution, marketing, digital content, infrastructure and legal setup.",
+
+                smartmenuRole: "Digital Product Design",
+                smartmenuTitle: "A restaurant website in 3 clicks",
+                smartmenuCaption: "I created an open-source application capable of generating a public website simply by taking a photo of a restaurant's paper menu and completing a quick three-field form, making an online presence simple and accessible to everyone.",
+
+                universeRole: "Social Game",
+                universeCaption: "“An alien invasion is the only thing that could immediately unite every human being on Earth.” Why not try without the aliens? In this online game, people can interact through games and moral and social dilemmas, learning more about others and themselves.",
+
+                threeDTitle: "Video-to-3D technology",
+                threeDCaption: "I developed a video-processing workflow that transforms flat images into three-dimensional digital twins starting from a simple video. The result is a working MVP with applications across real estate, manufacturing, maintenance, training and safety.",
+
+                travelTitle: "Travel Map",
+                travelSubtitle: "Places I have visited — click to see the memory",
+                cameraTitle: "Camera Roll",
+                cameraSubtitle: "Visual fragments of some of my greatest passions.",
+                cameraCaption1: "On track with anything I can get my hands on",
+                cameraCaption2: "handcrafted, incredibly soft mirrors",
+                cameraCaption3: "paintings that change with the light",
+                musicTitle: "My music"
+            }
+        };
+
+        function setLanguage(language, savePreference = true) {
+            const selectedLanguage = translations[language] ? language : "it";
+            document.documentElement.lang = selectedLanguage;
+
+            document.querySelectorAll("[data-i18n]").forEach(function (element) {
+                const key = element.getAttribute("data-i18n");
+                if (translations[selectedLanguage][key] !== undefined) {
+                    element.textContent = translations[selectedLanguage][key];
+                }
+            });
+
+            document.querySelectorAll(".language-btn").forEach(function (button) {
+                const isActive = button.dataset.language === selectedLanguage;
+                button.classList.toggle("active", isActive);
+                button.setAttribute("aria-pressed", isActive ? "true" : "false");
+            });
+
+            if (savePreference) {
+                localStorage.setItem("portfolioLanguage", selectedLanguage);
+            }
+
+            refreshTravelMapLanguage();
+        }
+
+        function refreshTravelMapLanguage() {
+            if (!window.travelMapInstance || !window.travelMarkersLayer) return;
+
+            window.travelMarkersLayer.clearLayers();
+            addTravelMarkers(window.travelMapInstance, window.travelMarkersLayer, travelPlaces, homeLocation);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".language-btn").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    setLanguage(button.dataset.language);
+                });
+            });
+
+            const savedLanguage = localStorage.getItem("portfolioLanguage");
+            const browserLanguage = navigator.language && navigator.language.toLowerCase().startsWith("en") ? "en" : "it";
+            setLanguage(savedLanguage || browserLanguage, false);
+        });
+    </script>
+
     <!-- =====================================================
          SCRIPT LOGICI SITO
     ===================================================== -->
@@ -1008,41 +1186,25 @@
     <script>
         /* ---- DATI DELLE TAPPE SULLA MAPPA ---- */
         const travelPlaces = [
-            { place: "Favignana, Italia", country: "Italia", lat: 37.9304, lng: 12.3256, date_label: "2022", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/favy.png" },
-            { place: "Agadir, Marocco", country: "Marocco", lat: 30.4278, lng: -9.5981, date_label: "2025", caption: "Io e G", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Agadirdesert.jpg" },
-            { place: "Gran Sasso, Italia", country: "Italia", lat: 42.4812, lng: 13.5574, date_label: "2025", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/GranSasso.jpg" },
-            { place: "Bangkok, Thailandia", country: "Thailandia", lat: 13.7563, lng: 100.5018, date_label: "2022", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Bangkok.jpg" },
-            { place: "Tempio Bianco, Chiang Rai", country: "Thailandia", lat: 19.8242, lng: 99.8234, date_label: "2022", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/tempio.jpg" },
-            { place: "Il Cairo, Egitto", country: "Egitto", lat: 30.0444, lng: 31.2357, date_label: "2023", caption: "", video_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Cairo.mp4" },
-            { place: "Jeddah, Arabia Saudita", country: "Arabia Saudita", lat: 21.5433, lng: 39.1728, date_label: "2025", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/jeddah.jpg" },
-            { place: "Bari, Italia", country: "Italia", lat: 41.1171, lng: 16.8719, date_label: "2025", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/bari.jpg" },
-            { place: "L'Aia, Paesi Bassi", country: "Paesi Bassi", lat: 52.0705, lng: 4.3007, date_label: "2024", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Aia.jpg" },
-            { place: "Tenerife, Spagna", country: "Spagna", lat: 28.2916, lng: -16.6291, date_label: "2024", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/tenerife.jpg" },
-            { place: "Barcellona, Spagna", country: "Spagna", lat: 41.3851, lng: 2.1734, date_label: "2024", caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barcellona.jpg" },
-            { place: "San Francisco, Stati Uniti",country: "Stati Uniti",lat: 37.7749,lng: -122.4194, date_label: "2006",caption: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/San%20Francisco.jpg"},
+            { place_it: "Favignana, Italia", place_en: "Favignana, Italy", country_it: "Italia", country_en: "Italy", lat: 37.9304, lng: 12.3256, date_label: "2022", caption_it: "", caption_en: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/favy.png" },
+            { place_it: "Agadir, Marocco", place_en: "Agadir, Morocco", country_it: "Marocco", country_en: "Morocco", lat: 30.4278, lng: -9.5981, date_label: "2025", caption_it: "Io e G", caption_en: "G and me", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Agadirdesert.jpg" },
+            { place_it: "Gran Sasso, Italia", place_en: "Gran Sasso, Italy", country_it: "Italia", country_en: "Italy", lat: 42.4812, lng: 13.5574, date_label: "2025", caption_it: "", caption_en: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/GranSasso.jpg" },
+            { place_it: "Bangkok, Thailandia", place_en: "Bangkok, Thailand", country_it: "Thailandia", country_en: "Thailand", lat: 13.7563, lng: 100.5018, date_label: "2022", caption_it: "", caption_en: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Bangkok.jpg" },
+            { place_it: "Tempio Bianco, Chiang Rai", place_en: "White Temple, Chiang Rai", country_it: "Thailandia", country_en: "Thailand", lat: 19.8242, lng: 99.8234, date_label: "2022", caption_it: "", caption_en: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/tempio.jpg" },
+            { place_it: "Il Cairo, Egitto", place_en: "Cairo, Egypt", country_it: "Egitto", country_en: "Egypt", lat: 30.0444, lng: 31.2357, date_label: "2023", caption_it: "", caption_en: "", video_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Cairo.mp4" },
+            { place_it: "Jeddah, Arabia Saudita", place_en: "Jeddah, Saudi Arabia", country_it: "Arabia Saudita", country_en: "Saudi Arabia", lat: 21.5433, lng: 39.1728, date_label: "2025", caption_it: "", caption_en: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/jeddah.jpg" },
+            { place_it: "Bari, Italia", place_en: "Bari, Italy", country_it: "Italia", country_en: "Italy", lat: 41.1171, lng: 16.8719, date_label: "2025", caption_it: "", caption_en: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/bari.jpg" },
+            { place_it: "L'Aia, Paesi Bassi", place_en: "The Hague, Netherlands", country_it: "Paesi Bassi", country_en: "Netherlands", lat: 52.0705, lng: 4.3007, date_label: "2024", caption_it: "", caption_en: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/Aia.jpg" },
+            { place_it: "Tenerife, Spagna", place_en: "Tenerife, Spain", country_it: "Spagna", country_en: "Spain", lat: 28.2916, lng: -16.6291, date_label: "2024", caption_it: "", caption_en: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/tenerife.jpg" },
+            { place_it: "Barcellona, Spagna", place_en: "Barcelona, Spain", country_it: "Spagna", country_en: "Spain", lat: 41.3851, lng: 2.1734, date_label: "2024", caption_it: "", caption_en: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/barcellona.jpg" },
+            { place_it: "San Francisco, Stati Uniti", place_en: "San Francisco, United States", country_it: "Stati Uniti", country_en: "United States", lat: 37.7749, lng: -122.4194, date_label: "2006", caption_it: "", caption_en: "", photo_url: "https://zysztvmbhboaupnbcwhq.supabase.co/storage/v1/object/public/portfolio-media/San%20Francisco.jpg" }
         ];
 
-        const homeLocation = { place: "Milano — Base", lat: 45.4642, lng: 9.1900 };
+        const homeLocation = { place_it: "Milano — Base", place_en: "Milan — Home base", lat: 45.4642, lng: 9.1900 };
 
         /* ---- INIZIALIZZAZIONE MAPPA LEAFLET ---- */
-        function initTravelMap(places, home) {
-            const mapEl = document.getElementById('travel-map');
-            if (!mapEl || typeof L === 'undefined') return;
 
-            const map = L.map('travel-map', {
-                minZoom: 1.5,
-                maxZoom: 8,
-                worldCopyJump: true,
-                zoomControl: true,
-                scrollWheelZoom: true,
-            });
-
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; OpenStreetMap &copy; CARTO',
-                subdomains: 'abcd',
-                maxZoom: 19,
-            }).addTo(map);
-
+        function addTravelMarkers(map, layer, places, home) {
             const customIcon = L.divIcon({
                 className: '',
                 html: '<div class="travel-pin"><div class="travel-pin-drop"></div><div class="travel-pin-dot"></div></div>',
@@ -1051,29 +1213,29 @@
                 popupAnchor: [0, -28],
             });
 
-            const points = [];
-
             places.forEach(function (p) {
+                const activeLanguage = document.documentElement.lang === 'en' ? 'en' : 'it';
+                const placeName = activeLanguage === 'en' ? p.place_en : p.place_it;
+                const placeCaption = activeLanguage === 'en' ? p.caption_en : p.caption_it;
                 let mediaHtml = '';
+
                 if (p.video_url) {
                     mediaHtml = '<video class="travel-popup-photo" src="' + p.video_url + '" autoplay loop muted playsinline></video>';
                 } else {
-                    mediaHtml = '<img class="travel-popup-photo" src="' + p.photo_url + '" alt="' + p.place + '" loading="lazy">';
+                    mediaHtml = '<img class="travel-popup-photo" src="' + p.photo_url + '" alt="' + placeName + '" loading="lazy">';
                 }
 
                 const popupHtml =
                     mediaHtml +
                     '<div class="travel-popup-body">' +
-                        '<div class="travel-popup-place">' + p.place + '</div>' +
+                        '<div class="travel-popup-place">' + placeName + '</div>' +
                         '<div class="travel-popup-date">' + p.date_label + '</div>' +
-                        '<div class="travel-popup-caption">' + p.caption + '</div>' +
+                        '<div class="travel-popup-caption">' + placeCaption + '</div>' +
                     '</div>';
 
                 L.marker([p.lat, p.lng], { icon: customIcon })
-                    .addTo(map)
+                    .addTo(layer)
                     .bindPopup(popupHtml, { closeButton: true, maxWidth: 240, minWidth: 240 });
-
-                points.push([p.lat, p.lng]);
             });
 
             if (home) {
@@ -1090,17 +1252,52 @@
                     popupAnchor: [0, -28],
                 });
 
+                const homeName = document.documentElement.lang === 'en' ? home.place_en : home.place_it;
+
                 L.marker([home.lat, home.lng], { icon: homeIcon })
-                    .addTo(map)
+                    .addTo(layer)
                     .bindPopup(
                         '<div class="travel-popup-body">' +
-                            '<div class="travel-popup-place"> ' + home.place + '</div>' +
+                            '<div class="travel-popup-place">' + homeName + '</div>' +
                         '</div>',
                         { closeButton: true, maxWidth: 200, minWidth: 160 }
                     );
+            }
+        }
 
+        window.travelMapInstance = null;
+        window.travelMarkersLayer = null;
+
+        function initTravelMap(places, home) {
+            const mapEl = document.getElementById('travel-map');
+            if (!mapEl || typeof L === 'undefined') return;
+
+            const map = L.map('travel-map', {
+                minZoom: 1.5,
+                maxZoom: 8,
+                worldCopyJump: true,
+                zoomControl: true,
+                scrollWheelZoom: true,
+            });
+
+            window.travelMapInstance = map;
+            window.travelMarkersLayer = L.layerGroup().addTo(map);
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap &copy; CARTO',
+                subdomains: 'abcd',
+                maxZoom: 19,
+            }).addTo(map);
+
+            const points = places.map(function (p) {
+                return [p.lat, p.lng];
+            });
+
+            if (home) {
                 points.push([home.lat, home.lng]);
             }
+
+            addTravelMarkers(map, window.travelMarkersLayer, places, home);
 
             if (points.length > 0) {
                 const bounds = L.latLngBounds(points);
